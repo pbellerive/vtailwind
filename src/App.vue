@@ -1,16 +1,19 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
+    <div class="max-w-4xl mx-auto grid justify-items-center">
+        <img class="self-center" alt="Vue logo" src="./assets/logo.png">
+    </div>
   <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import 'tailwindcss/tailwind.css'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    name: 'App',
+    components: {
+        HelloWorld
+    }
 }
 </script>
 
