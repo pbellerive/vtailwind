@@ -7,7 +7,7 @@ const VInput = defineComponent({
         return {
             tag: 'input',
             css: {
-                baseCss: 'border-2 border-blue-200 rounded'
+                baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300'
             }
         };
     },
@@ -15,14 +15,14 @@ const VInput = defineComponent({
     emits: ['update:modelValue'],
     render () {
         return h(
-            'Input', // tag name
+            'Input',
             {
                 class: this.css.baseCss,
                 value: this.modelValue,
+                type: 'text',
                 onInput: $event => this.$emit('update:modelValue', $event.target.value)
 
-            } // props/attributes
-            // this.$slots.default() // array of children
+            }
         );
     }
 });
