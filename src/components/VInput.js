@@ -11,7 +11,14 @@ const VInput = defineComponent({
             }
         };
     },
-    props: ['modelValue'],
+    props: {
+        modelValue: {
+            default: ''
+        },
+        type: {
+            default: 'text'
+        }
+    },
     emits: ['update:modelValue'],
     render () {
         return h(
@@ -19,7 +26,7 @@ const VInput = defineComponent({
             {
                 class: this.css.baseCss,
                 value: this.modelValue,
-                type: 'text',
+                type: this.type,
                 onInput: $event => this.$emit('update:modelValue', $event.target.value)
 
             }

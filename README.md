@@ -1,4 +1,4 @@
-# vue-ui
+# VTailwind
 
 ## Project setup
 ```
