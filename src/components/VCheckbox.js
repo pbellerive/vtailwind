@@ -5,7 +5,7 @@ const VCheckbox = defineComponent({
     extends: Base,
     data () {
         return {
-            tag: 'input',
+            tag: 'checkbox',
             css: {
                 baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300'
             }
@@ -73,7 +73,6 @@ const VCheckbox = defineComponent({
                 checked: this.checked,
                 type: 'checkbox',
                 onChange: $event => {
-                    debugger;
                     const tempValue = this.toggleValue();
                     this.$emit('update:modelValue', tempValue);
                 }

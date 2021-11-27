@@ -12,7 +12,7 @@ const Base = defineComponent({
     props: ['modelValue'],
     emits: ['update:modelValue'],
     created () {
-        if (this.$vUiSettings[this.tag]) {
+        if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
             this.css = this.$vUiSettings[this.tag].css;
         }
     }

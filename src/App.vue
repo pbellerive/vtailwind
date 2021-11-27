@@ -2,19 +2,19 @@
     <div class="max-w-4xl mx-auto grid justify-items-center">
         <img class="self-center" alt="Vue logo" src="./assets/logo.png">
     </div>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Demo />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import 'tailwindcss/tailwind.css'
+import Demo from './components/demo.vue';
+import 'tailwindcss/tailwind.css';
 
 export default {
     name: 'App',
     components: {
-        HelloWorld
+        Demo
     }
-}
+};
 </script>
 
 <style lang="scss">
