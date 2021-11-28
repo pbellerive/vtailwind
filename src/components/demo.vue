@@ -76,6 +76,12 @@
                     {{rselectValue}}
                 </div>
             </div>
+            <div class="mb-10">
+                <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true"/>
+                <div>
+                    {{rselectValue2}}
+                </div>
+            </div>
             <div>
                 <v-select v-model="selectedOption" :options="options" placeholder="My select"/>
                 <div>
@@ -134,7 +140,8 @@ export default {
             radioValue: undefined,
             radioValue1: undefined,
             area: 'Allo',
-            rselectValue: {}
+            rselectValue: {},
+            rselectValue2: {}
         };
     },
     components: {
@@ -149,6 +156,26 @@ export default {
         'v-rselect': VRichSelect
     },
     methods: {
+        getOptions(query) {
+            return [
+                {
+                    text: 'opt 1',
+                    value: 1
+                },
+                {
+                    text: 'opt 2',
+                    value: 2
+                },
+                {
+                    text: 'opt 3',
+                    value: 3
+                },
+                {
+                    text: 'opt 4',
+                    value: 4
+                }
+            ];
+        },
         onCurrentPageChange (evt) {
             console.log('Listen update:currentPage');
         }

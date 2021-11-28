@@ -25,7 +25,7 @@
                        </span>
 
                     </li>
-                    <li v-for="option in search()" :key="option.value" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
+                    <li v-for="option in getFilteredOptions()" :key="option.value" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
                         <span :class="css.optionLabel">
                             {{option.text}}
                         </span>
@@ -89,7 +89,7 @@ export default {
             this.showOptions = false;
         },
         isSelectedCss(option) {
-            if (this.modelValue.value === option.value) {
+            if (this.modelValue.value && this.modelValue.value === option.value) {
                 return this.css.selectedOptions;
             }
 
@@ -103,7 +103,14 @@ export default {
         openOptions() {
             this.showOptions = true;
         },
-        search() {
+        getFilteredOptions() {
+            if (this.fetchMethod) {
+                return this.fetch();
+            }
+
+            return this.filterOptions();
+        },
+        filterOptions() {
             if (this.query.trim() === '') {
                 return this.options;
             }
@@ -111,6 +118,9 @@ export default {
             return this.options.filter(option => {
                 return option.text.includes(this.query) || this.query.trim() === '';
             });
+        },
+        fetch() {
+            return this.fetchMethod(this.query);
         }
     },
     props: {
@@ -131,7 +141,12 @@ export default {
         searchable: {
             type: Boolean,
             default: false
+        },
+        fetchMethod: {
+            type: Function,
+            default: undefined
         }
+
     },
     setup (props) {
         const innerOptions = reactive(props.options);
