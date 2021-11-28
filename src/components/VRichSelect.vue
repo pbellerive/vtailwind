@@ -12,6 +12,11 @@
             </div>
         </div>
         <div v-if="showOptions" :class="css.optionsWrapper">
+            <slot name="options-search">
+                <div v-if="searchable" class="px-2 mt-2">
+                    <v-input v-model="query"/>
+                </div>
+            </slot>
             <slot name="options-slot">
                 <ul>
                     <li @click="onClick(undefined)">
@@ -20,7 +25,7 @@
                        </span>
 
                     </li>
-                    <li v-for="option in options" :key="option.value" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
+                    <li v-for="option in search()" :key="option.value" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
                         <span :class="css.optionLabel">
                             {{option.text}}
                         </span>
@@ -32,7 +37,13 @@
 </template>
 
 <script>
+import VInput from './VInput';
+import { reactive } from 'vue';
+
 export default {
+    components: {
+        'v-input': VInput
+    },
     computed: {
         computedPlaceholder() {
             let modelType = typeof this.modelValue;
@@ -68,7 +79,8 @@ export default {
                 optionLabel: 'px-2',
                 selectedOptions: 'bg-blue-300'
             },
-            showOptions: false
+            showOptions: false,
+            query: ''
         };
     },
     $emits: ['update:modelValue'],
@@ -84,11 +96,21 @@ export default {
             return '';
         },
         onClick(option) {
+            this.query = '';
             this.closeOptions();
             this.$emit('update:modelValue', option);
         },
         openOptions() {
             this.showOptions = true;
+        },
+        search() {
+            if (this.query.trim() === '') {
+                return this.options;
+            }
+
+            return this.options.filter(option => {
+                return option.text.includes(this.query) || this.query.trim() === '';
+            });
         }
     },
     props: {
@@ -105,10 +127,18 @@ export default {
         placeholder: {
             type: String,
             default: 'Select option'
+        },
+        searchable: {
+            type: Boolean,
+            default: false
         }
     },
-    setup () {
-        return {};
+    setup (props) {
+        const innerOptions = reactive(props.options);
+
+        return {
+            innerOptions
+        };
     }
 };
 </script>

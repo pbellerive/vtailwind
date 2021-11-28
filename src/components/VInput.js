@@ -7,7 +7,7 @@ const VInput = defineComponent({
         return {
             tag: 'input',
             css: {
-                baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full'
             }
         };
     },

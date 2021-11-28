@@ -65,10 +65,22 @@
         </div>
         <div class="grid grid-flow-col">
             <div class="mb-10">
-                <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue"/> {{rselectValue}}
+                <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue"/>
+                <div>
+                    {{rselectValue}}
+                </div>
+            </div>
+            <div class="mb-10">
+                <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true"/>
+                <div>
+                    {{rselectValue}}
+                </div>
             </div>
             <div>
-                <v-select v-model="selectedOption" :options="options" placeholder="My select"/> {{selectedOption}}
+                <v-select v-model="selectedOption" :options="options" placeholder="My select"/>
+                <div>
+                    {{selectedOption}}
+                </div>
             </div>
         </div>
 
