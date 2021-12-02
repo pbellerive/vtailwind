@@ -6,6 +6,7 @@ import VCheckbox from './components/VCheckbox';
 import VRadio from './components/VRadio';
 import VSelect from './components/VSelect';
 import VTextArea from './components/VTextArea';
+import VDatePicker from './components/VDatePicker';
 
 export {
   VButton,
@@ -15,5 +16,6 @@ export {
   VRadio,
   VSelect,
   VTextArea,
-  VToggle
+  VToggle,
+  VDatePicker
 };

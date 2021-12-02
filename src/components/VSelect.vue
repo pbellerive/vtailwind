@@ -20,6 +20,7 @@ export default {
     extends: Base,
     data () {
         return {
+            tag: 'select',
             css: {
                 selectCss: 'text-gray-500 px-3 py-1 bg-white border-2 border-gray-200 rounded focus:border-blue-300',
                 placeholderCss: 'text-gray-300',

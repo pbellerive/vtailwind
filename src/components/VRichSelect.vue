@@ -1,7 +1,7 @@
 <template>
     <div class="relative inline-block" :class="[css.wrapper]">
         <div :class="css.buttonWrapper">
-            <div class="w-full text-left">
+            <div class="text-left">
                 <span class="mr-2">
                 {{computedPlaceholder}}
                 </span>
@@ -18,7 +18,7 @@
                 </div>
             </slot>
             <slot name="options-slot">
-                <ul>
+                <ul class="overflow-y-scroll max-h-20">
                     <li @click="onClick(undefined)">
                        <span :class="css.optionLabel">
                         {{placeholder}}
@@ -46,6 +46,7 @@ export default {
     },
     computed: {
         computedPlaceholder() {
+            debugger;
             let modelType = typeof this.modelValue;
             if (Array.isArray(this.modelValue)) {
                 modelType = 'array';
@@ -72,24 +73,24 @@ export default {
     },
     data() {
         return {
+            tag: 'rselect',
             css: {
-                wrapper: 'relative border border-gray-300 rounded w-48',
-                buttonWrapper: 'flex flex-row items-center px-2 w-full',
+                wrapper: 'relative border border-gray-300 rounded',
+                buttonWrapper: 'flex flex-row items-center px-2',
                 optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white',
-                optionLabel: 'px-2',
+                optionLabel: 'px-2 hover:bg-blue-300',
                 selectedOptions: 'bg-blue-300'
             },
             showOptions: false,
             query: ''
         };
     },
-    $emits: ['update:modelValue'],
     methods: {
         closeOptions() {
             this.showOptions = false;
         },
         isSelectedCss(option) {
-            if (this.modelValue.value && this.modelValue.value === option.value) {
+            if (this.modelValue && this.modelValue.value && this.modelValue.value === option.value) {
                 return this.css.selectedOptions;
             }
 
@@ -115,6 +116,7 @@ export default {
                 return this.options;
             }
 
+            debugger;
             return this.options.filter(option => {
                 return option.text.includes(this.query) || this.query.trim() === '';
             });

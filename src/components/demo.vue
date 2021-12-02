@@ -1,5 +1,5 @@
 <template>
-  <div class="hello max-w-4xl mx-auto">
+  <div class="hello max-w-4xl mx-auto pb-20">
     <h1>Welcome to  VTailwind , a Vuejs 3 UI components</h1>
     <div class="grid grid-flow-row gap-3">
         <div>
@@ -89,11 +89,15 @@
                 </div>
             </div>
         </div>
-
-        <div>
-            <v-text-area v-model="area" :cols="40" rows="10"/>
+        <div class="grid grid-flow-col">
+            <div>
+                <v-text-area v-model="area" :cols="40" rows="10"/>
+            </div>
+            <div>
+                <v-date-picker v-model="dateSelected"/>
+                {{dateSelected}}
+            </div>
         </div>
-
     </div>
   </div>
 </template>
@@ -108,6 +112,7 @@ import VCheckbox from './VCheckbox.js';
 import VRadio from './VRadio';
 import VTextArea from './VTextArea';
 import VRichSelect from './VRichSelect';
+import VDatePicker from './VDatePicker';
 
 export default {
     name: 'HelloWorld',
@@ -141,7 +146,8 @@ export default {
             radioValue1: undefined,
             area: 'Allo',
             rselectValue: {},
-            rselectValue2: {}
+            rselectValue2: {},
+            dateSelected: new Date(2021, 11, 2)
         };
     },
     components: {
@@ -153,7 +159,8 @@ export default {
         'v-checkbox': VCheckbox,
         'v-radio': VRadio,
         'v-text-area': VTextArea,
-        'v-rselect': VRichSelect
+        'v-rselect': VRichSelect,
+        'v-date-picker': VDatePicker
     },
     methods: {
         getOptions(query) {
