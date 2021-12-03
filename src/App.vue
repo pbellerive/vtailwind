@@ -1,6 +1,6 @@
 <template>
-    <div class="max-w-4xl mx-auto grid justify-items-center">
-        <img class="self-center" alt="Vue logo" src="./assets/logo.png">
+    <div class="max-w-4xl mx-auto grid justify-items-center mt-8">
+        <img class="self-center w-32" alt="Vue logo" src="./assets/logo.png">
     </div>
   <Demo />
 </template>
@@ -24,6 +24,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

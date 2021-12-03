@@ -6,15 +6,27 @@ const Base = defineComponent({
             tag: '',
             css: {
                 // baseCss: 'border-2 border-blue-200 rounded'
-            }
+            },
+            innerCss: {}
         };
     },
-    props: ['modelValue'],
+    props: ['modelValue', 'variant'],
     emits: ['update:modelValue'],
+    methods: {
+        getCssVariant() {
+            if (this.variant && this.css[this.variant]) {
+                return this.css[this.variant];
+            }
+
+            return this.css;
+        }
+    },
     created () {
         if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
             this.css = this.$vUiSettings[this.tag].css;
         }
+
+        this.innerCss = this.getCssVariant();
     }
 });
 

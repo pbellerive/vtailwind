@@ -2,16 +2,13 @@
   <div class="hello max-w-4xl mx-auto pb-20">
     <h1>Welcome to  VTailwind , a Vuejs 3 UI components</h1>
     <div class="grid grid-flow-row gap-3">
-        <div>
-            <v-toggle v-model="testToggle">toggle</v-toggle> {{testToggle}}
-        </div>
         <section>
             <h1>BUTTONS</h1>
             <div class="flex flex-row justify-center gap-2">
-                <v-button>Button</v-button>
-                <v-button variant="danger">Button</v-button>
+                <v-button @click="$refs.notif.show({ text:'Test content', title: 'Test title'})">show notification</v-button>
+                <v-button @click="$refs.notifDanger.show({ text:'Test content', title: 'Test title'})" variant="danger">Show danger</v-button>
                 <v-button variant="primary">Button</v-button>
-                <v-button variant="warning">Button</v-button>
+                <v-button @click="$refs.notifWarning.show({ text:'Test content', title: 'Test title'})" variant="warning">Show warning</v-button>
                 <v-button variant="notvariant">Button</v-button>
             </div>
         </section>
@@ -28,18 +25,23 @@
             </div>
         </section>
 
-        <section class="flex flex-col gap-3">
+        <section class="">
             <h1>CHECKBOX</h1>
-            <div class="flex justify-center">
-                <v-checkbox v-model="checkValue" value="a"/>{{checkValue}}
-            </div>
-            <div class="flex flex-row gap-3 justify-center">
-                <v-checkbox v-model="checkArrayValue" value="a"/>
-                <v-checkbox v-model="checkArrayValue" value="b"/> {{checkArrayValue}}
+            <div class="flex flex-row justify-center gap-4">
+                <div class="flex justify-center">
+                    <v-checkbox v-model="checkValue" value="a"/>{{checkValue}}
+                </div>
+                <div class="flex flex-row gap-3 justify-center">
+                    <v-checkbox v-model="checkArrayValue" value="a"/>
+                    <v-checkbox v-model="checkArrayValue" value="b"/> {{checkArrayValue}}
+                </div>
+                <div>
+                    <v-toggle v-model="testToggle">toggle</v-toggle> {{testToggle}}
+                </div>
             </div>
         </section>
         <div>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-2 justify-center">
                 <div>
                     <v-radio name="radio1" value="my-radioA" v-model="radioValue" label="Radio A"/>
                 </div>
@@ -47,7 +49,7 @@
                     <v-radio name="radio1" value="my-radioB" v-model="radioValue" label="Radio B"/>
                 </div>
             </div>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-2 justify-center mt-8">
                 <div>
                     <v-radio name="radio2" value="my-radioC" v-model="radioValue1" label="Radio C" labelPosition="left"/>
                 </div>
@@ -101,6 +103,10 @@
             </div>
         </div>
     </div>
+    <v-notification ref="notif" />
+    <v-notification ref="notifDanger" variant="danger"/>
+    <v-notification ref="notifWarning" variant="warning"/>
+    <v-loading :isLoading="true"/>
   </div>
 </template>
 
@@ -115,6 +121,8 @@ import VRadio from './VRadio';
 import VTextArea from './VTextArea';
 import VRichSelect from './VRichSelect';
 import VDatePicker from './VDatePicker';
+import VNotification from './VNotification';
+import VLoading from './VLoading';
 
 export default {
     name: 'HelloWorld',
@@ -162,7 +170,9 @@ export default {
         'v-radio': VRadio,
         'v-text-area': VTextArea,
         'v-rselect': VRichSelect,
-        'v-date-picker': VDatePicker
+        'v-date-picker': VDatePicker,
+        'v-notification': VNotification,
+        'v-loading': VLoading
     },
     methods: {
         getOptions(query) {

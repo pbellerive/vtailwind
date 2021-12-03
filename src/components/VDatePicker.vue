@@ -37,8 +37,10 @@
 
 <script>
 import VSelect from './VRichSelect';
+import VBase from './base';
 
 export default {
+    extends: VBase,
     components: {
         'v-rselect': VSelect
     },
@@ -59,7 +61,6 @@ export default {
                 dateLabel: 'text-left text-sm px-2 w-full',
                 wrapper: 'inline-block border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full w-full',
                 wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 w-56 bg-white',
-                // wrapperSelector: 'grid grid-cols-4 gap-1 py-2 justify-center',
                 wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
                 previousButtonCss: 'absolute left-1',
                 nextButtonCss: 'absolute right-1',
