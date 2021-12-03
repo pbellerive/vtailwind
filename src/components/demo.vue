@@ -89,13 +89,15 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-flow-col">
+        <div class="grid grid-flow-col gap-2">
             <div>
                 <v-text-area v-model="area" :cols="40" rows="10"/>
             </div>
             <div>
+                <div>
+                    {{dateSelected}}
+                </div>
                 <v-date-picker v-model="dateSelected"/>
-                {{dateSelected}}
             </div>
         </div>
     </div>
