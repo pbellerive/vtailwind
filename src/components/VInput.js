@@ -26,6 +26,7 @@ const VInput = defineComponent({
             {
                 class: this.css.baseCss,
                 value: this.modelValue,
+                disabled: this.disabled,
                 type: this.type,
                 onInput: $event => this.$emit('update:modelValue', $event.target.value)
 

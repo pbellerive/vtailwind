@@ -71,6 +71,7 @@ const VCheckbox = defineComponent({
                 class: this.css.baseCss,
                 value: this.value,
                 checked: this.checked,
+                disabled: this.disabled,
                 type: 'checkbox',
                 onChange: $event => {
                     const tempValue = this.toggleValue();

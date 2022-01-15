@@ -10,6 +10,7 @@
                 <v-button variant="primary">Button</v-button>
                 <v-button @click="$refs.notifWarning.show({ text:'Test content', title: 'Test title'})" variant="warning">Show warning</v-button>
                 <v-button variant="notvariant">Button</v-button>
+                <v-button variant="primary" :disabled="true">Button</v-button>
             </div>
         </section>
         <section>
@@ -21,6 +22,7 @@
                 </div>
                 <div>
                     <v-input type="number"/>
+                    <v-input type="text" :disabled="true"/>
                 </div>
             </div>
         </section>
@@ -106,7 +108,7 @@
     <v-notification ref="notif" />
     <v-notification ref="notifDanger" variant="danger"/>
     <v-notification ref="notifWarning" variant="warning"/>
-    <v-loading :isLoading="true"/>
+    <v-loading :isLoading="false"/>
   </div>
 </template>
 

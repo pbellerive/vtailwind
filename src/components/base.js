@@ -10,7 +10,14 @@ const Base = defineComponent({
             innerCss: {}
         };
     },
-    props: ['modelValue', 'variant'],
+    props: {
+        modelValue: {},
+        variant: {},
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
     emits: ['update:modelValue'],
     methods: {
         getCssVariant() {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button :class="[css.baseCss, bgCss]">
+        <button :class="[css.baseCss, bgCss]" :disabled="disabled">
             <slot></slot>
         </button>
 
@@ -14,6 +14,10 @@ export default {
     extends: Base,
     computed: {
         bgCss () {
+            if (this.disabled) {
+                return 'bg-gray-200';
+            }
+
             if (this.variant === 'base' || this.variant.trim() === '') {
                 return this.css.bgCss;
             }
