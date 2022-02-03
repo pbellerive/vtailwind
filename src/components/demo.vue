@@ -72,6 +72,7 @@
         </div>
         <div class="grid grid-flow-col">
             <div class="mb-10">
+                <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true"/>
                 <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue"/>
                 <div>
                     {{rselectValue}}

@@ -1,11 +1,14 @@
 <template>
     <div class="wrapperCss">
-        <textarea :value="modelValue" :cols="cols" :rows="rows" :required="required" :class="[css.baseCss]" @input="onInput"></textarea>
+        <textarea :value="modelValue" :cols="cols" :rows="rows" :required="required" :class="[css.baseCss]" @input="onInput" :disabled="disabled"></textarea>
     </div>
 </template>
 
 <script>
+import VBase from './base';
+
 export default {
+    extends: VBase,
     data() {
         return {
             tag: 'text-area',

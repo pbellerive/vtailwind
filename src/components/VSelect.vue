@@ -1,5 +1,5 @@
 <template>
-    <select :value="modelValue" @change="onChange" :class="[css.selectCss]">
+    <select :value="modelValue" @change="onChange" :class="[css.selectCss]" :disabled="disabled">
         <option v-if="placeholder" value="undefined"  :class="css.placeholderCss">
             <span>
                 {{placeholder}}
@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import Base from './base';
+import VBase from './base';
 
 export default {
-    extends: Base,
+    extends: VBase,
     data () {
         return {
             tag: 'select',

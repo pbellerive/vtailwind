@@ -1,5 +1,5 @@
 <template>
-    <span @click="checked = !checked" :class="wrapper">
+    <span @click="onClickToggle" :class="wrapper">
         <input type="hidden" />
         <span :class="buttonClass"></span>
         <span :class="checkClass"></span>
@@ -55,6 +55,11 @@ export default {
                 buttonChecked: 'inline-block absolute transform translate-x-full transition ease-in-out duration-200 h-5 w-5 rounded-full bg-white shadow flex items-center justify-center text-blue-500 text-xs'
             }
         };
+    },
+    methods: {
+        onClickToggle() {
+            this.checked = !this.checked && !this.disabled;
+        }
     },
     created () {
         this.checked = this.modelValue;
