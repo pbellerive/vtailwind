@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import Base from './base';
+import VBase from './base';
 
 export default {
-    extends: Base,
+    extends: VBase,
     setup () {
         return {};
     },

@@ -1,15 +1,15 @@
 <template>
     <div class="flex items-center" :class="wrapperLeftCss">
-        <input v-model="innerValue" type="radio" ref="radio" :value="value" :checked="checked" @change="onChange" :class="[css.baseCss]" disabled/>
+        <input v-model="innerValue" type="radio" ref="radio" :value="value" :checked="checked" @change="onChange" :class="[css.baseCss]" :disabled="disabled"/>
         <span :class="labelPositionCss">{{label}}</span>
     </div>
 </template>
 
 <script>
-import Base from './base.js';
+import VBase from './base.js';
 
 export default {
-    extends: Base,
+    extends: VBase,
     setup () {
         return {};
     },

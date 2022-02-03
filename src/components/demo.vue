@@ -48,6 +48,9 @@
                     <v-radio name="radio1" value="my-radioA" v-model="radioValue" label="Radio A"/>
                 </div>
                 <div>
+                    <v-radio name="radio1" value="my-radioAA" v-model="radioValue" label="Radio AA" :disabled="true"/>
+                </div>
+                <div>
                     <v-radio name="radio1" value="my-radioB" v-model="radioValue" label="Radio B"/>
                 </div>
             </div>
@@ -102,6 +105,10 @@
                     {{dateSelected}}
                 </div>
                 <v-date-picker v-model="dateSelected"/>
+                <div>
+                    Disabled
+                    <v-date-picker v-model="dateSelected" :disabled="true"/>
+                </div>
             </div>
         </div>
     </div>

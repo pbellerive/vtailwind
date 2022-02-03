@@ -1,6 +1,6 @@
 <template>
     <div :class="css.wrapper">
-        <div @click="showDateSelector = !showDateSelector" class="text-left w-full">
+        <div @click="onClickShowDateSelector" class="text-left w-full">
             <span :class="css.dateLabel">
                 {{currentSelectedDate}}
             </span>
@@ -163,6 +163,9 @@ export default {
 
             this.currentMonthSelector = this.getMonthList().find(el => el.value === currentMonth);
             this.currentYearSelector = this.getYearList().find(el => el.value === currentYear);
+        },
+        onClickShowDateSelector() {
+            this.showDateSelector = !this.showDateSelector && !this.disabled;
         },
         onDayClick(day) {
             this.showDateSelector = false;

@@ -15,7 +15,7 @@ export default {
     computed: {
         bgCss () {
             if (this.disabled) {
-                return 'bg-gray-200';
+                return this.css.disabledBgCss;
             }
 
             if (this.variant === 'base' || this.variant.trim() === '') {
@@ -31,6 +31,7 @@ export default {
             css: {
                 baseCss: 'px-2 py-1 border-2 rounded border-gray-300 hover:border-blue-300',
                 bgCss: 'bg-white',
+                disabledBgCss: 'bg-gray-200',
                 variant: {
                     danger: 'bg-red-500',
                     primary: 'bg-blue-500',
