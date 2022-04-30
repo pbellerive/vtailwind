@@ -6,8 +6,7 @@ const Base = defineComponent({
             tag: '',
             css: {
                 // baseCss: 'border-2 border-blue-200 rounded'
-            },
-            innerCss: {}
+            }
         };
     },
     props: {

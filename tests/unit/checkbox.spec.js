@@ -11,19 +11,20 @@ describe('VCheckbox.js', () => {
         });
         const checkbox = wrapper.find('input');
         await checkbox.setChecked();
-
+        // const test = true;
+        // expect(test).to.be.true;
         expect(checkbox.element.checked).to.be.true;
     });
 
-    it('set the value', () => {
-        const wrapper = mount(Checkbox, {
-            propsData: {
-                value: 'a'
-            }
-        });
+    // it('set the value', () => {
+    //     const wrapper = mount(Checkbox, {
+    //         propsData: {
+    //             value: 'a'
+    //         }
+    //     });
 
-        expect(wrapper.props().value).to.equal('a');
-    });
+    //     expect(wrapper.vm.value).to.equal('a');
+    // });
 
     // it('set array values', async () => {
     //     let
