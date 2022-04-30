@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapperCss">
+    <div class="wrapper">
         <textarea :value="modelValue" :cols="cols" :rows="rows" :required="required" :class="[css.baseCss]" @input="onInput" :disabled="disabled"></textarea>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
             tag: 'text-area',
             css: {
                 baseCss: 'border border-gray-300',
-                wrapperCss: ''
+                wrapper: ''
             }
         };
     },

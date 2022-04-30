@@ -1,5 +1,5 @@
 <template>
-    <div :class="[ {'hidden': !isVisible}, wrapper, innerCss.wrapper]">
+    <div :class="[ {'hidden': !isVisible}, css.wrapper, css.bgCss]">
         <div class="text-sm pb-2">
             <span>
                 {{title}}
@@ -19,7 +19,7 @@
                 </svg>
             </span>
         </div>
-        <div :class="innerCss.textCss" v-html="text">
+        <div :class="css.textCss" v-html="text">
         </div>
     </div>
 </template>
@@ -29,29 +29,25 @@ import VBase from './base';
 
 export default {
     extends: VBase,
-    computed: {
-        wrapper() {
-            if (this.innerCss.variant[this.variant]) {
-                return this.innerCss.variant[this.variant].wrapper;
-            }
-            return '';
-        }
-    },
     data() {
         return {
             tag: 'notification',
             css: {
                 wrapper: 'border-l-4 shadow-lg rounded-lg text-left text-black bg-white m-8 p-4 notification-box fixed top-0 right-0',
+                bgCss: '',
                 textCss: 'text-left text-black text-sm',
                 variant: {
                     danger: {
-                        wrapper: 'bg-red-100 text-red-700 border-red-500'
+                        bgCss: 'bg-red-100 border-red-500',
+                        textCss: 'text-left text-sm text-red-700 '
                     },
                     success: {
-                        wrapper: 'bg-green-50 border-green-500 text-green-700'
+                        bgCss: 'bg-green-50 border-green-500 ',
+                        textCss: 'text-left text-sm text-green-700 '
                     },
                     warning: {
-                        wrapper: 'bg-yellow-50 border-yellow-500 text-yellow-700'
+                        bgCss: 'bg-yellow-50 border-yellow-500',
+                        textCss: 'text-left text-sm text-yellow-700'
                     }
                 }
             },

@@ -5,14 +5,9 @@ import vsettings from './index.js';
 const app = createApp(App);
 
 const settings = {
-    // button: {
-    //     css: {
-    //         baseCss: 'bg-blue-200 border border-black'
-    //     }
-    // },
     // input: {
     //     css: {
-    //         baseCss: 'border border-black rounded'
+    //         bgCss: 'bg-gray-100 border border-black rounded'
     //     }
     // }
 };

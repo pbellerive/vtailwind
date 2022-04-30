@@ -12,7 +12,10 @@ const Base = defineComponent({
     },
     props: {
         modelValue: {},
-        variant: {},
+        variant: {
+            type: String,
+            default: 'base'
+        },
         disabled: {
             type: Boolean,
             default: false
@@ -21,8 +24,8 @@ const Base = defineComponent({
     emits: ['update:modelValue'],
     methods: {
         getCssVariant() {
-            if (this.variant && this.css[this.variant]) {
-                return this.css[this.variant];
+            if (this.variant && this.css.variant && this.css.variant[this.variant]) {
+                return this.css.variant[this.variant];
             }
 
             return this.css;
@@ -33,7 +36,14 @@ const Base = defineComponent({
             this.css = this.$vUiSettings[this.tag].css;
         }
 
-        this.innerCss = this.getCssVariant();
+        // // this.innerCss = this.getCssVariant();
+        debugger;
+        if (this.variant !== 'base' && this.variant.trim() !== '') {
+            const variant = this.getCssVariant();
+            for (const i in variant) {
+                this.css[i] = variant[i];
+            }
+        }
     }
 });
 

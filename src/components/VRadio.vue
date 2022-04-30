@@ -20,7 +20,10 @@ export default {
                 baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300',
                 labelRightCss: 'ml-2',
                 labelLeftCss: 'mr-2',
-                wrapperLabelLeft: 'flex-row-reverse'
+                wrapperLabelLeft: 'flex-row-reverse',
+                variant: {
+
+                }
             },
             innerValue: undefined
         };

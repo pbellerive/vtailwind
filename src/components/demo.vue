@@ -21,6 +21,7 @@
                     {{test}}
                 </div>
                 <div>
+                    <v-input type="text" variant="danger"/>
                     <v-input type="number"/>
                     <v-input type="text" :disabled="true"/>
                 </div>
@@ -34,7 +35,7 @@
                     <v-checkbox v-model="checkValue" value="a"/>{{checkValue}}
                 </div>
                 <div class="flex flex-row gap-3 justify-center">
-                    <v-checkbox v-model="checkArrayValue" value="a"/>
+                    <v-checkbox variant="danger" v-model="checkArrayValue" value="a"/>
                     <v-checkbox v-model="checkArrayValue" value="b"/> {{checkArrayValue}}
                 </div>
                 <div>
@@ -116,7 +117,7 @@
     <v-notification ref="notif" />
     <v-notification ref="notifDanger" variant="danger"/>
     <v-notification ref="notifWarning" variant="warning"/>
-    <v-loading :isLoading="false"/>
+    <v-loading :isLoading="false" variant="danger"/>
   </div>
 </template>
 

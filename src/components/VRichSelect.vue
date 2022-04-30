@@ -81,7 +81,10 @@ export default {
                 buttonWrapper: 'flex flex-row items-center px-2',
                 optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white',
                 optionLabel: 'px-2 hover:bg-blue-300',
-                selectedOptions: 'bg-blue-300'
+                selectedOptions: 'bg-blue-300',
+                variant: {
+
+                }
             },
             showOptions: false,
             query: ''

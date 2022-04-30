@@ -64,7 +64,10 @@ export default {
                 wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
                 previousButtonCss: 'absolute left-1',
                 nextButtonCss: 'absolute right-1',
-                selectedDateCss: 'bg-blue-300 border rounded'
+                selectedDateCss: 'bg-blue-300 border rounded',
+                variant: {
+
+                }
             },
             currentDaySelector: this.modelValue.getDate(),
             currentMonthSelector: {

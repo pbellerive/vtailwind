@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="css.wrapper">
         <button :class="[css.baseCss, bgCss]" :disabled="disabled">
             <slot></slot>
         </button>
@@ -18,33 +18,33 @@ export default {
                 return this.css.disabledBgCss;
             }
 
-            if (this.variant === 'base' || this.variant.trim() === '') {
-                return this.css.bgCss;
-            }
-
-            return this.css.variant[this.variant];
+            return this.css.bgCss;
         }
     },
     data () {
         return {
             tag: 'button',
             css: {
+                wrapper: '',
                 baseCss: 'px-2 py-1 border-2 rounded border-gray-300 hover:border-blue-300',
                 bgCss: 'bg-white',
                 disabledBgCss: 'bg-gray-200',
                 variant: {
-                    danger: 'bg-red-500',
-                    primary: 'bg-blue-500',
-                    warning: 'bg-yellow-500'
+                    danger: {
+                        // wrapper: '',
+                        // baseCss: 'px-2 py-1 border-2 rounded border-gray-300 hover:border-blue-300',
+                        bgCss: 'bg-red-500'
+                        // disabledBgCss: 'bg-gray-200',
+                    },
+                    primary: {
+                        bgCss: 'bg-blue-500'
+                    },
+                    warning: {
+                        bgCss: 'bg-yellow-500'
+                    }
                 }
             }
         };
-    },
-    props: {
-        variant: {
-            type: String,
-            default: 'base'
-        }
     }
 };
 </script>

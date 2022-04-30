@@ -7,11 +7,14 @@ const VCheckbox = defineComponent({
         return {
             tag: 'checkbox',
             css: {
-                baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300'
+                baseCss: 'focus:outline-none focus:ring-2 focus:ring-blue-300',
+                variant: {
+                    danger: {
+                        baseCss: 'focus:outline-none focus:ring-2 focus:ring-red-500'
+                    }
+                }
             }
         };
-    },
-    computed: {
     },
     methods: {
         isChecked () {
