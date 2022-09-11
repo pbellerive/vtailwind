@@ -6,6 +6,9 @@ const Base = defineComponent({
             tag: '',
             css: {
                 // baseCss: 'border-2 border-blue-200 rounded'
+                variant: {
+                    default: {}
+                }
             }
         };
     },
@@ -26,22 +29,29 @@ const Base = defineComponent({
             if (this.variant && this.css.variant && this.css.variant[this.variant]) {
                 return this.css.variant[this.variant];
             }
+            return this.css.variant.default || this.css;
+        },
+        loadVariant() {
+            if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
+                this.css = this.$vUiSettings[this.tag].css;
+            }
+    
+            // // this.innerCss = this.getCssVariant();
+            // if (this.variant !== 'base' && this.variant.trim() !== '') {
+                const variant = this.getCssVariant();
 
-            return this.css;
+                for (const i in variant) {
+                    this.css[i] = variant[i];
+                }
+            // }
         }
     },
     created () {
-        if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
-            this.css = this.$vUiSettings[this.tag].css;
-        }
-
-        // // this.innerCss = this.getCssVariant();
-        debugger;
-        if (this.variant !== 'base' && this.variant.trim() !== '') {
-            const variant = this.getCssVariant();
-            for (const i in variant) {
-                this.css[i] = variant[i];
-            }
+        this.loadVariant();
+    },
+    watch: {
+        variant() {
+            this.loadVariant();
         }
     }
 });

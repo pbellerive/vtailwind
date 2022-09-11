@@ -1,38 +1,52 @@
 <template>
-    <div :class="css.wrapper">
-        <div @click="onClickShowDateSelector" class="text-left w-full">
-            <span :class="css.dateLabel">
-                {{currentSelectedDate}}
-            </span>
+  <div :class="css.wrapper">
+    <div>
+      <div :class="css.wrapperCalendar">
+        <div :class="[css.wrapperSelector]">
+          <div @click="previousMonth" class="mr-1 cursor-pointer" :class="css.previousButtonCss">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left" class="inline w-2"
+              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+              <path fill="currentColor"
+                d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <v-rselect v-model="currentMonthSelector" :options="getMonthList()" valueOptionAttribute="object"
+              @changed="$emit('monthChanged')" :searchable="true" class="text-xs" />
+          </div>
+          <div class="inline">
+            <v-rselect v-model="currentYearSelector" :options="getYearList().reverse()" valueOptionAttribute="object" @changed="$emit('yearChanged')" :searchable="true" class="text-xs" />
+          </div>
+          <div @click="nextMonth" class="ml-1 cursor-pointer" :class="css.nextButtonCss">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="inline w-2"
+              role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+              <path fill="currentColor"
+                d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z">
+              </path>
+            </svg>
+          </div>
         </div>
-        <div v-show="showDateSelector" class="relative z-20">
-            <div :class="css.wrapperCalendar">
-                <div :class="[css.wrapperSelector]">
-                    <div @click="previousMonth" class="mr-1 cursor-pointer" :class="css.previousButtonCss">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path></svg>
-                    </div>
-                    <div>
-                        <v-rselect v-model="currentMonthSelector" :options="getMonthList()" :searchable="true" class="text-xs"/>
-                    </div>
-                    <div class="inline">
-                        <v-rselect v-model="currentYearSelector" :options="getYearList().reverse()" :searchable="true" class="text-xs" />
-                    </div>
-                    <div @click="nextMonth" class="ml-1 cursor-pointer" :class="css.nextButtonCss">
-                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
-                    </div>
+        <div class="w-full">
+          <!-- jour -->
+          <div v-for="week, index in buildMonths()" :key="index" :class="css.wrapperWeek">
+            <div v-for="day, index in week" :key="index + 'd'" :class="[getSelectedDateCss(day), css.wrapperDay]"
+              class="max-h-16">
+              <span @click="onDayClick(day)" class="absolute top-1 left-2">
+                {{day.getDate()}}
+              </span>
+              <div class="flex flex-col mt-2 gap-y-1 md:gap-y-2">
+                <div v-for="evt in getEventByDay(day)" :key="evt.id" @click="onEventClick(evt)"
+                  class="bg-blue-100 text-gray-500 w-full px-2 rounded-md">
+                  {{evt[eventTitleAttribute]}}
                 </div>
-                <div class="flex flex-col"> <!-- jour -->
-                    <div v-for="week, index in buildMonths()" :key="index" class="grid grid-cols-7 gap-1">
-                        <div v-for="day, index in week" :key="index + 'd'" :class="[getSelectedDateCss(day), 'cursor-pointer']">
-                        <span @click="onDayClick(day)">
-                            {{day.getDate()}}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -41,8 +55,11 @@ import VBase from './base';
 
 export default {
     extends: VBase,
+    setup() {
+      return {};
+    },
     components: {
-        'v-rselect': VSelect
+      'v-rselect': VSelect
     },
     computed: {
         currentSelectedDate() {
@@ -53,58 +70,60 @@ export default {
         currentDaySelector() {
             return this.localValue.getDate();
         },
-        currentMonthSelector() {
-            return {
-                text: this.getMonthList()[this.localValue.getMonth()].text,
-                value: this.localValue.getMonth()
-            }
-        },
-        currentYearSelector() {
-            return {
-                text: this.localValue.getFullYear().toString(),
-                value: this.localValue.getFullYear()
-            }
-        },
-
     },
     created () {
         this.getMonthList();
         this.getYearList();
+        if (this.localValue) {
+            this.currentMonthSelector = {
+                text: this.getMonthList()[this.localValue.getMonth()].text,
+                value: this.localValue.getMonth()
+            };
+
+            this.currentYearSelector = {
+                text: this.localValue.getFullYear().toString(),
+                value: this.localValue.getFullYear()
+            };
+        }
+
+        this.filterEventByDay();
     },
+    emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     data() {
         return {
             localValue: new Date(),
             tag: 'date-picker',
             css: {
-                dateLabel: 'text-left text-sm px-2 w-full',
-                wrapper: 'inline-block border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full w-full',
-                wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 w-56 bg-white',
-                wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
-                previousButtonCss: 'absolute left-1',
-                nextButtonCss: 'absolute right-1',
-                selectedDateCss: 'bg-blue-300 border rounded',
                 variant: {
                     default: {
-                        dateLabel: 'text-left text-sm px-2 w-full',
-                        wrapper: 'inline-block border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full w-full',
-                        wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 w-56 bg-white',
+                        dateLabel: 'text-left text-sm w-full',
+                        wrapper: 'border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300',
+                        wrapperCalendar: 'rounded border border-gray-300 bg-white',
                         wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
+                        wrapperWeek: 'grid grid-cols-7 border-b-2 first:border-t-2 border-gray-100 divide-x-2',
+                        wrapperDay: 'flex-grow cursor-pointer p-5 relative overflow-auto max-h-32',
                         previousButtonCss: 'absolute left-1',
                         nextButtonCss: 'absolute right-1',
                         selectedDateCss: 'bg-blue-300 border rounded',
+
                     }
                 }
             },
             // currentDaySelector: this.localValue.getDate(),
-            // currentMonthSelector: {
-            //     text: this.getMonthList()[this.localValue.getMonth()].text,
-            //     value: this.localValue.getMonth()
-            // },
+            currentMonthSelector: {
+                text: '',
+                value: undefined
+            },
             // currentYearSelector: {
             //     text: this.localValue.getFullYear().toString(),
             //     value: this.localValue.getFullYear()
             // },
+            currentYearSelector: {
+                text: '',
+                value: undefined
+            },
             currentDay: 1,
+            filteredEvents: {},
             months: [],
             monthList: undefined,
             showDateSelector: false,
@@ -115,12 +134,17 @@ export default {
         buildMonths() {
             const weeks = [];
             let currentDay = 1;
+            this.firstDayOfTheMonth = undefined;
+            this.lastDayOfTheMonth = undefined;
 
             for (let i = 0; i < 6; i++) {
                 const week = this.buildWeek(currentDay, this.currentMonthSelector.value, this.currentYearSelector.value);
                 weeks.push(week);
                 currentDay += 7;
             }
+
+            this.firstDayOfTheMonth = weeks[0][0];
+            this.lastDayOfTheMonth = weeks[5][6];
 
             return weeks;
         },
@@ -142,6 +166,7 @@ export default {
                 const day = new Date(year, month, startingDate + i);
                 weekDays.push(day);
             }
+
             return weekDays;
         },
         dateFormat(format, date) {
@@ -250,22 +275,49 @@ export default {
 
             return string;
         },
+        filterEventByDay() {
+            this.filteredEvents = { };
+            for(let i = 0; i < this.events.length; i++) {
+                const currentEvent = this.events[i];
+                let dateOfTheDay = undefined;
+
+                if (currentEvent[this.startDateAttribute] != null) {
+                    dateOfTheDay = currentEvent[this.startDateAttribute];
+                } else if (currentEvent[this.dueDateAttribute] != null) {
+                    dateOfTheDay = currentEvent[this.dueDateAttribute];
+                }
+
+                if (dateOfTheDay !=  null) {
+                  const splitDate = dateOfTheDay.split('-');
+                  const day = splitDate[1] + splitDate[2];
+                    if (!(day in this.filteredEvents)) {
+                        this.filteredEvents[day] = [];
+                    }
+
+                    this.filteredEvents[day].push(currentEvent);
+                }
+            }
+        },
+        getEventByDay(day) {
+          const dayString = '' + (day.getMonth() + 1).toString().padStart(2,'0') + day.getDate().toString().padStart(2,'0');
+          if (day && ( dayString in this.filteredEvents)) {
+              return this.filteredEvents[dayString];
+          }
+
+          return [];
+        },
         /**
          * Recoit une date dans le meme format qu'il a ete configuré
          * Si ce nest pas une chaine de caractere ou null ou renvoi la date du jour
          */
         parse(value) {
             // si cest un objet  Date
-
             // si cest un format ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)  *** format serveur par defaut
-
             // pas une string ou autre  ou null
             if (typeof value != 'string') {
                 this.localeValue = new Date();
                 return;
             }
-
-
 
             let mo = undefined;   // month (0-11)
             let m1 = undefined;			    // month (1-12)
@@ -428,34 +480,56 @@ export default {
 
             this.currentMonthSelector = this.getMonthList().find(el => el.value === currentMonth);
             this.currentYearSelector = this.getYearList().find(el => el.value === currentYear);
+        },
+        onEventClick(evt) {
+          this.$emit('clickEvent', evt);
         }
     },
     watch: {
         modelValue(newValue, oldValue) {
             this.parse(newValue);
+        },
+        events(newValue, oldValue) {
+          if (newValue.length != oldValue.length){
+            this.filterEventByDay();
+          }
         }
     },
     props: {
+        events: {
+            type: [Array, Object],
+            default: []
+        },
+        format: {
+            type: String,
+            default: 'Y-m-d'
+        },
         locale: {
             type: String,
             default: 'fr'
         },
         modelValue: {
             type: [Date, String],
-            default: null
+            default: new Date()
         },
         monthFormat: {
             type: String,
             default: 'long'
         },
-        format: {
+        startDateAttribute: {
             type: String,
-            default: 'Y-m-d'
+            default: 'start_date'
+        },
+        dueDateAttribute: {
+            type: String,
+            default: 'due_date'
+        },
+        eventTitleAttribute: {
+          type: String,
+          default: 'title'
         }
+
     },
-    setup () {
-        return {};
-    }
 };
 </script>
 

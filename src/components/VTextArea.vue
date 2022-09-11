@@ -13,8 +13,14 @@ export default {
         return {
             tag: 'text-area',
             css: {
-                baseCss: 'border border-gray-300',
-                wrapper: ''
+                baseCss: 'border border-gray-300 w-full',
+                wrapper: 'w-full',
+                variant: {
+                    default: {
+                        baseCss: 'border border-gray-300 w-full',
+                        wrapper: 'w-full',
+                    }
+                }
             }
         };
     },

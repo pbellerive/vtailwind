@@ -36,7 +36,7 @@ export default {
     setup () {
         return {};
     },
-    emits: ['update:currentPage', 'update2:currentPage'],
+    emits: ['update:currentPage'],
     computed: {
         pagesToShow () {
             const pages = [];
@@ -54,14 +54,23 @@ export default {
             css: {
                 wrapper: 'table text-center',
                 page: 'table-cell w-8 h-8 border border-r-gray-200 last:border-r-0  hover:border-blue-300 align-middle',
-                currentPage: 'bg-blue-200 border-blue-300',
+                currentPage: 'bg-blue-fb-200 border-blue-fb-300',
                 pageLabel: 'cursor-pointer',
                 goToFirstPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
                 goToLastPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
                 goToPreviousPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
                 goToNextPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
                 variant: {
-
+                    default: {
+                        wrapper: 'table text-center',
+                        page: 'table-cell w-8 h-8 border border-r-gray-200 last:border-r-0  hover:border-blue-300 align-middle',
+                        currentPage: 'bg-blue-fb-200 border-blue-fb-300',
+                        pageLabel: 'cursor-pointer',
+                        goToFirstPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
+                        goToLastPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
+                        goToPreviousPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle',
+                        goToNextPage: 'table-cell w-8 h-8 border border-r-gray-200 hover:border-blue-300  align-middle'
+                    }
                 }
             }
         };
@@ -88,7 +97,6 @@ export default {
             }
 
             this.$emit('update:currentPage', newCurrent);
-            this.$emit('update2:currentPage', newCurrent);
         }
     },
     props: {

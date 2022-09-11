@@ -9,6 +9,15 @@ import VBase from './base';
 
 export default {
     extends: VBase,
+    setup() {
+        return {
+        };
+    },
+    computed: {
+        // isLoading() {
+        //     return this.store.isLoading;
+        // }
+    },
     data() {
         return {
             tag: 'loading',
@@ -16,6 +25,10 @@ export default {
                 wrapper: 'fixed top-0 left-0 flex z-50 w-screen h-screen text-center bg-gray-50 opacity-50 items-center justify-center',
                 textIcon: 'text-green-500 w-16 animate-spin',
                 variant: {
+                    default: {
+                        wrapper: 'fixed top-0 left-0 flex z-50 w-screen h-screen text-center bg-gray-50 opacity-50 items-center justify-center',
+                        textIcon: 'text-green-500 w-16 animate-spin'
+                    },
                     danger: {
                         textIcon: 'text-red-500 w-16 animate-spin'
                     }
