@@ -10,7 +10,7 @@
                 &#60;
             </span>
         </li>
-        <li @click="goToPage()" v-for="page in pagesToShow" :key="page" :class="[css.page, currentPageCss(page), css.pageLabel]">
+        <li @click="goToPage(page)" v-for="page in pagesToShow" :key="page" :class="[css.page, currentPageCss(page), css.pageLabel]">
             <span>
                 {{page}}
             </span>
