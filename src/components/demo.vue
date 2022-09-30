@@ -5,12 +5,12 @@
         <section>
             <h1>BUTTONS</h1>
             <div class="flex flex-row justify-center gap-2">
+              <v-button variant="primary">Button</v-button>
                 <v-button @click="$refs.notif.show({ text:'Test content', title: 'Test title'})">show notification</v-button>
                 <v-button @click="$refs.notifDanger.show({ text:'Test content', title: 'Test title'})" variant="danger">Show danger</v-button>
-                <v-button variant="primary">Button</v-button>
                 <v-button @click="$refs.notifWarning.show({ text:'Test content', title: 'Test title'})" variant="warning">Show warning</v-button>
-                <v-button variant="notvariant">Button</v-button>
-                <v-button variant="primary" :disabled="true">Button</v-button>
+                <v-button variant="notvariant">No variant</v-button>
+                <v-button variant="primary" :disabled="true">Primary disabled</v-button>
             </div>
         </section>
         <section>
@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="grid justify-center">
-            <v-pagination v-model:currentPage="currentPage" @update:currentPage="onCurrentPageChange"  :totalItems="50" :perPage="10" class="self-center"/>
+            <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange"  :totalItems="50" :perPage="10" class="self-center"/>
             Current Page : {{currentPage}}
         </div>
         <div class="grid grid-flow-col">
