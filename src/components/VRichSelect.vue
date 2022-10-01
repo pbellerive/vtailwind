@@ -148,6 +148,7 @@ export default {
             return '';
         },
         onClick(option) {
+          debugger
             this.query = '';
             this.closeOptions();
             const valueToEmit = this.valueOptionAttribute === 'object' ? option : option[this.valueOptionAttribute];

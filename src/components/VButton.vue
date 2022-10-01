@@ -20,7 +20,6 @@ export default {
     extends: Base,
     computed: {
         bgCss () {
-          debugger
             if (this.disabled) {
                 return this.css.disabledBgCss;
             }

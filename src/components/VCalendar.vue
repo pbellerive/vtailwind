@@ -88,11 +88,10 @@ export default {
 
         this.filterEventByDay();
     },
-    emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     data() {
         return {
             localValue: new Date(),
-            tag: 'date-picker',
+            tag: 'calendar',
             css: {
                 variant: {
                     default: {
@@ -130,8 +129,10 @@ export default {
             yearList: undefined,
         };
     },
+    emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     methods: {
         buildMonths() {
+          debugger
             const weeks = [];
             let currentDay = 1;
             this.firstDayOfTheMonth = undefined;

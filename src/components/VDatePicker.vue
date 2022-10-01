@@ -2,7 +2,7 @@
     <div :class="css.wrapper">
         <div @click="onClickShowDateSelector" class="text-left w-full">
             <span :class="css.dateLabel">
-                {{currentSelectedDate}}
+              {{currentSelectedDate}}
             </span>
         </div>
         <div v-show="showDateSelector" class="relative z-20">
@@ -12,10 +12,10 @@
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path></svg>
                     </div>
                     <div>
-                        <v-rselect v-model="currentMonthSelector" :options="getMonthList()" :searchable="true" class="text-xs"/>
+                        <v-rselect v-model="currentMonthSelector" :options="getMonthList()" :searchable="true" class="text-xs" valueOptionAttribute="object"/>
                     </div>
                     <div class="inline">
-                        <v-rselect v-model="currentYearSelector" :options="getYearList().reverse()" :searchable="true" class="text-xs" />
+                        <v-rselect v-model="currentYearSelector" :options="getYearList().reverse()" :searchable="true" class="text-xs" valueOptionAttribute="object"/>
                     </div>
                     <div @click="nextMonth" class="ml-1 cursor-pointer" :class="css.nextButtonCss">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
@@ -53,23 +53,35 @@ export default {
         currentDaySelector() {
             return this.localValue.getDate();
         },
-        currentMonthSelector() {
-            return {
-                text: this.getMonthList()[this.localValue.getMonth()].text,
-                value: this.localValue.getMonth()
-            }
-        },
-        currentYearSelector() {
-            return {
-                text: this.localValue.getFullYear().toString(),
-                value: this.localValue.getFullYear()
-            }
-        },
+        // currentMonthSelector() {
+        //     return {
+        //         text: this.getMonthList()[this.localValue.getMonth()].text,
+        //         value: this.localValue.getMonth()
+        //     }
+        // },
+        // currentYearSelector() {
+        //     return {
+        //         text: this.localValue.getFullYear().toString(),
+        //         value: this.localValue.getFullYear()
+        //     }
+        // },
 
     },
     created () {
         this.getMonthList();
         this.getYearList();
+
+        if (this.localValue) {
+            this.currentMonthSelector = {
+                text: this.getMonthList()[this.localValue.getMonth()].text,
+                value: this.localValue.getMonth()
+            };
+
+            this.currentYearSelector = {
+                text: this.localValue.getFullYear().toString(),
+                value: this.localValue.getFullYear()
+            };
+        }
     },
     data() {
         return {
@@ -96,10 +108,14 @@ export default {
                 }
             },
             // currentDaySelector: this.localValue.getDate(),
-            // currentMonthSelector: {
-            //     text: this.getMonthList()[this.localValue.getMonth()].text,
-            //     value: this.localValue.getMonth()
-            // },
+             currentMonthSelector: {
+                text: '',
+                value: undefined
+            },
+            currentYearSelector: {
+                text: '',
+                value: undefined
+            },
             // currentYearSelector: {
             //     text: this.localValue.getFullYear().toString(),
             //     value: this.localValue.getFullYear()
@@ -111,8 +127,10 @@ export default {
             yearList: undefined,
         };
     },
+    emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     methods: {
         buildMonths() {
+          debugger
             const weeks = [];
             let currentDay = 1;
 
@@ -125,6 +143,7 @@ export default {
             return weeks;
         },
         buildWeek(startingDate, month, year) {
+          debugger
             const currentDay = new Date(year, month, startingDate);
             const dayOfTheWeek = currentDay.getDay();
             const weekDays = [];
