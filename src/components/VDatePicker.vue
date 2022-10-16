@@ -130,7 +130,6 @@ export default {
     emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     methods: {
         buildMonths() {
-          debugger
             const weeks = [];
             let currentDay = 1;
 
@@ -143,7 +142,6 @@ export default {
             return weeks;
         },
         buildWeek(startingDate, month, year) {
-          debugger
             const currentDay = new Date(year, month, startingDate);
             const dayOfTheWeek = currentDay.getDay();
             const weekDays = [];

@@ -33,7 +33,10 @@ const Base = defineComponent({
         },
         loadVariant() {
             if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
-                this.css = this.$vUiSettings[this.tag].css;
+                this.css.variant = {
+                  ...this.css.variant,
+                  ...this.$vUiSettings[this.tag].css.variant
+                };
             }
 
             // // this.innerCss = this.getCssVariant();

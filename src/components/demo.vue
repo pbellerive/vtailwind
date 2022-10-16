@@ -123,7 +123,7 @@
 
 <script>
 import VButton from './VButton.vue';
-import VInput from './VInput.js';
+import VInput from './VInput';
 import VToggle from './VToggle.vue';
 import VPagination from './VPagination.vue';
 import VSelect from './VSelect.vue';

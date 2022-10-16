@@ -132,7 +132,6 @@ export default {
     emits: ['monthChanged', 'yearChanged', 'clickEvent'],
     methods: {
         buildMonths() {
-          debugger
             const weeks = [];
             let currentDay = 1;
             this.firstDayOfTheMonth = undefined;
