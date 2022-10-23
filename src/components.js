@@ -23,7 +23,6 @@ export {
   VPagination,
   VRadio,
   VSelect,
-  VSelect,
   VTextArea,
   VToggle,
   VDatePicker
