@@ -13,16 +13,10 @@
 
 <script>
 import Base from './base';
-import  {useStore} from '../../store/main';
 
 export default {
     extends: Base,
     setup() {
-        const store = useStore();
-
-        return {
-            store
-        }
     },
     computed: {
         bgCss () {
@@ -54,14 +48,14 @@ export default {
                     info: {
                         bgCss: 'bg-gray-200 text-gray-900'
                     },
-                   
+
                     success: {
                         bgCss: 'bg-green-fg-500 text-white'
                     },
                     warning: {
                         bgCss: 'bg-yellow-fy-300 text-gray-900'
                     },
-                    
+
                 }
             }
         };
@@ -76,15 +70,6 @@ export default {
             default: false
         },
     },
-    watch: {
-        show(newValue, oldValue) {
-            if (newValue === true) {
-                setTimeout(() => {
-                    this.store.hideMessageBox();
-                }, 3000);
-            }
-        }
-    }
 };
 </script>
 
