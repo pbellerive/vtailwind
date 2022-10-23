@@ -60,6 +60,7 @@ export default {
   },
   data() {
     return {
+      tag: 'pagination',
       css: {
         wrapper: 'table text-center',
         page: 'table-cell w-8 h-8 border border-r-gray-200 last:border-r-0  hover:border-blue-300 align-middle',
