@@ -41,7 +41,7 @@ export default {
                         baseCss: 'bg-white border border-gray-200 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-500',
                         placeholderCss: 'text-gray-300',
                         optionCss: 'text-gray-900 bg-white',
-                        selectedCss: "text-blue-fb-300",
+                        selectedCss: "text-blue-300",
                     },
                     success: {
                         baseCss: 'bg-green-fg-50 border border-green-fg-500 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-green-fg-500 w-full max-w-full font-robotoBold font-bold text-green-fg-500',
