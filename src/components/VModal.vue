@@ -65,7 +65,7 @@ export default {
     },
     props: {
       message: {
-        type: Number,
+        type: String,
         default: ''
       },
       showMessage: {
