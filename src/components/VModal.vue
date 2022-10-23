@@ -19,7 +19,7 @@
 <script>
 import Base from './base';
 import VButton from './VButton';
-import VMessage from '../ui/VMessage';
+import VMessage from './VMessage';
 
 export default {
     extends: Base,
