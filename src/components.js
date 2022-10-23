@@ -18,12 +18,19 @@ import VToggle from './components/VToggle';
 
 export {
   VButton,
+  VCalendar,
   VCheckbox,
+  VContextMenu,
+  VDatePicker,
   VInput,
+  VLoading,
+  VModal,
+  VNotification,
   VPagination,
   VRadio,
+  VRichSelect,
   VSelect,
+  VStar,
   VTextArea,
   VToggle,
-  VDatePicker
 };
