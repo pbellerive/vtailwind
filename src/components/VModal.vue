@@ -23,10 +23,10 @@
             <slot name="footer">
               <div :class="css.footer" class="align-bottom">
                 <div class="w-full">
-                  <v-button variant="primaryFlat">{{yesLabel}}</v-button>
+                  <v-button @click="onOkClickButton" variant="primaryFlat">{{yesLabel}}</v-button>
                 </div>
                 <div>
-                  <v-button variant="dangerFlat">{{noLabel}}</v-button>
+                  <v-button @click="onCancelClickButton" variant="dangerFlat">{{noLabel}}</v-button>
                 </div>
               </div>
             </slot>
@@ -82,6 +82,14 @@ export default {
         },
         close() {
             this.show = false;
+        },
+        onOkClickButton() {
+          this.close();
+          this.$emit('click-Ok-button');
+        },
+        onCancelClickButton() {
+          this.close();
+          this.$emit('click-cancel-button');
         }
     },
     props: {
