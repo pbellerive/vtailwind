@@ -31,13 +31,13 @@ export default {
         return {
             tag: 'button',
             css: {
-                wrapper: 'inline',
+                wrapper: 'inline-block',
                 baseCss: 'p-2 md:p-3 border-2 rounded rounded-sm',
                 bgCss: 'bg-white',
                 disabledBgCss: 'bg-gray-200',
                 variant: {
                     default: {
-                        wrapper: 'inline',
+                        wrapper: 'inline-block',
                         baseCss: 'p-2 md:p-3 border-2 rounded rounded-sm text-black',
                         bgCss: 'bg-white',
                         disabledBgCss: 'bg-gray-200',
@@ -45,10 +45,20 @@ export default {
                     danger: {
                         bgCss: 'bg-red-600 hover:bg-red-700 text-black'
                     },
+                    dangerFlat: {
+                      wrapper: 'inline ',
+                      baseCss: 'w-full p-2 md:p-3 rounded-none text-black',
+                      bgCss: 'bg-red-600 hover:bg-red-700 text-black',
+                    },
                     info: {
                         bgCss: 'bg-gray-200 hover:bg-gray-300 text-gray-900'
                     },
                     primary: {
+                        bgCss: 'bg-blue-600 hover:bg-blue-700 text-black'
+                    },
+                    primaryFlat: {
+                      wrapper: 'inline w-full',
+                        baseCss: 'w-full p-2 md:p-3 rounded-none text-black',
                         bgCss: 'bg-blue-600 hover:bg-blue-700 text-black'
                     },
                     secondary: {

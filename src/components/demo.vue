@@ -11,6 +11,7 @@
                 <v-button @click="$refs.notifWarning.show({ text:'Test content', title: 'Test title'})" variant="warning">Show warning</v-button>
                 <v-button variant="notvariant">No variant</v-button>
                 <v-button variant="primary" :disabled="true">Primary disabled</v-button>
+                <v-button @click="$refs['modal'].open()">show modal</v-button>
             </div>
         </section>
         <section>
@@ -118,22 +119,26 @@
     <v-notification ref="notifDanger" variant="danger"/>
     <v-notification ref="notifWarning" variant="warning"/>
     <v-loading :isLoading="false" variant="danger"/>
+    <v-modal :message="'test test test '" ref="modal" variant="default">
+
+    </v-modal>
   </div>
 </template>
 
 <script>
-import VButton from './VButton.vue';
+import VButton from './VButton';
 import VInput from './VInput';
-import VToggle from './VToggle.vue';
-import VPagination from './VPagination.vue';
-import VSelect from './VSelect.vue';
-import VCheckbox from './VCheckbox.js';
+import VToggle from './VToggle';
+import VPagination from './VPagination';
+import VSelect from './VSelect';
+import VCheckbox from './VCheckbox';
 import VRadio from './VRadio';
 import VTextArea from './VTextArea';
 import VRichSelect from './VRichSelect';
 import VDatePicker from './VDatePicker';
 import VNotification from './VNotification';
 import VLoading from './VLoading';
+import VModal from './VModal';
 
 export default {
     name: 'HelloWorld',
@@ -183,7 +188,8 @@ export default {
         'v-rselect': VRichSelect,
         'v-date-picker': VDatePicker,
         'v-notification': VNotification,
-        'v-loading': VLoading
+        'v-loading': VLoading,
+        'v-modal': VModal
     },
     methods: {
         getOptions(query) {
