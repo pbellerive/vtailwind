@@ -81,6 +81,10 @@ export default {
     methods: {
         open() {
             this.show = true;
+            return new Promise((resolve, reject) => {
+              this.resolve = resolve;
+              this.reject = reject;
+            });
         },
         close() {
             this.show = false;
@@ -88,10 +92,12 @@ export default {
         onOkClickButton() {
           this.close();
           this.$emit('click-Ok-button');
+          this.resolve({isOk: true, isCancel: false})
         },
         onCancelClickButton() {
           this.close();
           this.$emit('click-cancel-button');
+          this.resolve({isOk:false, isCancel: true});
         }
     },
     props: {

@@ -11,7 +11,7 @@
                 <v-button @click="$refs.notifWarning.show({ text:'Test content', title: 'Test title'})" variant="warning">Show warning</v-button>
                 <v-button variant="notvariant">No variant</v-button>
                 <v-button variant="primary" :disabled="true">Primary disabled</v-button>
-                <v-button @click="$refs['modal'].open()">show modal</v-button>
+                <v-button @click="showModal">show modal</v-button>
             </div>
         </section>
         <section>
@@ -192,6 +192,16 @@ export default {
         'v-modal': VModal
     },
     methods: {
+      showModal() {
+        this.$refs.modal.open().then(response => {
+          console.log(response);
+        })
+        .catch(response => {
+          console.log(response);
+        }).finally(response => {
+          console.log('finally');
+        })
+      },
         getOptions(query) {
             return [
                 {
