@@ -16,7 +16,7 @@ const Base = defineComponent({
         modelValue: {},
         variant: {
             type: String,
-            default: 'base'
+            default: 'default'
         },
         disabled: {
             type: Boolean,

@@ -58,8 +58,8 @@ export default {
                     },
                     primaryFlat: {
                       wrapper: 'inline w-full',
-                        baseCss: 'w-full p-2 md:p-3 rounded-none text-black',
-                        bgCss: 'bg-blue-600 hover:bg-blue-700 text-black'
+                      baseCss: 'w-full p-2 md:p-3 rounded-none text-black',
+                      bgCss: 'bg-blue-600 hover:bg-blue-700 text-black'
                     },
                     secondary: {
                         bgCss: 'bg-blue-100 hover:bg-blue-200 text-gray-900'
