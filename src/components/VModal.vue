@@ -11,7 +11,9 @@
               </div>
               <div>
                 <slot name="message">
-                  {{message}}
+                  <span :class="css.message">
+                    {{message}}
+                  </span>
                 </slot>
               </div>
             </div>
@@ -60,12 +62,13 @@ export default {
                 disabledBgCss: '',
                 variant: {
                     default: {
-                        wrapper: 'fixed flex justify-center w-full min-h-full bg-gray-300 z-50 top-0 left-0 bg-opacity-50',
-                        innerModal: 'absolute top-1/2 transform -translate-y-1/2 mt-5 self-start rounded',
-                        closeButtonCss: 'flex-1 flex absolute -top-2 -right-2',
                         bgCss: 'bg-white',
-                        title: 'font-bold mx-5 my-8 text-left word-wrap',
-                        footer: 'mt-3 md:mt-5 grid grid-cols-2'
+                        closeButtonCss: 'flex-1 flex absolute -top-2 -right-2',
+                        footer: 'mt-3 md:mt-5 grid grid-cols-2',
+                        innerModal: 'absolute top-1/2 transform -translate-y-1/2 mt-5 self-start rounded',
+                        message:'text-left text-black',
+                        title: 'font-bold mx-5 my-8 text-left word-wrap text-black',
+                        wrapper: 'fixed flex justify-center w-full min-h-full bg-gray-300 z-50 top-0 left-0 bg-opacity-50',
                     },
                     danger: {
                         bgCss: 'bg-red-600 hover:bg-red-700 text-white'
