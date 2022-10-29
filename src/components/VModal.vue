@@ -1,12 +1,12 @@
 <template>
     <div v-if="show" :class="css.wrapper" >
-        <div :class="[css.innerModal, css.bgCss]" class="-translate-y-1/2">
+        <div :class="[css.innerModal, css.bgCss]">
             <div>
-              <div>
+              <div class="max-w-xs md:max-w-lg">
                 <slot name="title">
-                  <h1 :class="css.title">
+                  <p :class="css.title">
                     {{title}}
-                  </h1>
+                  </p>
                 </slot>
               </div>
               <div>
@@ -21,12 +21,12 @@
               </v-button>
             </div>
             <slot name="footer">
-              <div :class="css.footer" class="align-bottom">
-                <div class="w-full">
-                  <v-button @click="onOkClickButton" variant="primaryFlat">{{yesLabel}}</v-button>
+              <div :class="css.footer" >
+                <div>
+                  <v-button @click="onOkClickButton" :variant="yesButtonVariant">{{yesLabel}}</v-button>
                 </div>
                 <div>
-                  <v-button @click="onCancelClickButton" variant="dangerFlat">{{noLabel}}</v-button>
+                  <v-button @click="onCancelClickButton" :variant="noButtonVariant">{{noLabel}}</v-button>
                 </div>
               </div>
             </slot>
@@ -61,11 +61,10 @@ export default {
                 variant: {
                     default: {
                         wrapper: 'fixed flex justify-center w-full min-h-full bg-gray-300 z-50 top-0 left-0 bg-opacity-50',
-                        innerModal: 'absolute top-1/2 transform -translate-y-1/2 mt-5 self-start',
+                        innerModal: 'absolute top-1/2 transform -translate-y-1/2 mt-5 self-start rounded',
                         closeButtonCss: 'flex-1 flex absolute -top-2 -right-2',
                         bgCss: 'bg-white',
-                        disabledBgCss: '',
-                        title: 'font-bold my-5',
+                        title: 'font-bold mx-5 my-8 text-left word-wrap',
                         footer: 'mt-3 md:mt-5 grid grid-cols-2'
                     },
                     danger: {
@@ -99,7 +98,7 @@ export default {
       },
       title: {
         type: String,
-        default: 'my title'
+        default: 'my titlemy titlemy titlemy titlemy titlemy titlemy title'
       },
       messageVariant: {
         type: String
@@ -111,6 +110,14 @@ export default {
       noLabel: {
         type: String,
         default: 'CANCEL'
+      },
+      yesButtonVariant: {
+        type:String,
+        default: 'primaryFlat'
+      },
+      noButtonVariant: {
+        type:String,
+        default: 'dangerFlat'
       }
     },
 
