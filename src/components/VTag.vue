@@ -1,64 +1,62 @@
 <template>
-    <div :class="css.wrapper">
-        <div v-if="iconClass">
-            <font-awesome-icon :icon="iconClass" />
-        </div>
-        <div>
-            <span class="text-xs">
-                {{label}}
-            </span>
-        </div>
+  <div :class="css.wrapper">
+    <div v-if="iconClass">
+      <font-awesome-icon :icon="iconClass" />
     </div>
-</template >
+    <div>
+      <span class="text-xs">
+        {{ label }}
+      </span>
+    </div>
+  </div>
+</template>
 
 <script>
 import VBase from './base';
 
 export default {
-    extends: VBase,
-    data() {
-        return {
-            isFocus: false,
-            tag: 'text-area',
-            css: {
-                baseCss: '',
-                wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
-                variant: {
-                    default: {
-                        baseCss: '',
-                        wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
-                    }
-                }
-            }
-        };
-    },
-    computed: {
-        withPrepend() {
-            return typeof(this.prependText) != 'undefined' && this.prependText.trim().length > 0;
-        }
-    },
-    props: {
-        iconClass: {
-            type: String,
-            default: undefined
+  extends: VBase,
+  data() {
+    return {
+      isFocus: false,
+      tag: 'text-area',
+      css: {
+        baseCss: '',
+        wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
+        variant: {
+          default: {
+            baseCss: '',
+            wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
+          },
         },
-        label: {
-            type: String,
-            default: undefined
-        },
+      },
+    };
+  },
+  computed: {
+    withPrepend() {
+      return typeof this.prependText != 'undefined' && this.prependText.trim().length > 0;
     },
-    $emits: ['update:modelValue'],
-    methods: {
-        onInput(evt) {
-            this.$emit('update:modelValue', evt.target.value);
-        }
+  },
+  props: {
+    iconClass: {
+      type: String,
+      default: undefined,
     },
-    setup () {
-        return {};
-    }
+    label: {
+      type: String,
+      default: undefined,
+    },
+  },
+  $emits: ['update:modelValue'],
+  methods: {
+    onInput(evt) {
+      this.$emit('update:modelValue', evt.target.value);
+    },
+  },
+  setup() {
+    return {};
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
