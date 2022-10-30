@@ -77,7 +77,7 @@ export default {
       default: undefined,
     },
     modelValue: {
-      type: String,
+      type: [String, Number],
     },
     prependText: {
       type: String,
