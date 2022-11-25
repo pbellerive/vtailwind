@@ -81,6 +81,7 @@
           </div>
         </div>
         <div class="mb-10">
+          With method
           <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" />
           <div>
             {{ rselectValue2 }}
@@ -164,7 +165,7 @@ export default {
       radioValue1: undefined,
       area: 'Allo',
       rselectValue: {},
-      rselectValue2: {},
+      rselectValue2: {value:''},
       dateSelected: new Date(2021, 11, 2),
     };
   },

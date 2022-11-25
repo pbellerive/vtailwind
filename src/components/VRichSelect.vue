@@ -53,7 +53,7 @@ import VBase from './base.js';
 export default {
   extends: VBase,
   mounted() {
-    this.filterOptions();
+    // this.filterOptions();
   },
   components: {
     'v-button': VButton,
@@ -170,15 +170,17 @@ export default {
                 to: 15
                 total: 21
              */
+            debugger
       if (this.fetchMethod && this.isAnyPageLeft) {
         let { data, meta } = await this.getFilterPromise();
         this.filteredOptions = this.filteredOptions.concat(data);
         this.meta = meta;
 
         return;
-      }
+      } else return this.options
 
-      this.filteredOptions = this.queryFilter();
+      // this.filteredOptions = this.queryFilter();
+      // return this.queryFilter();
     },
     queryFilter() {
       if (this.query.trim() === '') {
