@@ -199,7 +199,8 @@ export default {
         });
     },
     getOptions(query) {
-      return [
+      return {
+        data: [
         {
           text: 'opt 1',
           value: 1,
@@ -216,7 +217,11 @@ export default {
           text: 'opt 4',
           value: 4,
         },
-      ];
+      ],
+      meta: {
+        current_page: 1
+      }
+    };
     },
     onCurrentPageChange(evt) {
       console.log('Listen update:currentPage');

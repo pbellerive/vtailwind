@@ -23,7 +23,7 @@
       </slot>
       <slot name="options-slot">
         <ul class="overflow-y-scroll max-h-20">
-          <li @click="onClick(undefined)">
+          <li @click="onClick()">
             <span :class="css.optionLabel">
               {{ placeholder }}
             </span>
@@ -35,7 +35,7 @@
           </li>
           <li v-if="showMore && isAnyPageLeft">
             <div class="flex justify-center">
-              <v-button variant="link" @click="filterOptions" class="">{{ $t('showMore') }}</v-button>
+              <v-button variant="link" @click="filterOptions()" class="">{{ $t('showMore') }}</v-button>
             </div>
           </li>
         </ul>
@@ -154,33 +154,22 @@ export default {
       this.query = '';
     },
     onClickShowOptions() {
+      this.filterOptions();
       this.showOptions = !this.showOptions && !this.disabled;
     },
     openOptions() {
       this.showOptions = true;
     },
-    async filterOptions() {
-      /**
-             * current_page: 1
-                from: 1
-                last_page: 2
-                links: (4) [{…}, {…}, {…}, {…}]
-                path: "http://px.test/api/projects"
-                per_page: 15
-                to: 15
-                total: 21
-             */
-            debugger
-      if (this.fetchMethod && this.isAnyPageLeft) {
-        let { data, meta } = await this.getFilterPromise();
-        this.filteredOptions = this.filteredOptions.concat(data);
-        this.meta = meta;
+    filterOptions() {
+      if (this.fetchMethod) {
 
+        this.meta.current_page += 1;
+        let result = this.fetchMethod(this.query, this.meta);
+        this.filteredOptions = this.filteredOptions.concat(result.data);
+        this.meta = result.meta;
         return;
-      } else return this.options
-
-      // this.filteredOptions = this.queryFilter();
-      // return this.queryFilter();
+      }
+      this.filteredOptions = this.queryFilter();
     },
     queryFilter() {
       if (this.query.trim() === '') {
@@ -198,10 +187,6 @@ export default {
 
       this.filteredOptions = [];
       this.filterOptions();
-    },
-    getFilterPromise() {
-      const page = this.meta.current_page + 1;
-      return Promise.resolve(this.fetchMethod(page, this.query));
     },
   },
   props: {
