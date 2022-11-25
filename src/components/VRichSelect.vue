@@ -164,9 +164,10 @@ export default {
       if (this.fetchMethod) {
 
         this.meta.current_page += 1;
-        let result = this.fetchMethod(this.query, this.meta);
-        this.filteredOptions = this.filteredOptions.concat(result.data);
-        this.meta = result.meta;
+        let result = this.fetchMethod(this.query, this.meta).then(response => {
+          this.filteredOptions = this.filteredOptions.concat(result.data);
+          this.meta = result.meta;
+        });
         return;
       }
       this.filteredOptions = this.queryFilter();
