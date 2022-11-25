@@ -163,10 +163,11 @@ export default {
     filterOptions() {
       if (this.fetchMethod) {
 
-        this.meta.current_page += 1;
-        let result = this.fetchMethod(this.query, this.meta).then(response => {
-          this.filteredOptions = this.filteredOptions.concat(result.data);
-          this.meta = result.meta;
+        // this.meta.current_page += 1;
+        debugger
+       this.fetchMethod(this.query).then(response => {
+          this.filteredOptions = this.filteredOptions.concat(response.data);
+          // this.meta = result.meta;
         });
         return;
       }

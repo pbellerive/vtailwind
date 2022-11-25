@@ -199,33 +199,35 @@ export default {
         });
     },
     getOptions(query) {
-      return {
-        data: [
-        {
-          text: 'opt 1',
-          value: 1,
-        },
-        {
-          text: 'opt 2',
-          value: 2,
-        },
-        {
-          text: 'opt 3',
-          value: 3,
-        },
-        {
-          text: 'opt 4',
-          value: 4,
-        },
-      ],
-      meta: {
-        current_page: 1
-      }
-    };
+      return new Promise((resolve) => {
+          resolve({
+            data: [
+              {
+                text: 'opt 1',
+                value: 1,
+              },
+              {
+                text: 'opt 2',
+                value: 2,
+              },
+              {
+                text: 'opt 3',
+                value: 3,
+              },
+              {
+                text: 'opt 4',
+                value: 4,
+              }
+            ],
+            meta: {
+              current_page: 1
+            }
+        })
+      });
     },
     onCurrentPageChange(evt) {
       console.log('Listen update:currentPage');
-    },
+    }
   },
   props: {
     msg: String,
