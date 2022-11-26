@@ -13,6 +13,9 @@ export default {
   setup() {
     return {};
   },
+  created() {
+    this.innerValue = this.modelValue;
+  },
   data() {
     return {
       tag: 'radio',
@@ -81,5 +84,3 @@ export default {
   emits: ['update:modelValue'],
 };
 </script>
-
-<style lang="scss" scoped></style>
