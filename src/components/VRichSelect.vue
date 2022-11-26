@@ -73,7 +73,7 @@ export default {
         modelType = 'array';
       }
 
-      if (modelType === 'object' && this.modelValue[this.textOptionAttribute]) {
+      if (modelType === 'object' && this.modelValue && this.modelValue[this.textOptionAttribute]) {
         return this.modelValue[this.textOptionAttribute];
       }
 
