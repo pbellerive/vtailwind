@@ -173,7 +173,7 @@ export default {
         this.fetchMethod(this.query, this.meta).then(response => {
           // this.filteredOptions = this.filteredOptions.concat(response.data);
           this.filteredOptions = response.data;
-          this.meta = result.meta;
+          this.meta = response.meta;
         });
         return;
       }
