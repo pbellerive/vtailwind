@@ -13,7 +13,7 @@ export default {
   setup() {
     return {};
   },
-  created() {
+  mounted() {
     this.innerValue = this.modelValue;
   },
   data() {
