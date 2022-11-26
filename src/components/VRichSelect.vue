@@ -18,7 +18,7 @@
     <div v-if="showOptions" :class="css.optionsWrapper">
       <slot name="options-search">
         <div v-if="searchable" class="px-2 mt-2">
-          <v-input v-model="query" />
+          <v-input v-model="query" :variant="searchInputVariant"/>
         </div>
       </slot>
       <slot name="options-slot">
@@ -52,8 +52,12 @@ import VBase from './base.js';
 
 export default {
   extends: VBase,
-  mounted() {
-    // this.filterOptions();
+  setup(props) {
+    const innerOptions = reactive(props.options);
+
+    return {
+      innerOptions,
+    };
   },
   components: {
     'v-button': VButton,
@@ -155,19 +159,21 @@ export default {
     },
     onClickShowOptions() {
       this.filterOptions();
-      this.showOptions = !this.showOptions && !this.disabled;
+      this.openOptions();
     },
     openOptions() {
-      this.showOptions = true;
+      this.showOptions = !this.showOptions && !this.disabled;
     },
     filterOptions() {
       if (this.fetchMethod) {
-
-        // this.meta.current_page += 1;
-        debugger
-       this.fetchMethod(this.query).then(response => {
-          this.filteredOptions = this.filteredOptions.concat(response.data);
-          // this.meta = result.meta;
+        if (this.meta && this.meta.current_page) {
+          //ask the next page .
+          this.meta.current_page += 1;
+        }
+        this.fetchMethod(this.query, this.meta).then(response => {
+          // this.filteredOptions = this.filteredOptions.concat(response.data);
+          this.filteredOptions = response.data;
+          this.meta = result.meta;
         });
         return;
       }
@@ -214,6 +220,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    searchInputVariant: {
+      type: String,
+      default: 'default'
+    },
     showMore: {
       type: Boolean,
       default: false,
@@ -226,13 +236,6 @@ export default {
       type: String,
       default: 'value',
     },
-  },
-  setup(props) {
-    const innerOptions = reactive(props.options);
-
-    return {
-      innerOptions,
-    };
   },
 };
 </script>
