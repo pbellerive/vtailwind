@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center" :class="wrapperLeftCss">
-    <input v-model="innerValue" type="radio" ref="radio" :value="value" :checked="checked" @change="onChange" :class="[css.baseCss]" :disabled="disabled" />
+    <input v-model="innerValue" type="radio" ref="radio" :value="value" :checked="isChecked" @change="onChange" :class="[css.baseCss]" :disabled="disabled" />
     <span :class="labelPositionCss">{{ label }}</span>
   </div>
 </template>
@@ -35,6 +35,9 @@ export default {
     },
   },
   computed: {
+    isChecked() {
+      return this.value == this.modelValue;
+    },
     wrapperLeftCss() {
       if (this.labelPosition === 'left') {
         return this.css.wrapperLabelLeft;

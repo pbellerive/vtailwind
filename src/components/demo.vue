@@ -161,7 +161,7 @@ export default {
       ],
       checkValue: undefined,
       checkArrayValue: [],
-      radioValue: undefined,
+      radioValue: 'my-radioA',
       radioValue1: undefined,
       area: 'Allo',
       rselectValue: {},
