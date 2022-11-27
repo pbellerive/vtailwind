@@ -79,8 +79,11 @@ export default {
                     },
                     close: {
                         wrapper:'',
-                        baseCss: 'border border-red-50 text-white bg-red-900 px-3 py-2 rounded-sm'
-                    }
+                        baseCss: 'border border-red-50 text-white bg-red-700 px-3 py-2 rounded-sm'
+                    },
+                    closeRounded: {
+                        baseCss: 'w-8 h-8 border border-red-50 text-white bg-red-700 rounded-full'
+                    },
                 }
             }
         };
