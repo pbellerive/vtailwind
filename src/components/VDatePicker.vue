@@ -51,8 +51,9 @@ export default {
   },
   computed: {
     currentSelectedDate() {
-      const currentDate = this.localValue || new Date(this.currentYearSelector.value, this.currentMonthSelector.value, this.currentDaySelector);
-      const currentFormattedDate = new Intl.DateTimeFormat(this.locale, { month: 'long', year: 'numeric', day: '2-digit' }).format(currentDate);
+      if (this.modelValue == null) return '--';
+
+      const currentFormattedDate = this.localValue ? new Intl.DateTimeFormat(this.locale, { month: 'long', year: 'numeric', day: '2-digit' }).format(this.localValue) : '';
       return currentFormattedDate;
     },
     currentDaySelector() {
@@ -430,7 +431,6 @@ export default {
     onDayClick(day) {
       this.showDateSelector = false;
       let formatted = this.dateFormat(this.format, day);
-
       this.$emit('update:modelValue', formatted);
     },
     previousMonth() {

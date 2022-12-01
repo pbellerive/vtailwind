@@ -107,6 +107,10 @@
             Disabled
             <v-date-picker v-model="dateSelected" :disabled="true" />
           </div>
+          <div>
+            Default null value
+            <v-date-picker v-model="dateSelectedNull" />
+          </div>
         </div>
       </div>
     </div>
@@ -167,6 +171,7 @@ export default {
       rselectValue: {},
       rselectValue2: {value:''},
       dateSelected: new Date(2021, 11, 2),
+      dateSelectedNull: null
     };
   },
   components: {
