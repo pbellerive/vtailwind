@@ -164,7 +164,7 @@ export default {
       const valueToEmit = this.valueOptionAttribute === 'object' ? option : option[this.valueOptionAttribute];
       this.$emit('update:modelValue', valueToEmit);
 
-      this.query = '';
+      // this.query = '';
     },
     onClickShowOptions() {
       this.filterOptions();
