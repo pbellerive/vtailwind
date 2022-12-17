@@ -28,10 +28,13 @@
               {{ placeholder }}
             </span>
           </li>
-          <li v-for="option in filteredOptions" :key="option[valueOptionAttribute]" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
-            <span :class="css.optionLabel">
-              {{ option[textOptionAttribute] }}
-            </span>
+          <li v-for="option in filteredOptions" @mouseover="hoverOption(option)" :key="option[valueOptionAttribute]" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
+            <div :class="[css.optionLabel, preselectOption.id == option.id ? css.highlighted : '']">
+              <span >
+                {{ option[textOptionAttribute] }}
+              </span>
+            </div>
+
           </li>
           <li v-if="showMore && isAnyPageLeft">
             <div class="flex justify-center">
@@ -115,7 +118,8 @@ export default {
         arrowCss: 'bg-blue-fb-300 rounded px-2 py-1',
         buttonWrapper: 'flex flex-row items-center border border-gray-300 rounded',
         optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white text-gray-800',
-        optionLabel: 'px-2 hover:bg-blue-300 text-gray-800',
+        optionLabel: 'px-2 text-gray-800',
+        highlighted: 'hover:bg-blue-300 ',
         placeholderWrapper: 'px-2 text-left',
         selectedOptions: 'bg-blue-300',
         variant: {
@@ -124,7 +128,8 @@ export default {
             arrowCss: 'bg-blue-fb-300 rounded px-2 py-1',
             buttonWrapper: 'flex flex-row items-center border border-gray-300 rounded',
             optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white text-gray-800',
-            optionLabel: 'px-2 hover:bg-blue-300 text-gray-800',
+            optionLabel: 'px-2 text-gray-800',
+            highlighted: 'hover:bg-blue-300 ',
             placeholderWrapper: 'px-2 text-left cursor-pointer',
             selectedOptions: 'bg-blue-300',
           },
@@ -136,10 +141,14 @@ export default {
       meta: {
         current_page: 0,
       },
+      preselectOption: -1
     };
   },
   emits: ['changed'],
   methods: {
+    hoverOption(option) {
+      this.preselectOption = option;
+    },
     closeOptions() {
       this.showOptions = false;
     },
