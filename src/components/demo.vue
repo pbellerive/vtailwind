@@ -11,7 +11,9 @@
           <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="warning">Show warning</v-button>
           <v-button variant="notvariant">No variant</v-button>
           <v-button variant="primary" :disabled="true">Primary disabled</v-button>
-          <v-button @click="showModal">show modal</v-button>
+          <v-button @click="showModal('modal')">show modal</v-button>
+          <v-button @click="showModal('modalNoFooter')">show modal no footer</v-button>
+          <v-button @click="showModal('modalNoTitle')">show modal no title</v-button>
         </div>
       </section>
       <section>
@@ -119,6 +121,8 @@
     <v-notification ref="notifWarning" variant="warning" />
     <v-loading :isLoading="false" variant="danger" />
     <v-modal :message="'test test test '" ref="modal" variant="default"> </v-modal>
+    <v-modal :message="'No footer '" :showFooter="false" ref="modalNoFooter" variant="default"> </v-modal>
+    <v-modal :message="'No title '" title="Title" :showTitle="false" ref="modalNoTitle" variant="default"> </v-modal>
   </div>
 </template>
 
@@ -190,8 +194,8 @@ export default {
     'v-modal': VModal,
   },
   methods: {
-    showModal() {
-      this.$refs.modal
+    showModal(name) {
+      this.$refs[name]
         .open()
         .then((response) => {
           console.log(response);
@@ -203,6 +207,7 @@ export default {
           console.log('finally');
         });
     },
+
     getOptions(query) {
       return new Promise((resolve) => {
           resolve({

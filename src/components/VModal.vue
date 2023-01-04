@@ -2,7 +2,7 @@
   <div v-if="show" :class="css.wrapper">
     <div :class="[css.innerModal, css.bgCss]">
       <div>
-        <div class="max-w-xs md:max-w-lg">
+        <div v-if="showTitle" class="max-w-xs md:max-w-lg">
           <slot name="title">
             <p :class="css.title">
               {{ title }}
@@ -10,7 +10,7 @@
           </slot>
         </div>
         <div>
-          <slot name="message">
+          <slot name="message" >
             <span :class="css.message">
               {{ message }}
             </span>
@@ -22,7 +22,7 @@
           <v-button :variant="closeButtonVariant" @click="show = false"> x </v-button>
         </div>
       </div>
-      <slot name="footer">
+      <slot v-if="showFooter" name="footer">
         <div :class="css.footer">
           <div>
             <v-button @click="onOkClickButton" :variant="yesButtonVariant">{{ yesLabel }}</v-button>
@@ -131,6 +131,14 @@ export default {
       type: String,
       default: 'closeRounded',
     },
+    showFooter: {
+      type: Boolean,
+      default: true
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    }
   },
 };
 </script>
