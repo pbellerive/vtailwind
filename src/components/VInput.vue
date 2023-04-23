@@ -15,7 +15,7 @@
         <span>{{ prependText }}</span>
       </div>
       <div class="flex-1">
-        <input :type="type" :value="modelValue" :required="required" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" />
+        <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" />
       </div>
       <div v-if="variant == 'danger' && shortErrorMessage" :class="[css.shortError]" class="relative grid items-center flex-grow-0">
         <div>
@@ -88,6 +88,10 @@ export default {
       default: false,
     },
     shortErrorMessage: {
+      type: String,
+      default: undefined,
+    },
+    placeholder: {
       type: String,
       default: undefined,
     },
