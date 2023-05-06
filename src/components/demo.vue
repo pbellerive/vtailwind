@@ -4,12 +4,31 @@
     <div class="grid grid-flow-row gap-3">
       <section>
         <h1>BUTTONS</h1>
-        <div class="flex flex-row justify-center gap-2">
-          <v-button variant="primary">Button</v-button>
-          <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
-          <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="danger">Show danger</v-button>
-          <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="warning">Show warning</v-button>
-          <v-button variant="notvariant">No variant</v-button>
+        <div class="flex flex-row flex-wrap gap-2">
+          <div class="flex flex-col gap-5">
+            <v-button variant="primary">Button</v-button>
+            <v-button variant="primaryFlat">Button</v-button>
+            <v-button variant="primaryRounded">Button</v-button>
+          </div>
+          <div class="flex flex-col gap-5">
+            <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
+          </div>
+          <div class="flex flex-col gap-5">
+            <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="danger">Show danger</v-button>
+            <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="dangerFlat">Show danger</v-button>
+            <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="dangerRounded">Show danger</v-button>
+          </div>
+          <div class="flex flex-col gap-5">
+            <v-button variant="info"> Information</v-button>
+            <v-button variant="infoFlat"> Information</v-button>
+            <v-button variant="infoRounded"> Information</v-button>
+          </div>
+          <div class="flex flex-col gap-5">
+            <v-button variant="warning"> Information</v-button>
+            <v-button variant="warningFlat"> Information</v-button>
+            <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="warningRounded">Show warning</v-button>
+          </div>
+          <v-button variant="notvariant">No variant is default</v-button>
           <v-button variant="primary" :disabled="true">Primary disabled</v-button>
           <v-button @click="showModal">show modal</v-button>
         </div>
@@ -169,9 +188,9 @@ export default {
       radioValue1: undefined,
       area: 'Allo',
       rselectValue: {},
-      rselectValue2: {value:''},
+      rselectValue2: { value: '' },
       dateSelected: new Date(2021, 11, 2),
-      dateSelectedNull: null
+      dateSelectedNull: null,
     };
   },
   components: {
@@ -205,34 +224,34 @@ export default {
     },
     getOptions(query) {
       return new Promise((resolve) => {
-          resolve({
-            data: [
-              {
-                text: 'opt 1',
-                value: 1,
-              },
-              {
-                text: 'opt 2',
-                value: 2,
-              },
-              {
-                text: 'opt 3',
-                value: 3,
-              },
-              {
-                text: 'opt 4',
-                value: 4,
-              }
-            ],
-            meta: {
-              current_page: 1
-            }
-        })
+        resolve({
+          data: [
+            {
+              text: 'opt 1',
+              value: 1,
+            },
+            {
+              text: 'opt 2',
+              value: 2,
+            },
+            {
+              text: 'opt 3',
+              value: 3,
+            },
+            {
+              text: 'opt 4',
+              value: 4,
+            },
+          ],
+          meta: {
+            current_page: 1,
+          },
+        });
       });
     },
     onCurrentPageChange(evt) {
       console.log('Listen update:currentPage');
-    }
+    },
   },
   props: {
     msg: String,
