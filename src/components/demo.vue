@@ -4,8 +4,11 @@
     <div class="grid grid-flow-row gap-3">
       <section>
         <h1>BUTTONS</h1>
-        <div class="flex flex-row justify-center gap-2">
-          <v-button variant="primary">Button</v-button>
+        <div class="flex flex-row flex-wrap justify-center gap-2">
+          <v-button variant="default">Default</v-button>
+          <v-button variant="primary">Primary</v-button>
+          <v-button variant="secondary">Secondary</v-button>
+          <v-button variant="success">success</v-button>
           <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
           <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="danger">Show danger</v-button>
           <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="warning">Show warning</v-button>
