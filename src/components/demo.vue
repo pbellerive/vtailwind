@@ -23,8 +23,13 @@
             <v-input v-model="test" />
             {{ test }}
           </div>
-          <div>
+          <div class="flex gap-3 flex-wrap">
+            <v-input type="text" variant="success" />
             <v-input type="text" variant="danger" />
+            <v-input type="text" variant="oneliner" />
+            <v-input type="text" variant="oneliner_danger" />
+            <v-input type="text" variant="oneliner_success" />
+            
             <v-input type="number" />
             <v-input type="text" :disabled="true" />
           </div>
