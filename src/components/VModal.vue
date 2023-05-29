@@ -77,6 +77,10 @@ export default {
       },
     };
   },
+  emits: [
+    'click-Ok-button',
+    'click-cancel-button'
+  ],
   methods: {
     open() {
       this.show = true;
