@@ -32,7 +32,7 @@
             <v-input type="text" variant="oneliner" />
             <v-input type="text" variant="oneliner_danger" />
             <v-input type="text" variant="oneliner_success" />
-            
+
             <v-input type="number" />
             <v-input type="text" :disabled="true" />
           </div>
@@ -42,11 +42,11 @@
       <section class="">
         <h1>CHECKBOX</h1>
         <div class="flex flex-row justify-center gap-4">
-          <div class="flex justify-center"><v-checkbox v-model="checkValue" value="a" />{{ checkValue }}</div>
-          <div class="flex flex-row gap-3 justify-center">
+          <div class="flex justify-center"><v-checkbox v-model="checkValue" variant="default" value="a" />{{ checkValue }}</div>
+          <!-- <div class="flex flex-row gap-3 justify-center">
             <v-checkbox variant="danger" v-model="checkArrayValue" value="a" />
             <v-checkbox v-model="checkArrayValue" value="b" /> {{ checkArrayValue }}
-          </div>
+          </div> -->
           <div><v-toggle v-model="testToggle">toggle</v-toggle> {{ testToggle }}</div>
         </div>
       </section>
@@ -175,15 +175,15 @@ export default {
           value: 4,
         },
       ],
-      checkValue: undefined,
+      checkValue: true,
       checkArrayValue: [],
       radioValue: 'my-radioA',
       radioValue1: undefined,
       area: 'Allo',
       rselectValue: {},
-      rselectValue2: {value:''},
+      rselectValue2: { value: '' },
       dateSelected: new Date(2021, 11, 2),
-      dateSelectedNull: null
+      dateSelectedNull: null,
     };
   },
   components: {
@@ -218,34 +218,34 @@ export default {
 
     getOptions(query) {
       return new Promise((resolve) => {
-          resolve({
-            data: [
-              {
-                text: 'opt 1',
-                value: 1,
-              },
-              {
-                text: 'opt 2',
-                value: 2,
-              },
-              {
-                text: 'opt 3',
-                value: 3,
-              },
-              {
-                text: 'opt 4',
-                value: 4,
-              }
-            ],
-            meta: {
-              current_page: 1
-            }
-        })
+        resolve({
+          data: [
+            {
+              text: 'opt 1',
+              value: 1,
+            },
+            {
+              text: 'opt 2',
+              value: 2,
+            },
+            {
+              text: 'opt 3',
+              value: 3,
+            },
+            {
+              text: 'opt 4',
+              value: 4,
+            },
+          ],
+          meta: {
+            current_page: 1,
+          },
+        });
       });
     },
     onCurrentPageChange(evt) {
       console.log('Listen update:currentPage');
-    }
+    },
   },
   props: {
     msg: String,
