@@ -5,7 +5,7 @@
         {{ message }}
       </slot>
     </div>
-    <div @click="show = false" :class="css.buttonCss">x</div>
+    <div @click="show = false" :class="css.closeButtonCss">x</div>
   </div>
 </template>
 
@@ -28,16 +28,16 @@ export default {
     return {
       tag: 'message',
       css: {
-        wrapper: 'flex w-full py-3',
+        wrapper: 'flex w-full relative py-3',
         baseCss: 'flex-1 text-center',
         bgCss: 'bg-white',
         buttonCss: 'self-end px-3 font-bold hover:text-gray-600 cursor-pointer',
         variant: {
           default: {
-            wrapper: 'flex w-full py-3',
-            baseCss: 'flex-1 text-center',
-            bgCss: 'bg-white',
-            buttonCss: 'self-end px-3 font-bold hover:text-gray-600 cursor-pointer',
+            wrapper: 'flex w-full py-3 relative rounded-lg ',
+            baseCss: 'flex-1 text-center font-regular relative mb-4 block w-full text-base leading-5  opacity-100',
+            bgCss: 'bg-blue-500 text-white',
+            closeButtonCss: 'absolute top-1 right-1 self-end px-3 font-bold hover:text-gray-600 cursor-pointer',
           },
           danger: {
             bgCss: 'bg-red-50 text-red-900',

@@ -5,11 +5,6 @@
         {{ label }}
       </span>
     </div>
-    <div v-if="variant == 'danger' && errorMessage" :class="css.error">
-      <span>
-        {{ errorMessage }}
-      </span>
-    </div>
     <div class="flex">
       <div v-if="withPrepend" :class="[css.prepend, { 'bg-blue-fb-300 border-2 border-blue-fb-300 ring-blue-fb-300': isFocus }]" class="flex items-center">
         <span>{{ prependText }}</span>
@@ -17,11 +12,17 @@
       <div class="flex-1">
         <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" />
       </div>
-      <div v-if="variant == 'danger' && shortErrorMessage" :class="[css.shortError]" class="relative grid items-center flex-grow-0">
+
+      <!-- <div v-if="variant == 'danger' && shortErrorMessage" :class="[css.shortError]" class="relative grid items-center flex-grow-0">
         <div>
           {{ shortErrorMessage }}
         </div>
         <div :class="css.shortErrorArrow"></div>
+      </div> -->
+    </div>
+    <div v-if="['danger', 'filled_danger'].includes(variant) && shortErrorMessage" :class="[css.shortError]" class="">
+      <div>
+        {{ shortErrorMessage }}
       </div>
     </div>
   </div>
@@ -37,54 +38,54 @@ export default {
       isFocus: false,
       tag: 'input',
       css: {
-        baseCss: 'border border-gray-200 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-500',
-        label: 'text-left text-gray-700 font-bold text-sm',
-        prepend: 'border border-gray-200 bg-zinc-200 text-zinc-400 pl-5 pr-2 font-bold',
-        wrapper: 'grid justify-left text-sm',
+        baseCss: '',
+        label: '',
+        prepend: '',
+        wrapper: '',
         variant: {
           default: {
             // baseCss: 'border border-gray-200 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-500',
             baseCss:
-              'peer h-full w-full rounded-[7px] border border-red-200  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700  transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50',
+              'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700  transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label: 'text-left text-gray-700 font-bold text-sm',
             prepend: 'border border-gray-200 bg-zinc-200 text-zinc-400 pl-5 pr-2 font-bold',
             // baseCss: 'border border-red-500 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-red-500 w-full max-w-full text-red-500',
-            baseCss:
-              'peer h-full w-full rounded-[7px] border border-red-500  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-red-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-red-200 placeholder-shown:border-t-red-200 focus:border-2 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-red-50',
-            label: 'text-left text-red-500 font-bold',
             error: 'text-left text-red-500 font-bold',
-            shortError: 'bg-red-500 text-white font-bold text-center ml-1 md:ml-3 rounded rounded-md px-3',
-            shortErrorArrow: 'border-transparent   w-0 h-0 border-t-[10px] border-b-[10px] border border-r-[10px] border-r-red-500 absolute -left-2 top-1/2 -translate-y-1/2',
           },
           success: {
             // baseCss: 'border border-red-500 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-red-500 w-full max-w-full text-red-500',
             baseCss:
-              'peer h-full w-full rounded-[7px] border border-green-500  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-green-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-green-200 placeholder-shown:border-t-green-200 focus:border-2 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-green-50',
+              'peer w-full rounded-[7px] border border-green-500  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-green-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-green-200 placeholder-shown:border-t-green-200 focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label: 'text-left text-green-500 font-bold',
             error: 'text-left text-green-500 font-bold',
-            shortError: 'bg-green-500 text-white font-bold text-center ml-1 md:ml-3 rounded rounded-md px-3',
-            shortErrorArrow: 'border-transparent   w-0 h-0 border-t-[10px] border-b-[10px] border border-r-[10px] border-r-green-500 absolute -left-2 top-1/2 -translate-y-1/2',
           },
-          oneliner: {
+          danger: {
+            // baseCss: 'border border-red-500 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-red-500 w-full max-w-full text-red-500',
             baseCss:
-              'peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50',
+              'peer w-full rounded-[7px] border border-red-500  bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-red-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-red-200 placeholder-shown:border-t-red-200 focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
+            label: 'text-left text-red-500 font-bold',
+            error: 'text-left text-red-500 font-bold',
+            shortError: 'bg-transparent text-red-500 font-normal text-left ml-1',
+            shortErrorArrow: 'border-transparent   w-0 h-0 border-t-[10px] border-b-[10px] border border-r-[10px] border-r-red-500 absolute -left-2 top-1/2 -translate-y-1/2',
+          },
+          filled: {
+            baseCss:
+              'peer w-full border-b-2 border-blue-gray-500 bg-gray-200 pt-4 pb-1.5 px-3  font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50-50',
             label: 'text-left text-gray-700 font-bold text-sm',
             prepend: 'border border-gray-200 bg-zinc-200 text-zinc-400 pl-5 pr-2 font-bold',
-            wrapper: 'grid justify-left text-sm',
           },
-          oneliner_danger: {
+          filled_danger: {
             baseCss:
-              'peer h-full w-full border-b border-red-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-red-700 outline outline-0 transition-all placeholder-shown:border-red-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-red-50',
+              'peer w-full border-b-2 border-red-600 bg-gray-200 pt-4 pb-1.5 px-3  font-sans text-sm font-normal text-red-700 outline outline-0 transition-all placeholder-shown:border-red-200 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label: 'text-left text-gray-700 font-bold text-sm',
             prepend: 'border border-gray-200 bg-zinc-200 text-zinc-400 pl-5 pr-2 font-bold',
-            wrapper: 'grid justify-left text-sm',
+            shortError: 'bg-transparent text-red-500 font-normal text-left ml-1',
           },
-          oneliner_success: {
+          filled_success: {
             baseCss:
-              'peer h-full w-full border-b border-green-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-green-700 outline outline-0 transition-all placeholder-shown:border-green-200 focus:border-pink-500 focus:outline-0 disabled:border-0 disabled:bg-green-50',
+              'peer w-full border-b-2 border-green-200 bg-gray-200 pt-4 pb-1.5 px-3  font-sans text-sm font-normal text-green-700 outline outline-0 transition-all placeholder-shown:border-green-200 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label: 'text-left text-green-700 font-bold text-sm',
             prepend: 'border border-green-200 bg-zinc-200 text-zinc-400 pl-5 pr-2 font-bold',
-            wrapper: 'grid justify-left text-sm',
           },
           title: {
             baseCss: 'border-none rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-600 font-bold text-lg md:text-2xl',
@@ -99,10 +100,6 @@ export default {
     },
   },
   props: {
-    errorMessage: {
-      type: String,
-      default: undefined,
-    },
     label: {
       type: String,
       default: undefined,

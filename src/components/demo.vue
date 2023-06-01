@@ -1,54 +1,73 @@
 <template>
   <div class="hello max-w-4xl mx-auto pb-20">
     <h1>Welcome to VTailwind , a Vuejs 3 UI components</h1>
+    <div>
+      <v-message message="Message ici" :show="true"></v-message>
+    </div>
     <div class="grid grid-flow-row gap-3">
       <section>
         <h1>BUTTONS</h1>
-        <div class="flex flex-row flex-wrap justify-center gap-2">
-          <v-button variant="default">Default</v-button>
-          <v-button variant="primary">Primary</v-button>
-          <v-button variant="secondary">Secondary</v-button>
-          <v-button variant="success">success</v-button>
-          <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
-          <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="danger">Show danger</v-button>
-          <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="warning">Show warning</v-button>
-          <v-button variant="notvariant">No variant</v-button>
-          <v-button variant="primary" :disabled="true">Primary disabled</v-button>
-          <v-button @click="showModal('modal')">show modal</v-button>
-          <v-button @click="showModal('modalNoFooter')">show modal no footer</v-button>
-          <v-button @click="showModal('modalNoTitle')">show modal no title</v-button>
+        <div class="flex flex-col gap-2">
+          <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+            <v-button variant="default">Default</v-button>
+            <v-button variant="primary">Primary</v-button>
+            <v-button variant="secondary">Secondary</v-button>
+            <v-button variant="tertiary">Tertiary</v-button>
+            <v-button variant="danger">danger</v-button>
+          </div>
+          <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+            <v-button variant="elevatedPrimary">Elevated primary</v-button>
+            <v-button variant="elevatedSecondary">Elevated secondary</v-button>
+            <v-button variant="elevatedTertiary">Elevated tertiary</v-button>
+            <v-button variant="elevatedDanger">Elevated danger</v-button>
+          </div>
+          <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+            <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
+            <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="default">Show danger</v-button>
+            <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="default">Show warning</v-button>
+
+            <v-button variant="notvariant">No variant</v-button>
+            <v-button variant="primary" :disabled="true">Primary disabled</v-button>
+            <v-button @click="showModal('modal')">show modal</v-button>
+            <v-button @click="showModal('modalNoFooter')">show modal no footer</v-button>
+            <v-button @click="showModal('modalNoTitle')">show modal no title</v-button>
+          </div>
         </div>
       </section>
       <section>
         <h1>INPUT</h1>
-        <div class="flex flex-row gap-3 justify-center">
-          <div>
-            <v-input v-model="test" />
-            {{ test }}
+        <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+          <div class="flex gap-3 flex-wrap">
+            <v-input type="number" variant="default" />
+            <v-input type="text" variant="success" />
+            <v-input type="text" variant="danger" shortErrorMessage="Error message" />
+            <v-input type="text" variant="default" :disabled="true" />
           </div>
           <div class="flex gap-3 flex-wrap">
-            <v-input type="text" variant="success" />
-            <v-input type="text" variant="danger" />
-            <v-input type="text" variant="oneliner" />
-            <v-input type="text" variant="oneliner_danger" />
-            <v-input type="text" variant="oneliner_success" />
-
-            <v-input type="number" />
-            <v-input type="text" :disabled="true" />
+            <v-input type="text" variant="filled" />
+            <v-input type="text" variant="filled_success" />
+            <v-input type="text" variant="filled_danger" shortErrorMessage="Error message" />
           </div>
         </div>
       </section>
 
       <section class="">
         <h1>CHECKBOX</h1>
-        <div class="flex flex-row justify-center gap-4">
-          <div class="flex justify-center"><v-checkbox v-model="checkValue" variant="default" value="a" />{{ checkValue }}</div>
-          <!-- <div class="flex flex-row gap-3 justify-center">
-            <v-checkbox variant="danger" v-model="checkArrayValue" value="a" />
-            <v-checkbox v-model="checkArrayValue" value="b" /> {{ checkArrayValue }}
-          </div> -->
-          <div><v-toggle v-model="testToggle">toggle</v-toggle> {{ testToggle }}</div>
+        <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+          <div class="flex justify-center"><v-checkbox v-model="checkValue" variant="default" trueValue="a" />{{ checkValue }}</div>
+          <div>
+            <div class="flex flex-row gap-3 justify-center">
+              <v-checkbox variant="danger" v-model="checkArrayValue" trueValue="a" />
+              <v-checkbox v-model="checkArrayValue" trueValue="b" />
+            </div>
+            <div>--{{ checkArrayValue }}--</div>
+          </div>
         </div>
+      </section>
+
+      <section>
+        <h1 class="uppercase">Toggle</h1>
+        <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3"><v-toggle v-model="testToggle">toggle</v-toggle> {{ testToggle }}</div>
       </section>
       <div>
         <div class="flex flex-row gap-2 justify-center">
@@ -148,6 +167,7 @@ import VDatePicker from './VDatePicker';
 import VNotification from './VNotification';
 import VLoading from './VLoading';
 import VModal from './VModal';
+import VMessage from './VMessage';
 
 export default {
   name: 'HelloWorld',
@@ -175,8 +195,8 @@ export default {
           value: 4,
         },
       ],
-      checkValue: true,
-      checkArrayValue: [],
+      checkValue: false,
+      checkArrayValue: ['a'],
       radioValue: 'my-radioA',
       radioValue1: undefined,
       area: 'Allo',
@@ -200,6 +220,7 @@ export default {
     'v-notification': VNotification,
     'v-loading': VLoading,
     'v-modal': VModal,
+    VMessage,
   },
   methods: {
     showModal(name) {
