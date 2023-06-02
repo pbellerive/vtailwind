@@ -93,38 +93,42 @@
           <div>CurrentValue: {{ radioValue }}</div>
         </div>
       </section>
-      <div class="grid justify-center">
-        <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="50" :perPage="2" class="self-center" />
-        Current Page : {{ currentPage }}
-      </div>
-      <div class="grid grid-flow-col">
-        <div class="mb-10">
-          <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true" />
-          <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" />
+      <section>
+        <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
+          <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="50" :perPage="2" class="self-center" />
+          Current Page : {{ currentPage }}
+        </div>
+      </section>
+      <section>
+        <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+          <div class="w-full flex flex-col gap-2">
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true" />
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" />
+            <div>
+              {{ rselectValue }}
+            </div>
+          </div>
+          <div class="mb-10">
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true" />
+            <div>
+              {{ rselectValue }}
+            </div>
+          </div>
+          <div class="mb-10">
+            With method
+            <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" />
+            <div>
+              {{ rselectValue2 }}
+            </div>
+          </div>
           <div>
-            {{ rselectValue }}
+            <v-select v-model="selectedOption" :options="options" placeholder="My select" />
+            <div>
+              {{ selectedOption }}
+            </div>
           </div>
         </div>
-        <div class="mb-10">
-          <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true" />
-          <div>
-            {{ rselectValue }}
-          </div>
-        </div>
-        <div class="mb-10">
-          With method
-          <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" />
-          <div>
-            {{ rselectValue2 }}
-          </div>
-        </div>
-        <div>
-          <v-select v-model="selectedOption" :options="options" placeholder="My select" />
-          <div>
-            {{ selectedOption }}
-          </div>
-        </div>
-      </div>
+      </section>
       <div class="grid grid-flow-col gap-2">
         <div>
           <v-text-area v-model="area" :cols="40" rows="10" />

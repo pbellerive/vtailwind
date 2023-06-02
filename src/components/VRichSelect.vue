@@ -1,5 +1,5 @@
 <template>
-  <div :class="[css.wrapper]">
+  <div :class="[css.wrapper, disabledCss]">
     <div :class="css.buttonWrapper">
       <div @click="onClickShowOptions" :class="css.placeholderWrapper">
         <span class="mr-2">
@@ -18,7 +18,7 @@
     <div v-if="showOptions" :class="css.optionsWrapper">
       <slot name="options-search">
         <div v-if="searchable" class="px-2 mt-2">
-          <v-input v-model="query" :variant="searchInputVariant"/>
+          <v-input v-model="query" :variant="searchInputVariant" />
         </div>
       </slot>
       <slot name="options-slot">
@@ -30,11 +30,10 @@
           </li>
           <li v-for="option in filteredOptions" @mouseover="hoverOption(option)" :key="option[valueOptionAttribute]" @click="onClick(option)" class="cursor-pointer" :class="[isSelectedCss(option)]">
             <div :class="[css.optionLabel, preselectOption.id == option.id ? css.highlighted : '']">
-              <span >
+              <span>
                 {{ option[textOptionAttribute] }}
               </span>
             </div>
-
           </li>
           <li v-if="showMore && isAnyPageLeft">
             <div class="flex justify-center">
@@ -67,6 +66,13 @@ export default {
     'v-input': VInput,
   },
   computed: {
+    disabledCss() {
+      if (this.disabled) {
+        return this.css.disabled;
+      }
+
+      return '';
+    },
     isAnyPageLeft() {
       return !this.meta.last_page || this.meta.current_page < this.meta.last_page;
     },
@@ -114,24 +120,25 @@ export default {
     return {
       tag: 'rselect',
       css: {
-        wrapper: 'relative inline-block',
-        arrowCss: 'bg-blue-fb-300 rounded px-2 py-1',
-        buttonWrapper: 'flex flex-row items-center border border-gray-300 rounded',
-        optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white text-gray-800',
-        optionLabel: 'px-2 text-gray-800',
-        highlighted: 'hover:bg-blue-300 ',
-        placeholderWrapper: 'px-2 text-left',
-        selectedOptions: 'bg-blue-300',
+        wrapper: '',
+        arrowCss: '',
+        buttonWrapper: '',
+        optionsWrapper: '',
+        optionLabel: '',
+        highlighted: '',
+        placeholderWrapper: '',
+        selectedOptions: '',
         variant: {
           default: {
-            wrapper: 'relative',
-            arrowCss: 'bg-blue-fb-300 rounded px-2 py-1',
+            wrapper: 'relative rounded',
+            arrowCss: 'bg-blue-fb-300  px-2 py-1',
             buttonWrapper: 'flex flex-row items-center border border-gray-300 rounded',
             optionsWrapper: 'absolute z-20 border border-gray-300 w-full text-left bg-white text-gray-800',
             optionLabel: 'px-2 text-gray-800',
             highlighted: 'hover:bg-blue-300 ',
             placeholderWrapper: 'px-2 text-left cursor-pointer',
             selectedOptions: 'bg-blue-300',
+            disabled: 'bg-gray-300 cursor-default',
           },
         },
       },
@@ -141,7 +148,7 @@ export default {
       meta: {
         current_page: 0,
       },
-      preselectOption: -1
+      preselectOption: -1,
     };
   },
   emits: ['changed'],
@@ -179,7 +186,7 @@ export default {
           //ask the next page .
           this.meta.current_page += 1;
         }
-        this.fetchMethod(this.query, this.meta).then(response => {
+        this.fetchMethod(this.query, this.meta).then((response) => {
           // this.filteredOptions = this.filteredOptions.concat(response.data);
           this.filteredOptions = response.data;
           this.meta = response.meta;
@@ -231,7 +238,7 @@ export default {
     },
     searchInputVariant: {
       type: String,
-      default: 'default'
+      default: 'default',
     },
     showMore: {
       type: Boolean,
