@@ -100,39 +100,49 @@
         </div>
       </section>
       <section>
-        <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
-          <div class="w-full flex flex-col gap-2">
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true" />
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" />
-            <div>
-              {{ rselectValue }}
-            </div>
-          </div>
-          <div class="mb-10">
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true" />
-            <div>
-              {{ rselectValue }}
-            </div>
-          </div>
-          <div class="mb-10">
-            With method
-            <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" />
-            <div>
-              {{ rselectValue2 }}
-            </div>
-          </div>
-          <div>
-            <v-select v-model="selectedOption" :options="options" placeholder="My select" />
+        <div>
+          <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+            <v-select v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
+            <v-select variant="primary" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
+            <v-select variant="success" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
+            <v-select variant="danger" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
             <div>
               {{ selectedOption }}
             </div>
           </div>
         </div>
       </section>
-      <div class="grid grid-flow-col gap-2">
-        <div>
+      <section>
+        <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+          <div class="w-full flex flex-row gap-2">
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true" label="My Rich Select" />
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" label="My Rich Select" />
+            <div>
+              {{ rselectValue }}
+            </div>
+          </div>
+          <div class="mb-10">
+            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true" label="My Rich Select" />
+            <div>
+              {{ rselectValue }}
+            </div>
+          </div>
+          <div class="mb-10">
+            With method
+            <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" label="My Rich Select" />
+            <div>
+              {{ rselectValue2 }}
+            </div>
+          </div>
+        </div>
+      </section>
+      TextArea
+      <section>
+        <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
           <v-text-area v-model="area" :cols="40" rows="10" />
         </div>
+      </section>
+      <div class="grid grid-flow-col gap-2">
         <div>
           <div>
             {{ dateSelected }}
