@@ -69,30 +69,32 @@
         <h1 class="uppercase">Toggle</h1>
         <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3"><v-toggle v-model="testToggle">toggle</v-toggle> {{ testToggle }}</div>
       </section>
-      <div>
-        <div class="flex flex-row gap-2 justify-center">
-          <div>
-            <v-radio name="radio1" value="my-radioA" v-model="radioValue" label="Radio A" />
+      <section>
+        <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
+          <div class="flex flex-row gap-2 justify-center">
+            <div>
+              <v-radio name="radio1" value="my-radioA" v-model="radioValue" label="Radio A" />
+            </div>
+            <div>
+              <v-radio name="radio1" value="my-radioAA" v-model="radioValue" label="Radio AA" :disabled="true" />
+            </div>
+            <div>
+              <v-radio name="radio1" value="my-radioB" v-model="radioValue" label="Radio B" />
+            </div>
           </div>
-          <div>
-            <v-radio name="radio1" value="my-radioAA" v-model="radioValue" label="Radio AA" :disabled="true" />
+          <div class="flex flex-row gap-2 justify-center mt-8">
+            <div>
+              <v-radio name="radio2" value="my-radioC" v-model="radioValue1" label="Radio C" labelPosition="left" />
+            </div>
+            <div>
+              <v-radio name="radio2" value="my-radioD" v-model="radioValue1" label="Radio D" labelPosition="left" />
+            </div>
           </div>
-          <div>
-            <v-radio name="radio1" value="my-radioB" v-model="radioValue" label="Radio B" />
-          </div>
+          <div>CurrentValue: {{ radioValue }}</div>
         </div>
-        <div class="flex flex-row gap-2 justify-center mt-8">
-          <div>
-            <v-radio name="radio2" value="my-radioC" v-model="radioValue1" label="Radio C" labelPosition="left" />
-          </div>
-          <div>
-            <v-radio name="radio2" value="my-radioD" v-model="radioValue1" label="Radio D" labelPosition="left" />
-          </div>
-        </div>
-        <div>CurrentValue: {{ radioValue }}</div>
-      </div>
+      </section>
       <div class="grid justify-center">
-        <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="50" :perPage="10" class="self-center" />
+        <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="50" :perPage="2" class="self-center" />
         Current Page : {{ currentPage }}
       </div>
       <div class="grid grid-flow-col">

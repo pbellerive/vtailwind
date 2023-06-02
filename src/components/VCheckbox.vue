@@ -53,7 +53,6 @@ export default {
     };
   },
   created() {
-    debugger;
     this.newValue = this.modelValue;
   },
   props: {
@@ -84,7 +83,6 @@ export default {
         return this.newValue;
       },
       set(value) {
-        debugger;
         this.newValue = value;
         this.$emit('update:modelValue', this.newValue);
       },

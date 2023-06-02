@@ -32,8 +32,40 @@ export default {
     },
     pagesToShow() {
       const pages = [];
-      const startPage = Math.max(this.currentPage - 1, 1);
-      const endPage = Math.min(this.pageToDisplay + startPage, this.nbTotalPages());
+
+      // 1 2 3 4 5 6 7 8 9 10 11 12 13
+      // Page 8
+      //  nbPage (13) - 8 =  5
+      //  8 - 1 = 7
+      // 5 > (5/2)  endPage = 8+2 = 10
+      // 7 > (5/2)   startPage = 8-2 = 6
+      // Page 12
+      //  nbPage (13) - 12 =  1
+      //  12 - 1 = 11
+      // 1 > (5/2)  faux  endPage = 12+1 = 13
+      //   startPage = 5-(1+1)=4 --> 12-3 = 9
+      // PAGE 2
+      //  nbPage (13) - 2 =  11
+      //  12 - 1 = 11
+      // 1 > (5/2)  vrai  endPage = 2+2 = 4
+      //   startPage = 2-2 = 0   0 < 1 -> vrai startPage  = 1 et endpage = endpage + currentPage(2) - startPage(1) = 5
+      const halfPages = Math.floor(this.pageToDisplay / 2);
+      const nbEndPage = this.nbTotalPages() - this.currentPage;
+      let nbBeforePages = halfPages;
+      let endPage = 0;
+      let startPage = 1;
+
+      if (nbEndPage >= halfPages) {
+        endPage = this.currentPage + halfPages;
+      } else {
+        endPage = this.currentPage + nbEndPage;
+        nbBeforePages = this.pageToDisplay - nbEndPage - 1;
+      }
+      startPage = this.currentPage - nbBeforePages;
+      if (startPage < 1) {
+        startPage = 1;
+        endPage += nbBeforePages - 1;
+      }
 
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
@@ -105,13 +137,6 @@ export default {
         return value >= 0;
       },
     },
-    // currentPage: {
-    //     type: Number,
-    //     default: 1,
-    //     validator: value => {
-    //         return value >= 0;
-    //     }
-    // },
     modelValue: {
       type: [Number, String],
       default: 1,
