@@ -1,35 +1,40 @@
 <template>
   <div :class="css.wrapper">
-    <div @click="onClickShowDateSelector" class="text-left w-full">
-      <span :class="css.dateLabel">
-        {{ currentSelectedDate }}
-      </span>
+    <div>
+      <v-input variant="default" @click="onClickShowDateSelector" v-model="currentSelectedDate"></v-input>
     </div>
     <div v-show="showDateSelector" class="relative z-20">
       <div :class="css.wrapperCalendar">
+        <div>
+          <header class="flex items-end bg-blue-700 h-16 text-white px-4 uppercase font-bold">
+            {{ currentSelectedDate }}
+          </header>
+        </div>
         <div :class="[css.wrapperSelector]">
-          <div @click="previousMonth" class="mr-1 cursor-pointer" :class="css.previousButtonCss">
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
-              <path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path>
-            </svg>
+          <div class="flex flex-grow gap-1">
+            <div @click="previousMonth" class="cursor-pointer flex-shrink-0" :class="css.previousButtonCss">
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-left" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+                <path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path>
+              </svg>
+            </div>
+            <div class="flex-grow w-full">
+              <v-rselect v-model="currentMonthSelector" :options="getMonthList()" :searchable="true" class="text-xs" valueOptionAttribute="object" />
+            </div>
+            <div @click="nextMonth" class="cursor-pointer" :class="css.nextButtonCss">
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+                <path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
+              </svg>
+            </div>
           </div>
-          <div>
-            <v-rselect v-model="currentMonthSelector" :options="getMonthList()" :searchable="true" class="text-xs" valueOptionAttribute="object" />
-          </div>
-          <div class="inline">
+          <div class="">
             <v-rselect v-model="currentYearSelector" :options="getYearList().reverse()" :searchable="true" class="text-xs" valueOptionAttribute="object" />
           </div>
-          <div @click="nextMonth" class="ml-1 cursor-pointer" :class="css.nextButtonCss">
-            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" class="inline w-2" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
-              <path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
-            </svg>
-          </div>
         </div>
-        <div class="flex flex-col">
+        <div class="flex flex-col px-3 text-center">
           <!-- jour -->
           <div v-for="(week, index) in buildMonths()" :key="index" class="grid grid-cols-7 gap-1">
-            <div v-for="(day, index) in week" :key="index + 'd'" :class="[getSelectedDateCss(day), 'cursor-pointer']">
-              <span @click="onDayClick(day)">
+            <div v-for="(day, index) in week" :key="index + 'd'" @click="onDayClick(day)" :class="[css.dateCss, getSelectedDateCss(day), 'cursor-pointer']">
+              <span>
                 {{ day.getDate() }}
               </span>
             </div>
@@ -42,12 +47,14 @@
 
 <script>
 import VSelect from './VRichSelect';
+import VInput from './VInput';
 import VBase from './base';
 
 export default {
   extends: VBase,
   components: {
     'v-rselect': VSelect,
+    VInput,
   },
   computed: {
     currentSelectedDate() {
@@ -93,22 +100,23 @@ export default {
       localValue: new Date(),
       tag: 'date-picker',
       css: {
-        dateLabel: 'text-left text-sm px-2 w-full',
-        wrapper: 'inline-block border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full w-full',
-        wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 w-56 bg-white',
-        wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
-        previousButtonCss: 'absolute left-1',
-        nextButtonCss: 'absolute right-1',
-        selectedDateCss: 'bg-blue-300 border rounded',
+        dateLabel: '',
+        wrapper: '',
+        wrapperCalendar: '',
+        wrapperSelector: '',
+        previousButtonCss: '',
+        nextButtonCss: '',
+        selectedDateCss: '',
         variant: {
           default: {
-            dateLabel: 'text-left text-sm px-2 w-full',
-            wrapper: 'inline-block border-2 border-gray-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-300 max-w-full w-full',
-            wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 w-56 bg-white',
-            wrapperSelector: 'relative flex flex-row flex-wrap gap-1 py-2 justify-center',
-            previousButtonCss: 'absolute left-1',
-            nextButtonCss: 'absolute right-1',
-            selectedDateCss: 'bg-blue-300 border rounded',
+            dateLabel: 'text-left text-sm px-2 ',
+            dateCss: 'flex items-center  justify-center w-12 h-12 hover:bg-slate-300 hover:rounded-full',
+            wrapper: 'inline-block max-w-full',
+            wrapperCalendar: 'absolute origin-top-left rounded border border-gray-300 bg-white pb-5 w-80',
+            wrapperSelector: 'flex flex-row gap-1 px-1 py-2',
+            previousButtonCss: 'flex items-center text-sm m-1',
+            nextButtonCss: 'flex items-center  text-sm m-1',
+            selectedDateCss: 'bg-blue-300 border rounded-full w-12 h-12',
           },
         },
       },

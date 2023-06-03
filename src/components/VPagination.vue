@@ -40,7 +40,7 @@ export default {
       let startPage = 1;
 
       if (this.currentPage > this.pageToDisplay) {
-        startPage = this.currentPage - this.pageToDisplay;
+        startPage = this.currentPage - this.pageToDisplay + 1;
         endPage = this.currentPage;
       }
 

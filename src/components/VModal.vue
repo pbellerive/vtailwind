@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" :class="css.wrapper">
+  <div v-if="show" @click="onCancelClickButton" :class="css.wrapper">
     <div :class="[css.innerModal, css.bgCss]">
       <div>
         <div v-if="showTitle" class="max-w-xs md:max-w-lg">
@@ -9,9 +9,9 @@
             </p>
           </slot>
         </div>
-        <div>
-          <slot name="message" >
-            <span :class="css.message">
+        <div :class="css.message">
+          <slot name="message">
+            <span>
               {{ message }}
             </span>
           </slot>
@@ -19,16 +19,16 @@
       </div>
       <div :class="css.closeButtonDiv">
         <div :class="css.closeButtonCss">
-          <v-button :variant="closeButtonVariant" @click="show = false"> x </v-button>
+          <v-button variant="closeRounded" @click="show = false"> x </v-button>
         </div>
       </div>
       <slot v-if="showFooter" name="footer">
         <div :class="css.footer">
           <div>
-            <v-button @click="onOkClickButton" :variant="yesButtonVariant">{{ yesLabel }}</v-button>
+            <v-button @click="onOkClickButton" variant="elevatedPrimary">{{ yesLabel }}</v-button>
           </div>
           <div>
-            <v-button @click="onCancelClickButton" :variant="noButtonVariant">{{ noLabel }}</v-button>
+            <v-button @click="onCancelClickButton" variant="elevatedDanger">{{ noLabel }}</v-button>
           </div>
         </div>
       </slot>
@@ -55,8 +55,8 @@ export default {
       show: false,
       tag: 'modal',
       css: {
-        wrapper: 'fixed min-h-full bg-gray-300 z-50 top-0 left-0 bg-opacity-25',
-        closeButtonCss: 'flex-1 flex absolute -top-2 -right-2 rounded-full',
+        wrapper: '',
+        closeButtonCss: '',
         bgCss: '',
         disabledBgCss: '',
         variant: {
@@ -64,11 +64,11 @@ export default {
             bgCss: 'bg-white',
             closeButtonDiv: 'flex-1 flex absolute -top-2 -right-2',
             closeButtonCss: '',
-            footer: 'mt-3 md:mt-5 grid grid-cols-2',
-            innerModal: 'absolute top-1/2 transform -translate-y-1/2 mt-5 self-start rounded',
-            message: 'text-left text-black',
-            title: 'font-bold mx-5 my-8 text-left word-wrap text-black',
-            wrapper: 'fixed flex justify-center w-full min-h-full bg-gray-300 z-50 top-0 left-0 bg-opacity-50',
+            footer: 'flex shrink-0 flex-wrap items-center justify-end p-4 text-blue-gray-500 gap-1',
+            innerModal: 'relative m-4 w-2/5 min-w-[40%] max-w-[40%] rounded-lg bg-white font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased shadow-2xl',
+            message: 'relative border-t border-b border-t-blue-gray-100 border-b-blue-gray-100 p-4 font-sans text-base font-light leading-relaxed text-blue-gray-500 antialiased',
+            title: 'flex shrink-0 items-center p-4 font-sans text-2xl font-semibold leading-snug text-blue-gray-900 antialiased',
+            wrapper: 'fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 backdrop-blur-sm transition-opacity duration-300',
           },
           danger: {
             bgCss: 'bg-red-600 hover:bg-red-700 text-white',
@@ -77,10 +77,7 @@ export default {
       },
     };
   },
-  emits: [
-    'click-Ok-button',
-    'click-cancel-button'
-  ],
+  emits: ['click-Ok-button', 'click-cancel-button'],
   methods: {
     open() {
       this.show = true;
@@ -137,12 +134,12 @@ export default {
     },
     showFooter: {
       type: Boolean,
-      default: true
+      default: true,
     },
     showTitle: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
 };
 </script>

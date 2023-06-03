@@ -114,17 +114,22 @@ export default {
           },
           link: {
             baseCss: 'border-none hover:text-blue-500 text-center',
+            bgCss: 'bg-transparent',
           },
           editor: {
             wrapper: '',
             baseCss: 'border border-gray-50 text-gray-600',
+            bgCss: 'bg-transparent',
           },
           close: {
             wrapper: '',
-            baseCss: 'border border-red-50 text-white bg-red-700 px-3 py-2 rounded-sm',
+            baseCss: 'border border-red-50 px-3 py-2 rounded-sm',
+            bgCss: 'text-white bg-red-700',
           },
           closeRounded: {
-            baseCss: 'w-8 h-8 border border-red-50 text-white bg-red-700 rounded-full',
+            wrapper: 'flex place-items-center',
+            baseCss: 'w-8 h-8 border border-red-700 rounded-full',
+            bgCss: 'text-white bg-red-700 hover:bg-red-500',
           },
         },
       },

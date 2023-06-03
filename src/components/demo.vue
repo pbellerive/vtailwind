@@ -136,12 +136,7 @@
           </div>
         </div>
       </section>
-      TextArea
-      <section>
-        <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
-          <v-text-area v-model="area" :cols="40" rows="10" />
-        </div>
-      </section>
+
       <div class="grid grid-flow-col gap-2">
         <div>
           <div>
@@ -158,6 +153,12 @@
           </div>
         </div>
       </div>
+      TextArea
+      <section>
+        <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
+          <v-text-area v-model="area" :cols="40" rows="10" />
+        </div>
+      </section>
     </div>
     <v-notification ref="notif" />
     <v-notification ref="notifDanger" variant="danger" />
