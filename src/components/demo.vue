@@ -38,10 +38,24 @@
         <h1>INPUT</h1>
         <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
           <div class="flex gap-3 flex-wrap">
-            <v-input type="number" variant="default" />
-            <v-input type="text" variant="success" />
-            <v-input type="text" variant="danger" shortErrorMessage="Error message" />
-            <v-input type="text" variant="default" :disabled="true" />
+            <div>
+              <v-input type="number" variant="default" label="Input Label" />
+            </div>
+            <div>
+              <v-input type="text" variant="success" label="Input Label" />
+            </div>
+            <div>
+              <v-input type="text" variant="danger" shortErrorMessage="Error message" label="Input Label" />
+            </div>
+            <div>
+              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+            </div>
+            <div>
+              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+            </div>
+            <div>
+              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+            </div>
           </div>
           <div class="flex gap-3 flex-wrap">
             <v-input type="text" variant="filled" />
@@ -137,12 +151,15 @@
         </div>
       </section>
 
-      <div class="grid grid-flow-col gap-2">
+      <section>
+        <h1>Date Picker</h1>
         <div>
+          {{ dateSelected }}
+        </div>
+        <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
           <div>
-            {{ dateSelected }}
+            <v-date-picker v-model="dateSelected" label="Date Label" />
           </div>
-          <v-date-picker v-model="dateSelected" />
           <div>
             Disabled
             <v-date-picker v-model="dateSelected" :disabled="true" />
@@ -152,7 +169,7 @@
             <v-date-picker v-model="dateSelectedNull" />
           </div>
         </div>
-      </div>
+      </section>
       TextArea
       <section>
         <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">

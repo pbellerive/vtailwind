@@ -1,7 +1,7 @@
 <template>
   <div :class="css.wrapper">
     <div>
-      <v-input variant="default" @click="onClickShowDateSelector" v-model="currentSelectedDate"></v-input>
+      <v-input variant="default" @click="onClickShowDateSelector" v-model="currentSelectedDate" :label="label"></v-input>
     </div>
     <div v-show="showDateSelector" class="relative z-20">
       <div :class="css.wrapperCalendar">
@@ -66,18 +66,6 @@ export default {
     currentDaySelector() {
       return this.localValue.getDate();
     },
-    // currentMonthSelector() {
-    //     return {
-    //         text: this.getMonthList()[this.localValue.getMonth()].text,
-    //         value: this.localValue.getMonth()
-    //     }
-    // },
-    // currentYearSelector() {
-    //     return {
-    //         text: this.localValue.getFullYear().toString(),
-    //         value: this.localValue.getFullYear()
-    //     }
-    // },
   },
   created() {
     this.getMonthList();
@@ -475,6 +463,10 @@ export default {
     format: {
       type: String,
       default: 'Y-m-d',
+    },
+    label: {
+      type: String,
+      default: '',
     },
   },
   setup() {
