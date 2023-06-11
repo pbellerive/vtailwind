@@ -18,6 +18,10 @@ const Base = defineComponent({
       type: String,
       default: 'default',
     },
+    dataTestId: {
+      type: String,
+      default: undefined,
+    },
     disabled: {
       type: Boolean,
       default: false,

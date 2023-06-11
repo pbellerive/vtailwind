@@ -1,6 +1,6 @@
 <template>
   <div :class="css.wrapper">
-    <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" />
+    <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" :data-testId="dataTestId" />
     <label v-if="label" :class="css.label">
       {{ label }}
     </label>
