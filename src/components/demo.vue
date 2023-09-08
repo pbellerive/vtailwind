@@ -6,6 +6,14 @@
     </div>
     <div class="grid grid-flow-row gap-3">
       <section>
+        <h1>Rating</h1>
+        <div>
+          <v-star v-model="rating"></v-star>
+        </div>
+      </section>
+    </div>
+    <div class="grid grid-flow-row gap-3">
+      <section>
         <h1>BUTTONS</h1>
         <div class="flex flex-col gap-2">
           <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
@@ -202,11 +210,13 @@ import VNotification from './VNotification';
 import VLoading from './VLoading';
 import VModal from './VModal';
 import VMessage from './VMessage';
+import VStar from './VStar';
 
 export default {
   name: 'HelloWorld',
   data() {
     return {
+      rating: 4,
       test: '',
       testToggle: false,
       currentPage: 2,
@@ -254,6 +264,7 @@ export default {
     'v-notification': VNotification,
     'v-loading': VLoading,
     'v-modal': VModal,
+    'v-star': VStar,
     VMessage,
   },
   methods: {

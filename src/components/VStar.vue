@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row gap-2">
     <div v-for="index in max" :key="index">
-      <font-awesome-icon icon="fa-solid fa-pepper-hot" :class="color(index)" class="cursor-pointer" @click="onStarClick(index)" />
+      <font-awesome-icon :icon="iconCss" :class="color(index)" class="cursor-pointer" @click="onStarClick(index)" />
     </div>
   </div>
 </template>
@@ -30,12 +30,12 @@ export default {
       const middle = Math.ceil(this.max / 2);
 
       if (index >= middle && index < this.max) {
-        return 'text-orange-500';
+        return this.colorMiddle;
       } else if (index == this.max) {
-        return 'text-red-500';
+        return this.colorEnd;
       }
 
-      return 'text-green-fg-500';
+      return this.colorStart;
     },
     onStarClick(starValue) {
       this.$emit('update:modelValue', starValue);
@@ -49,6 +49,22 @@ export default {
     max: {
       type: Number,
       default: 5,
+    },
+    iconCss: {
+      type: String,
+      default: 'fa-solid fa-pepper-hot',
+    },
+    colorStart: {
+      type: String,
+      default: 'text-green-fg-500',
+    },
+    colorMiddle: {
+      type: String,
+      default: 'text-orange-500',
+    },
+    colorEnd: {
+      type: String,
+      default: 'text-red-500',
     },
   },
 };
