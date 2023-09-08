@@ -42,7 +42,7 @@ export default {
     },
   },
   props: {
-    modeValue: {
+    modelValue: {
       type: Number,
       default: 0,
     },
