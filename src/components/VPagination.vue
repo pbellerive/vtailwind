@@ -36,7 +36,7 @@ export default {
       const halfPages = Math.floor(this.pageToDisplay / 2);
       const nbEndPage = this.nbTotalPages() - this.currentPage;
       let nbBeforePages = halfPages;
-      let endPage = this.pageToDisplay;
+      let endPage = this.nbTotalPages() <= this.pageToDisplay ? this.nbTotalPages() : this.pageToDisplay;
       let startPage = 1;
 
       if (this.currentPage > this.pageToDisplay) {

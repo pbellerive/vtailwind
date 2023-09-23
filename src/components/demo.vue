@@ -117,7 +117,7 @@
       </section>
       <section>
         <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
-          <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="50" :perPage="2" class="self-center" />
+          <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="8" :perPage="5" class="self-center" />
           Current Page : {{ currentPage }}
         </div>
       </section>
