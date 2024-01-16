@@ -1,6 +1,6 @@
 <template>
-  <div v-if="show" @click="onCancelClickButton" :class="css.wrapper">
-    <div :class="[css.innerModal, css.bgCss]">
+  <div v-if="show" @click="onCancelClickButton" :class="css.wrapper" class="z-40">
+    <div @click.stop="" :class="[css.innerModal, css.bgCss]" class="z-50">
       <div>
         <div v-if="showTitle" class="max-w-xs md:max-w-lg">
           <slot name="title">
