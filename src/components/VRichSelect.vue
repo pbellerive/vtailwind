@@ -40,7 +40,7 @@
           </li>
           <li v-if="showMore && isAnyPageLeft">
             <div class="flex justify-center">
-              <v-button variant="link" @click="filterOptions()" class="">{{ $t('showMore') }}</v-button>
+              <v-button variant="link" @click="filterOptions(true)" class="">{{ $t('showMore') }}</v-button>
             </div>
           </li>
         </ul>
@@ -206,11 +206,13 @@ export default {
     openOptions() {
       this.showOptions = !this.showOptions && !this.disabled;
     },
-    filterOptions() {
+    filterOptions(nextPage = false) {
       if (this.fetchMethod) {
-        if (this.meta && this.meta.current_page) {
+        if (this.meta && this.meta.current_page && nextPage) {
           //ask the next page .
           this.meta.current_page += 1;
+        } else {
+          this.meta.current_page = 1;
         }
         this.fetchMethod(this.query, this.meta).then((response) => {
           // this.filteredOptions = this.filteredOptions.concat(response.data);
