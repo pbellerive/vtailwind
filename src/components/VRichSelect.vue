@@ -25,7 +25,7 @@
         </div>
       </slot>
       <slot name="options-slot">
-        <ul class="overflow-y-scroll max-h-20">
+        <ul class="overflow-y-scroll" :class="css.optionsList">
           <li @click="onClick()">
             <span :class="css.optionLabel">
               {{ placeholder }}
