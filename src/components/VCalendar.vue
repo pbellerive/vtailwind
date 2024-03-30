@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import VSelect from './VRichSelect';
+import VSelect from './VRichSelect.vue';
 import VBase from './base';
 
 export default {

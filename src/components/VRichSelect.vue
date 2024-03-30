@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import VButton from './VButton';
-import VInput from './VInput';
+import VButton from './VButton.vue';
+import VInput from './VInput.vue';
 import { reactive } from 'vue';
 import VBase from './base.js';
 

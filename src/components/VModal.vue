@@ -38,8 +38,8 @@
 
 <script>
 import Base from './base';
-import VButton from './VButton';
-import VMessage from './VMessage';
+import VButton from './VButton.vue';
+import VMessage from './VMessage.vue';
 
 export default {
   extends: Base,

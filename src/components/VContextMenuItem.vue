@@ -8,7 +8,7 @@
 
 <script>
 import Base from './base';
-import VButton from './VButton';
+import VButton from './VButton.vue';
 
 export default {
   extends: Base,

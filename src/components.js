@@ -1,36 +1,18 @@
-import VButton from './components/VButton';
-import VCalendar from './components/VCalendar';
-import VCheckbox from './components/VCheckbox';
-import VContextMenu from './components/VContextMenu';
-import VDatePicker from './components/VDatePicker';
-import VInput from './components/VInput';
-import VLoading from './components/VLoading';
-import VModal from './components/VModal';
-import VNotification from './components/VNotification';
-import VPagination from './components/VPagination';
-import VRadio from './components/VRadio';
-import VRichSelect from './components/VRichSelect';
-import VSelect from './components/VSelect';
-import VStar from './components/VStar';
-import VTextArea from './components/VTextArea';
-import VToggle from './components/VToggle';
+import VButton from './components/VButton.vue';
+import VCalendar from './components/VCalendar.vue';
+import VCheckbox from './components/VCheckbox.vue';
+import VContextMenu from './components/VContextMenu.vue';
+import VDatePicker from './components/VDatePicker.vue';
+import VInput from './components/VInput.vue';
+import VLoading from './components/VLoading.vue';
+import VModal from './components/VModal.vue';
+import VNotification from './components/VNotification.vue';
+import VPagination from './components/VPagination.vue';
+import VRadio from './components/VRadio.vue';
+import VRichSelect from './components/VRichSelect.vue';
+import VSelect from './components/VSelect.vue';
+import VStar from './components/VStar.vue';
+import VTextArea from './components/VTextArea.vue';
+import VToggle from './components/VToggle.vue';
 
-
-export {
-  VButton,
-  VCalendar,
-  VCheckbox,
-  VContextMenu,
-  VDatePicker,
-  VInput,
-  VLoading,
-  VModal,
-  VNotification,
-  VPagination,
-  VRadio,
-  VRichSelect,
-  VSelect,
-  VStar,
-  VTextArea,
-  VToggle,
-};
+export { VButton, VCalendar, VCheckbox, VContextMenu, VDatePicker, VInput, VLoading, VModal, VNotification, VPagination, VRadio, VRichSelect, VSelect, VStar, VTextArea, VToggle };

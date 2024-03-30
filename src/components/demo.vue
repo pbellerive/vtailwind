@@ -196,21 +196,21 @@
 </template>
 
 <script>
-import VButton from './VButton';
-import VInput from './VInput';
-import VToggle from './VToggle';
-import VPagination from './VPagination';
-import VSelect from './VSelect';
-import VCheckbox from './VCheckbox';
-import VRadio from './VRadio';
-import VTextArea from './VTextArea';
-import VRichSelect from './VRichSelect';
-import VDatePicker from './VDatePicker';
-import VNotification from './VNotification';
-import VLoading from './VLoading';
-import VModal from './VModal';
-import VMessage from './VMessage';
-import VStar from './VStar';
+import VButton from './VButton.vue';
+import VInput from './VInput.vue';
+import VToggle from './VToggle.vue';
+import VPagination from './VPagination.vue';
+import VSelect from './VSelect.vue';
+import VCheckbox from './VCheckbox.vue';
+import VRadio from './VRadio.vue';
+import VTextArea from './VTextArea.vue';
+import VRichSelect from './VRichSelect.vue';
+import VDatePicker from './VDatePicker.vue';
+import VNotification from './VNotification.vue';
+import VLoading from './VLoading.vue';
+import VModal from './VModal.vue';
+import VMessage from './VMessage.vue';
+import VStar from './VStar.vue';
 
 export default {
   name: 'HelloWorld',

@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import VSelect from './VRichSelect';
-import VInput from './VInput';
+import VSelect from './VRichSelect.vue';
+import VInput from './VInput.vue';
 import VBase from './base';
 
 export default {
