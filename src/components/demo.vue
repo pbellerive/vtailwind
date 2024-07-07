@@ -65,7 +65,7 @@
               <v-input type="text" variant="default" :disabled="true" label="Input Label" />
             </div>
           </div>
-          <div class="flex gap-3 flex-wrap">
+          <div class="flex flex-row gap-3 mt-5">
             <v-input type="text" variant="filled" />
             <v-input type="text" variant="filled_success" />
             <v-input type="text" variant="filled_danger" shortErrorMessage="Error message" />

@@ -18,7 +18,7 @@
     <label :class="css.label">
       {{ label }}
     </label>
-    <div v-if="showOptions" :class="css.optionsWrapper">
+    <div v-if="showOptions" :class="css.optionsWrapper" class="min-w-[220px]">
       <slot name="options-search">
         <div v-if="searchable" class="px-2 mt-2">
           <v-input v-model="query" :variant="searchInputVariant" />
