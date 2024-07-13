@@ -62,7 +62,7 @@
               <v-input type="text" variant="default" :disabled="true" label="Input Label" />
             </div>
             <div>
-              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+              <v-input type="text" variant="default" label="Prepend" prepend prependValue="test"/>
             </div>
           </div>
           <div class="flex flex-row gap-3 mt-5">
@@ -169,12 +169,10 @@
             <v-date-picker v-model="dateSelected" label="Date Label" />
           </div>
           <div>
-            Disabled
-            <v-date-picker v-model="dateSelected" :disabled="true" />
+            <v-date-picker v-model="dateSelected" :disabled="true" label="Disabled"/>
           </div>
           <div>
-            Default null value
-            <v-date-picker v-model="dateSelectedNull" />
+            <v-date-picker v-model="dateSelectedNull"  label=" Default null value"/>
           </div>
         </div>
       </section>

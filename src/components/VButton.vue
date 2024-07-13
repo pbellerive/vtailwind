@@ -5,7 +5,7 @@
         <slot></slot>
       </span>
     </router-link>
-    <button v-else :class="[css.baseCss, bgCss, css.label]" :disabled="disabled">
+    <button v-else :class="[css.baseCss, css.bgCss, css.label]" :disabled="disabled">
       <span class="text-center">
         <slot></slot>
       </span>
@@ -32,15 +32,14 @@ export default {
       tag: 'button',
       css: {
         wrapper: 'inline-block',
-        baseCss: 'p-2 md:p-3 border-2 rounded rounded-sm',
+        baseCss: 'p-2 md:p-2 border-2 rounded rounded-sm',
         bgCss: 'bg-white',
         disabledBgCss: 'bg-gray-200',
         variant: {
           default: {
             wrapper: 'inline-block',
-            // baseCss: 'p-2 md:p-3 border-2 rounded rounded-sm text-black',
             baseCss:
-              'middle none center rounded-lg py-3 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-lg py-2 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-white',
             disabledBgCss: 'bg-gray-200',
             label: 'text-xs font-bold uppercase',
@@ -48,53 +47,53 @@ export default {
           elevatedPrimary: {
             wrapper: 'inline-block',
             baseCss:
-              'middle none center rounded-full py-3 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-full py-2 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-green-500 text-white',
             disabledBgCss: 'bg-gray-200',
             label: 'text-xs font-bold uppercase',
           },
           elevatedSecondary: {
             baseCss:
-              'middle none center rounded-full py-3 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-full py-2 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-blue-500 text-white',
             disabledBgCss: 'bg-gray-200',
             label: 'text-xs font-bold uppercase',
           },
           elevatedTertiary: {
             baseCss:
-              'middle none center rounded-full py-3 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-full py-2 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-gray-500 text-black',
             disabledBgCss: 'bg-gray-200',
             label: 'text-xs font-bold uppercase',
           },
           elevatedDanger: {
             baseCss:
-              'middle none center rounded-full py-3 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-full py-2 px-6 font-sans shadow-md shadow-gray-500/20 transition-all hover:shadow-lg hover:shadow-gray-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-red-500 text-white',
             disabledBgCss: 'bg-gray-200',
             label: 'text-xs font-bold uppercase',
           },
           primary: {
             baseCss:
-              'middle none center rounded-lg py-3 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-lg py-2 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-green-600 hover:bg-green-700 text-white',
             label: 'text-xs font-bold uppercase',
           },
           secondary: {
             baseCss:
-              'middle none center rounded-lg py-3 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-lg py-2 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-blue-100 hover:bg-blue-200 text-gray-900',
             label: 'text-xs font-bold uppercase',
           },
           tertiary: {
             baseCss:
-              'middle none center rounded-lg py-3 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-lg py-2 px-6 font-sans shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-gray-500 text-black',
             label: 'text-xs font-bold uppercase',
           },
           danger: {
             baseCss:
-              'middle none center rounded-lg py-3 px-6 font-sans shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+              'middle none center rounded-lg py-2 px-6 font-sans shadow-md shadow-red-500/20 transition-all hover:shadow-lg hover:shadow-red-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
             bgCss: 'bg-red-600 hover:bg-red-700 text-black',
             label: 'text-xs font-bold uppercase',
           },
@@ -130,6 +129,14 @@ export default {
             wrapper: 'flex place-items-center',
             baseCss: 'w-8 h-8 border border-red-700 rounded-full',
             bgCss: 'text-white bg-red-700 hover:bg-red-500',
+          },
+          prepend: {
+            wrapper: 'inline-block',
+            baseCss:
+              'middle none center rounded-lg py-2 px-6 mr-0 font-sans disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none',
+            bgCss: 'bg-gray-200 rounded-r-none',
+            disabledBgCss: 'bg-gray-200',
+            label: 'text-xs font-bold uppercase',
           },
         },
       },

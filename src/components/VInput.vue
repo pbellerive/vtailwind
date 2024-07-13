@@ -3,7 +3,14 @@
     <label v-if="label" :class="css.label">
       {{ label }}
     </label>
-    <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss]" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" :data-testId="dataTestId" />
+    <div class="flex gap-0">
+      <div v-if="prepend" class="prependButton">        
+        <v-button variant="prepend">
+          {{ prependValue }}
+        </v-button>
+      </div>
+      <input :type="type" :value="modelValue" :required="required" :placeholder="placeholder" :class="[css.baseCss, prepend ? css.preprendInput : '']" @input="onInput" :disabled="disabled" @focus="isFocus = true" @focusout="isFocus = false" :data-testId="dataTestId" />
+    </div>
     <div v-if="['danger', 'filled_danger'].includes(variant) && shortErrorMessage" :class="[css.shortError]" class="">
       <div>
         {{ shortErrorMessage }}
@@ -14,9 +21,13 @@
 
 <script>
 import VBase from './base';
+import VButton from './VButton.vue';
 
 export default {
   extends: VBase,
+  components: {
+    'v-button': VButton
+  },
   data() {
     return {
       isFocus: false,
@@ -31,9 +42,11 @@ export default {
             wrapper: 'relative h-14 w-full min-w-[200px]',
             // baseCss: 'border border-gray-200 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-500',
             baseCss:
-              'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-1.5 font-sans text-sm font-normal text-blue-gray-700  transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
+              'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-1 font-sans text-sm font-normal text-blue-gray-700  transition-all focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label:
               "",
+            prependButton: "mr-0 pr-0",
+            preprendInput: "ml-0 rounded-l-none"
           },
           success: {
             wrapper: 'relative h-14 w-full min-w-[200px]',
@@ -85,7 +98,15 @@ export default {
     },
   },
   props: {
+    prepend: {
+      type: Boolean,
+      default: false
+    },
     label: {
+      type: String,
+      default: undefined,
+    },
+    prependValue: {
       type: String,
       default: undefined,
     },
