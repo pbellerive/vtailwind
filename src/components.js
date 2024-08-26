@@ -5,6 +5,7 @@ import VContextMenu from './components/VContextMenu.vue';
 import VDatePicker from './components/VDatePicker.vue';
 import VInput from './components/VInput.vue';
 import VLoading from './components/VLoading.vue';
+import VMessage from './components/VMessage.vue';
 import VModal from './components/VModal.vue';
 import VNotification from './components/VNotification.vue';
 import VPagination from './components/VPagination.vue';

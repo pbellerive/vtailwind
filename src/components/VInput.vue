@@ -40,7 +40,6 @@ export default {
         variant: {
           default: {
             wrapper: 'relative h-14 w-full min-w-[200px]',
-            // baseCss: 'border border-gray-200 rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-500',
             baseCss:
               'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-1 font-sans text-sm font-normal text-blue-gray-700  transition-all focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
             label:
