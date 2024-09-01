@@ -16,4 +16,4 @@ import VStar from './components/VStar.vue';
 import VTextArea from './components/VTextArea.vue';
 import VToggle from './components/VToggle.vue';
 
-export { VButton, VCalendar, VCheckbox, VContextMenu, VDatePicker, VInput, VLoading, VModal, VNotification, VPagination, VRadio, VRichSelect, VSelect, VStar, VTextArea, VToggle };
+export { VButton, VCalendar, VCheckbox, VContextMenu, VDatePicker, VInput, VLoading, VMessage, VModal, VNotification, VPagination, VRadio, VRichSelect, VSelect, VStar, VTextArea, VToggle };
