@@ -2,7 +2,7 @@
   <div class="hello max-w-4xl mx-auto pb-20">
     <h1>Welcome to VTailwind , a Vuejs 3 UI components</h1>
     <div>
-      <v-message message="Message ici" :show="true"></v-message>
+      <v-message message="Message ici" :show="true" @update:show="(value) => (show = value)"></v-message>
     </div>
     <div class="grid grid-flow-row gap-3">
       <section>

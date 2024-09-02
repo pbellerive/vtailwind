@@ -1,11 +1,11 @@
 <template>
-  <div v-if="show" :class="[css.wrapper, css.bgCss]">
+  <div v-if="innerShow" :class="[css.wrapper, css.bgCss]">
     <div :class="css.baseCss">
       <slot>
         {{ message }}
       </slot>
     </div>
-    <div @click="show = false" :class="css.closeButtonCss">x</div>
+    <div @click="hide" :class="css.closeButtonCss">x</div>
   </div>
 </template>
 
@@ -15,6 +15,7 @@ import Base from './base';
 export default {
   extends: Base,
   setup() {},
+  emits: ['update:show'],
   computed: {
     bgCss() {
       if (this.disabled) {
@@ -24,9 +25,24 @@ export default {
       return this.css.bgCss;
     },
   },
+  mounted() {
+    this.innerShow = this.show;
+  },
+  watch:{
+    show(newValue, oldValue) {
+      this.innerShow = newValue;
+    }
+  },
+  methods: {
+    hide() {
+      this.innerShow = false;
+      this.$emit('update:show', this.innerShow);
+    }
+  },
   data() {
     return {
       tag: 'message',
+      innerShow: false, 
       css: {
         wrapper: 'flex w-full relative py-3',
         baseCss: 'flex-1 text-center',
