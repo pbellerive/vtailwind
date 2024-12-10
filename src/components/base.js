@@ -2,7 +2,10 @@ import { defineComponent } from 'vue';
 
 const Base = defineComponent({
     props: {
-        modelValue: {},
+        modelValue: {
+            type: [String, Number, Boolean, Array, Object],
+            default: undefined
+        },
         variant: {
             type: String,
             default: 'default'

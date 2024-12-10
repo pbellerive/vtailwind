@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
-import Checkbox from '@/components/VCheckbox.js';
+import Checkbox from '@/components/VCheckbox.vue';
 
 describe('VCheckbox.js', () => {
     it('set checked on click', async () => {

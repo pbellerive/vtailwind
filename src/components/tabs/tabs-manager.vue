@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { reactive } from 'vue';
-import { useStore } from 'vuex'; // This line is already present in the code
+// import { reactive } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     props: {

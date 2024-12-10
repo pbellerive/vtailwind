@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
-import Base from '@/components/base.js';
+import Base from '@/components/Base.js';
 
 describe('base.js', () => {
     it('set variant', async () => {
