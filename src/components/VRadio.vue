@@ -1,6 +1,14 @@
 <template>
   <div class="flex items-center" :class="wrapperLeftCss">
-    <input v-model="innerValue" type="radio" ref="radio" :value="value" :checked="isChecked" @change="onChange" :class="[css.baseCss]" :disabled="disabled" />
+    <input
+      ref="radio"
+      v-model="innerValue"
+      type="radio"
+      :value="value"
+      :checked="isChecked"
+      :class="[css.baseCss]"
+      :disabled="disabled"
+      @change="onChange" />
     <span :class="labelPositionCss">{{ label }}</span>
   </div>
 </template>
@@ -9,81 +17,81 @@
 import VBase from './base.js';
 
 export default {
-  extends: VBase,
-  setup() {
-    return {};
-  },
-  mounted() {
-    this.innerValue = this.modelValue;
-  },
-  data() {
-    return {
-      tag: 'radio',
-      css: {
-        baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300',
-        labelRightCss: 'ml-2',
-        labelLeftCss: 'mr-2',
-        wrapperLabelLeft: 'flex-row-reverse',
-        variant: {},
-      },
-      innerValue: undefined,
-    };
-  },
-  watch: {
-    modelValue(newValue) {
-      this.innerValue = this.modelValue;
+    extends: VBase,
+    props: {
+        labelPosition: {
+            type: String,
+            default: 'right'
+        },
+        checked: {
+            type: Boolean,
+            default: false
+        },
+        label: {
+            type: String,
+            default: ''
+        },
+        modelValue: {
+            default: ''
+        },
+        name: {
+            type: String,
+            default: ''
+        },
+        value: {
+            type: [String, Number, Boolean, Array, Object],
+            default: false
+        }
     },
-  },
-  computed: {
-    isChecked() {
-      return this.value == this.modelValue;
+    emits: ['update:modelValue'],
+    setup() {
+        return {};
     },
-    wrapperLeftCss() {
-      if (this.labelPosition === 'left') {
-        return this.css.wrapperLabelLeft;
-      }
-      return '';
+    data() {
+        return {
+            tag: 'radio',
+            css: {
+                baseCss: 'border-2 border-gray-200 rounded px-2 focus:outline-none focus:ring-2 focus:ring-blue-300',
+                labelRightCss: 'ml-2',
+                labelLeftCss: 'mr-2',
+                wrapperLabelLeft: 'flex-row-reverse',
+                variant: {}
+            },
+            innerValue: undefined
+        };
     },
-    labelPositionCss() {
-      let css = this.css.labelRightCss;
+    computed: {
+        isChecked() {
+            return this.value == this.modelValue;
+        },
+        wrapperLeftCss() {
+            if (this.labelPosition === 'left') {
+                return this.css.wrapperLabelLeft;
+            }
+            return '';
+        },
+        labelPositionCss() {
+            let css = this.css.labelRightCss;
 
-      if (this.labelPosition === 'left') {
-        css = this.css.labelLeftCss;
-      }
+            if (this.labelPosition === 'left') {
+                css = this.css.labelLeftCss;
+            }
 
-      return css;
+            return css;
+        }
     },
-  },
-  methods: {
-    onChange($event) {
-      this.$emit('update:modelValue', this.value);
+    watch: {
+        modelValue(newValue) {
+            this.innerValue = this.modelValue;
+        }
     },
-  },
-  props: {
-    labelPosition: {
-      type: String,
-      default: 'right',
+    mounted() {
+        this.innerValue = this.modelValue;
     },
-    checked: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-      default: '',
-    },
-    modelValue: {
-      default: '',
-    },
-    name: {
-      type: String,
-      default: '',
-    },
-    value: {
-      type: [String, Number, Boolean, Array, Object],
-      default: false,
-    },
-  },
-  emits: ['update:modelValue'],
+    methods: {
+        onChange($event) {
+            this.$emit('update:modelValue', this.value);
+        }
+    }
 };
 </script>

@@ -10,9 +10,9 @@ import Demo from './components/demo.vue';
 import 'tailwindcss/tailwind.css';
 
 export default {
-  name: 'App',
-  components: {
-    Demo,
-  },
+    name: 'App',
+    components: {
+        Demo
+    }
 };
 </script>

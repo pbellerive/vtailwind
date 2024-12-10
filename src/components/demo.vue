@@ -31,8 +31,8 @@
           </div>
           <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
             <v-button @click="$refs.notif.show({ text: 'Test content', title: 'Test title' })">show notification</v-button>
-            <v-button @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })" variant="default">Show danger</v-button>
-            <v-button @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })" variant="default">Show warning</v-button>
+            <v-button variant="default" @click="$refs.notifDanger.show({ text: 'Test content', title: 'Test title' })">Show danger</v-button>
+            <v-button variant="default" @click="$refs.notifWarning.show({ text: 'Test content', title: 'Test title' })">Show warning</v-button>
 
             <v-button variant="notvariant">No variant</v-button>
             <v-button variant="primary" :disabled="true">Primary disabled</v-button>
@@ -53,22 +53,39 @@
               <v-input type="text" variant="success" label="Input Label" />
             </div>
             <div>
-              <v-input type="text" variant="danger" shortErrorMessage="Error message" label="Input Label" />
+              <v-input
+                type="text"
+                variant="danger"
+                short-error-message="Error message"
+                label="Input Label" />
             </div>
             <div>
-              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+              <v-input
+                type="text"
+                variant="default"
+                :disabled="true"
+                label="Input Label" />
             </div>
             <div>
-              <v-input type="text" variant="default" :disabled="true" label="Input Label" />
+              <v-input
+                type="text"
+                variant="default"
+                :disabled="true"
+                label="Input Label" />
             </div>
             <div>
-              <v-input type="text" variant="default" label="Prepend" prepend prependValue="test"/>
+              <v-input
+                type="text"
+                variant="default"
+                label="Prepend"
+                prepend
+                prepend-value="test"/>
             </div>
           </div>
           <div class="flex flex-row gap-3 mt-5">
             <v-input type="text" variant="filled" />
             <v-input type="text" variant="filled_success" />
-            <v-input type="text" variant="filled_danger" shortErrorMessage="Error message" />
+            <v-input type="text" variant="filled_danger" short-error-message="Error message" />
           </div>
         </div>
       </section>
@@ -76,11 +93,11 @@
       <section class="">
         <h1>CHECKBOX</h1>
         <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
-          <div class="flex justify-center"><v-checkbox v-model="checkValue" variant="default" trueValue="a" />{{ checkValue }}</div>
+          <div class="flex justify-center"><v-checkbox v-model="checkValue" variant="default" true-value="a" />{{ checkValue }}</div>
           <div>
             <div class="flex flex-row gap-3 justify-center">
-              <v-checkbox variant="danger" v-model="checkArrayValue" trueValue="a" />
-              <v-checkbox v-model="checkArrayValue" trueValue="b" />
+              <v-checkbox v-model="checkArrayValue" variant="danger" true-value="a" />
+              <v-checkbox v-model="checkArrayValue" true-value="b" />
             </div>
             <div>--{{ checkArrayValue }}--</div>
           </div>
@@ -95,21 +112,44 @@
         <div class="flex flex-row flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
           <div class="flex flex-row gap-2 justify-center">
             <div>
-              <v-radio name="radio1" value="my-radioA" v-model="radioValue" label="Radio A" />
+              <v-radio
+                v-model="radioValue"
+                name="radio1"
+                value="my-radioA"
+                label="Radio A" />
             </div>
             <div>
-              <v-radio name="radio1" value="my-radioAA" v-model="radioValue" label="Radio AA" :disabled="true" />
+              <v-radio
+                v-model="radioValue"
+                name="radio1"
+                value="my-radioAA"
+                label="Radio AA"
+                :disabled="true" />
             </div>
             <div>
-              <v-radio name="radio1" value="my-radioB" v-model="radioValue" label="Radio B" />
+              <v-radio
+                v-model="radioValue"
+                name="radio1"
+                value="my-radioB"
+                label="Radio B" />
             </div>
           </div>
           <div class="flex flex-row gap-2 justify-center mt-8">
             <div>
-              <v-radio name="radio2" value="my-radioC" v-model="radioValue1" label="Radio C" labelPosition="left" />
+              <v-radio
+                v-model="radioValue1"
+                name="radio2"
+                value="my-radioC"
+                label="Radio C"
+                label-position="left" />
             </div>
             <div>
-              <v-radio name="radio2" value="my-radioD" v-model="radioValue1" label="Radio D" labelPosition="left" />
+              <v-radio
+                v-model="radioValue1"
+                name="radio2"
+                value="my-radioD"
+                label="Radio D"
+                label-position="left" />
             </div>
           </div>
           <div>CurrentValue: {{ radioValue }}</div>
@@ -117,17 +157,41 @@
       </section>
       <section>
         <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
-          <v-pagination v-model="currentPage" @update:currentPage="onCurrentPageChange" :totalItems="8" :perPage="5" class="self-center" />
+          <v-pagination
+            v-model="currentPage"
+            :total-items="8"
+            :per-page="5"
+            class="self-center"
+            @update:current-page="onCurrentPageChange" />
           Current Page : {{ currentPage }}
         </div>
       </section>
       <section>
         <div>
           <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
-            <v-select v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
-            <v-select variant="primary" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
-            <v-select variant="success" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
-            <v-select variant="danger" v-model="selectedOption" :options="options" placeholder="My select" label="My Select Label" />
+            <v-select
+              v-model="selectedOption"
+              :options="options"
+              placeholder="My select"
+              label="My Select Label" />
+            <v-select
+              v-model="selectedOption"
+              variant="primary"
+              :options="options"
+              placeholder="My select"
+              label="My Select Label" />
+            <v-select
+              v-model="selectedOption"
+              variant="success"
+              :options="options"
+              placeholder="My select"
+              label="My Select Label" />
+            <v-select
+              v-model="selectedOption"
+              variant="danger"
+              :options="options"
+              placeholder="My select"
+              label="My Select Label" />
             <div>
               {{ selectedOption }}
             </div>
@@ -137,21 +201,40 @@
       <section>
         <div class="flex flex-row flex-wrap gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3">
           <div class="w-full flex flex-row gap-2">
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :disabled="true" label="My Rich Select" />
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" label="My Rich Select" />
+            <v-rselect
+              v-model="rselectValue"
+              placeholder="Choisir"
+              :options="options"
+              :disabled="true"
+              label="My Rich Select" />
+            <v-rselect
+              v-model="rselectValue"
+              placeholder="Choisir"
+              :options="options"
+              label="My Rich Select" />
             <div>
               {{ rselectValue }}
             </div>
           </div>
           <div class="mb-10">
-            <v-rselect placeholder="Choisir" :options="options" v-model="rselectValue" :searchable="true" label="My Rich Select" />
+            <v-rselect
+              v-model="rselectValue"
+              placeholder="Choisir"
+              :options="options"
+              :searchable="true"
+              label="My Rich Select" />
             <div>
               {{ rselectValue }}
             </div>
           </div>
           <div class="mb-10">
             With method
-            <v-rselect placeholder="Choisir" v-model="rselectValue2" :fetchMethod="getOptions" :searchable="true" label="My Rich Select" />
+            <v-rselect
+              v-model="rselectValue2"
+              placeholder="Choisir"
+              :fetch-method="getOptions"
+              :searchable="true"
+              label="My Rich Select" />
             <div>
               {{ rselectValue2 }}
             </div>
@@ -186,10 +269,19 @@
     <v-notification ref="notif" />
     <v-notification ref="notifDanger" variant="danger" />
     <v-notification ref="notifWarning" variant="warning" />
-    <v-loading :isLoading="false" variant="danger" />
-    <v-modal :message="'test test test '" ref="modal" variant="default"> </v-modal>
-    <v-modal :message="'No footer '" :showFooter="false" ref="modalNoFooter" variant="default"> </v-modal>
-    <v-modal :message="'No title '" title="Title" :showTitle="false" ref="modalNoTitle" variant="default"> </v-modal>
+    <v-loading :is-loading="false" variant="danger" />
+    <v-modal ref="modal" :message="'test test test '" variant="default"> </v-modal>
+    <v-modal
+      ref="modalNoFooter"
+      :message="'No footer '"
+      :show-footer="false"
+      variant="default"> </v-modal>
+    <v-modal
+      ref="modalNoTitle"
+      :message="'No title '"
+      title="Title"
+      :show-title="false"
+      variant="default"> </v-modal>
   </div>
 </template>
 
@@ -211,109 +303,109 @@ import VMessage from './VMessage.vue';
 import VStar from './VStar.vue';
 
 export default {
-  name: 'HelloWorld',
-  data() {
-    return {
-      rating: 4,
-      test: '',
-      testToggle: false,
-      currentPage: 2,
-      selectedOption: 0,
-      options: [
-        {
-          text: 'option 1',
-          value: 1,
-        },
-        {
-          text: 'option 2',
-          value: 2,
-        },
-        {
-          text: 'option 3',
-          value: 3,
-        },
-        {
-          text: 'option 4',
-          value: 4,
-        },
-      ],
-      checkValue: false,
-      checkArrayValue: ['a'],
-      radioValue: 'my-radioA',
-      radioValue1: undefined,
-      area: 'Allo',
-      rselectValue: {},
-      rselectValue2: { value: '' },
-      dateSelected: new Date(2021, 11, 2),
-      dateSelectedNull: null,
-    };
-  },
-  components: {
-    'v-button': VButton,
-    'v-input': VInput,
-    'v-toggle': VToggle,
-    'v-pagination': VPagination,
-    'v-select': VSelect,
-    'v-checkbox': VCheckbox,
-    'v-radio': VRadio,
-    'v-text-area': VTextArea,
-    'v-rselect': VRichSelect,
-    'v-date-picker': VDatePicker,
-    'v-notification': VNotification,
-    'v-loading': VLoading,
-    'v-modal': VModal,
-    'v-star': VStar,
-    VMessage,
-  },
-  methods: {
-    showModal(name) {
-      this.$refs[name]
-        .open()
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((response) => {
-          console.log(response);
-        })
-        .finally((response) => {
-          console.log('finally');
-        });
+    name: 'HelloWorld',
+    components: {
+        'v-button': VButton,
+        'v-input': VInput,
+        'v-toggle': VToggle,
+        'v-pagination': VPagination,
+        'v-select': VSelect,
+        'v-checkbox': VCheckbox,
+        'v-radio': VRadio,
+        'v-text-area': VTextArea,
+        'v-rselect': VRichSelect,
+        'v-date-picker': VDatePicker,
+        'v-notification': VNotification,
+        'v-loading': VLoading,
+        'v-modal': VModal,
+        'v-star': VStar,
+        VMessage
     },
+    props: {
+        msg: String
+    },
+    data() {
+        return {
+            rating: 4,
+            test: '',
+            testToggle: false,
+            currentPage: 2,
+            selectedOption: 0,
+            options: [
+                {
+                    text: 'option 1',
+                    value: 1
+                },
+                {
+                    text: 'option 2',
+                    value: 2
+                },
+                {
+                    text: 'option 3',
+                    value: 3
+                },
+                {
+                    text: 'option 4',
+                    value: 4
+                }
+            ],
+            checkValue: false,
+            checkArrayValue: ['a'],
+            radioValue: 'my-radioA',
+            radioValue1: undefined,
+            area: 'Allo',
+            rselectValue: {},
+            rselectValue2: { value: '' },
+            dateSelected: new Date(2021, 11, 2),
+            dateSelectedNull: null
+        };
+    },
+    methods: {
+        showModal(name) {
+            this.$refs[name]
+                .open()
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((response) => {
+                    console.log(response);
+                })
+                .finally((response) => {
+                    console.log('finally');
+                });
+        },
 
-    getOptions(query) {
-      return new Promise((resolve) => {
-        resolve({
-          data: [
-            {
-              text: 'opt 1',
-              value: 1,
-            },
-            {
-              text: 'opt 2',
-              value: 2,
-            },
-            {
-              text: 'opt 3',
-              value: 3,
-            },
-            {
-              text: 'opt 4',
-              value: 4,
-            },
-          ],
-          meta: {
-            current_page: 1,
-          },
-        });
-      });
-    },
-    onCurrentPageChange(evt) {
-      console.log('Listen update:currentPage');
-    },
-  },
-  props: {
-    msg: String,
-  },
+        getOptions(query) {
+            return new Promise((resolve) => {
+                resolve({
+                    data: [
+                        {
+                            text: 'opt 1',
+                            value: 1
+                        },
+                        {
+                            text: 'opt 2',
+                            value: 2
+                        },
+                        {
+                            text: 'opt 3',
+                            value: 3
+                        },
+                        {
+                            text: 'opt 4',
+                            value: 4
+                        }
+                    ],
+                    meta: {
+                        current_page: 1
+                    }
+                });
+            });
+        },
+        onCurrentPageChange(evt) {
+            console.log('Listen update:currentPage');
+        }
+    }
 };
 </script>
 

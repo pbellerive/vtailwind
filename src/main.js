@@ -3,9 +3,9 @@ import App from './App.vue';
 import vsettings from './index.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
-var router = new createRouter({
-  history: createWebHistory(),
-  routes: []
+const router = createRouter({
+    history: createWebHistory(),
+    routes: []
 });
 
 const app = createApp(App);
@@ -13,11 +13,11 @@ const app = createApp(App);
 const settings = {
     input: {
         css: {
-          variant: {
-            newVariant: {
-              bgCss: 'bg-gray-100 border border-black rounded'
+            variant: {
+                newVariant: {
+                    bgCss: 'bg-gray-100 border border-black rounded'
+                }
             }
-          }
         }
     }
 };

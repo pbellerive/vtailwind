@@ -1,18 +1,13 @@
 <template>
-     <div v-if="isSelected">
-        <slot>{{name}}</slot>
-    </div>
+  <div v-if="isSelected">
+    <slot>{{name}}</slot>
+  </div>
 </template>
 
 <script>
 import mixin from './mixins';
 
 export default {
-    setup () {
-
-        return {
-        }
-    },
     mixins: [mixin],
     props: {
         label: {
@@ -23,9 +18,13 @@ export default {
             type: String,
             default: undefined,
             required: true
-        },
+        }
     },
-}
+    setup () {
+        return {
+        };
+    }
+};
 </script>
 
 <style lang="scss" scoped>
