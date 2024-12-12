@@ -265,6 +265,13 @@
           <v-text-area v-model="area" :cols="40" rows="10" />
         </div>
       </section>
+      <section>
+        <h1 class="uppercase">Calendar</h1>
+        <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
+          <v-calendar v-model="dateSelected" :events="events"></v-calendar>
+          <div class="mt-2">Selected Date: {{ dateSelected }}</div>
+        </div>
+      </section>
     </div>
     <v-notification ref="notif" />
     <v-notification ref="notifDanger" variant="danger" />
@@ -282,7 +289,9 @@
       title="Title"
       :show-title="false"
       variant="default"> </v-modal>
-  </div>
+
+    </div>
+
 </template>
 
 <script>
@@ -301,6 +310,7 @@ import VLoading from './VLoading.vue';
 import VModal from './VModal.vue';
 import VMessage from './VMessage.vue';
 import VStar from './VStar.vue';
+import VCalendar from './VCalendar.vue';
 
 export default {
     name: 'HelloWorld',
@@ -319,6 +329,7 @@ export default {
         'v-loading': VLoading,
         'v-modal': VModal,
         'v-star': VStar,
+        'v-calendar': VCalendar,
         VMessage
     },
     props: {
@@ -357,7 +368,19 @@ export default {
             rselectValue: {},
             rselectValue2: { value: '' },
             dateSelected: new Date(2021, 11, 2),
-            dateSelectedNull: null
+            dateSelectedNull: null,
+            events: [
+              {
+                title: 'Meeting',
+                date: new Date(),
+                variant: 'primary'
+              },
+              {
+                title: 'Lunch',
+                date: new Date(new Date().setDate(new Date().getDate() + 1)),
+                variant: 'secondary'
+              }
+            ]
         };
     },
     methods: {
@@ -408,6 +431,3 @@ export default {
     }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>

@@ -160,15 +160,10 @@ export default {
           },
         },
       },
-      // currentDaySelector: this.localValue.getDate(),
       currentMonthSelector: {
         text: '',
         value: undefined,
       },
-      // currentYearSelector: {
-      //     text: this.localValue.getFullYear().toString(),
-      //     value: this.localValue.getFullYear()
-      // },
       currentYearSelector: {
         text: '',
         value: undefined,
@@ -188,7 +183,7 @@ export default {
         new Date(
           this.currentYearSelector.value,
           this.currentMonthSelector.value,
-          this.currentDaySelector
+          this.currentDay
         );
       const currentFormattedDate = new Intl.DateTimeFormat(this.locale, {
         month: 'long',
@@ -206,7 +201,7 @@ export default {
       this.parse(newValue);
     },
     events(newValue, oldValue) {
-      if (newValue.length != oldValue.length) {
+      if (newValue.length !== oldValue.length) {
         this.filterEventByDay();
       }
     },
@@ -257,7 +252,6 @@ export default {
 
       weekDays.push(currentDay);
 
-      // let daysBefore = 1;
       for (let i = 1; i <= dayOfTheWeek; i++) {
         const day = new Date(year, month, startingDate - i);
         weekDays.unshift(day);
@@ -281,7 +275,6 @@ export default {
       let string = '';
       const mo = date.getMonth(); // month (0-11)
       const m1 = mo + 1; // month (1-12)
-      const dow = date.getDay(); // day of week (0-6)
       const d = date.getDate(); // day of the month (1-31)
       const y = date.getFullYear(); // 1999 or 2003
       const h = date.getHours(); // hour (0-23)
@@ -290,121 +283,65 @@ export default {
 
       for (let i = 0, len = format.length; i < len; i++) {
         switch (format[i]) {
-          case 'j': // Day of the month without leading zeros  (1 to 31)
+          case 'j': { // Day of the month without leading zeros  (1 to 31)
             string += d;
             break;
-
-          case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
+          }
+          case 'd': { // Day of the month, 2 digits with leading zeros (01 to 31)
             string += d < 10 ? '0' + d : d;
             break;
-
-          case 'l': // (lowercase 'L') A full textual representation of the day of the week
-            var days = Array(
-              'Sunday',
-              'Monday',
-              'Tuesday',
-              'Wednesday',
-              'Thursday',
-              'Friday',
-              'Saturday'
-            );
-            string += days[dow];
-            break;
-
-          case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
-            string += dow;
-            break;
-
-          case 'D': // A textual representation of a day, three letters
-            days = Array('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat');
-            string += days[dow];
-            break;
-
-          case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
+          }
+          case 'm': { // Numeric representation of a month, with leading zeros (01 to 12)
             string += m1 < 10 ? '0' + m1 : m1;
             break;
-
-          case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
+          }
+          case 'n': { // Numeric representation of a month, without leading zeros (1 to 12)
             string += m1;
             break;
-
-          case 'F': // A full textual representation of a month, such as January or March
-            var months = Array(
-              'January',
-              'February',
-              'March',
-              'April',
-              'May',
-              'June',
-              'July',
-              'August',
-              'September',
-              'October',
-              'November',
-              'December'
-            );
-            string += months[mo];
-            break;
-
-          case 'M': // A short textual representation of a month, three letters (Jan - Dec)
-            months = Array(
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec'
-            );
-            string += months[mo];
-            break;
-
-          case 'Y': // A full numeric representation of a year, 4 digits (1999 OR 2003)
+          }
+          case 'Y': { // A full numeric representation of a year, 4 digits (1999 OR 2003)
             string += y;
             break;
-
-          case 'y': // A two digit representation of a year (99 OR 03)
+          }
+          case 'y': { // A two digit representation of a year (99 OR 03)
             string += y.toString().slice(-2);
             break;
-
-          case 'H': // 24-hour format of an hour with leading zeros (00 to 23)
+          }
+          case 'H': { // 24-hour format of an hour with leading zeros (00 to 23)
             string += h < 10 ? '0' + h : h;
             break;
-
-          case 'g': // 12-hour format of an hour without leading zeros (1 to 12)
-            var hour = h === 0 ? 12 : h;
+          }
+          case 'g': { // 12-hour format of an hour without leading zeros (1 to 12)
+            const hour = h === 0 ? 12 : h;
             string += hour > 12 ? hour - 12 : hour;
             break;
-
-          case 'h': // 12-hour format of an hour with leading zeros (01 to 12)
-            hour = h === 0 ? 12 : h;
-            hour = hour > 12 ? hour - 12 : hour;
-            string += hour < 10 ? '0' + hour : hour;
+          }
+          case 'h': { // 12-hour format of an hour with leading zeros (01 to 12)
+            const hour = h === 0 ? 12 : h;
+            const adjustedHour = hour > 12 ? hour - 12 : hour;
+            string += adjustedHour < 10 ? '0' + adjustedHour : adjustedHour;
             break;
-
-          case 'a': // Lowercase Ante meridiem and Post meridiem (am or pm)
+          }
+          case 'a': { // Lowercase Ante meridiem and Post meridiem (am or pm)
             string += h < 12 ? 'am' : 'pm';
             break;
-
-          case 'i': // Minutes with leading zeros (00 to 59)
+          }
+          case 'i': { // Minutes with leading zeros (00 to 59)
             string += mi < 10 ? '0' + mi : mi;
             break;
-
-          case 's': // Seconds, with leading zeros (00 to 59)
+          }
+          case 's': { // Seconds, with leading zeros (00 to 59)
             string += s < 10 ? '0' + s : s;
             break;
-
-          case 'c': // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
+          }
+          case 'c': { // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
             string += date.toISOString();
             break;
-
-          default:
+          }
+          default: {
             string += format[i];
+            break;
+          }
         }
       }
 
@@ -444,109 +381,63 @@ export default {
 
       return [];
     },
-    /**
-     * Recoit une date dans le meme format qu'il a ete configuré
-     * Si ce nest pas une chaine de caractere ou null ou renvoi la date du jour
-     */
     parse(value) {
-      // si cest un objet  Date
-      // si cest un format ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)  *** format serveur par defaut
-      // pas une string ou autre  ou null
-      if (typeof value !== 'string') {
-        this.localeValue = new Date();
+      let d;
+      let y;
+      let h = 0;
+      let mi = 0;
+      let s = 0;
+      let mo;
+
+      if (!value || value === '') {
+        this.localValue = new Date();
         return;
       }
-
-      let mo; // month (0-11)
-      //   const m1 = undefined; // month (1-12)
-      //   const dow = undefined; // day of week (0-6)
-      let d; // day of the month (1-31)
-      let y; // 1999 or 2003
-      let h = 0; // hour (0-23)
-      let mi = 0; // minute (0-59)
-      let s = 0; // seconds (0-59)
 
       const dateSplit = value.split(/-|\/|\b/);
       const formatSplit = this.format.split(/-|\/\b/);
 
       for (let i = 0, len = formatSplit.length; i < len; i++) {
         switch (formatSplit[i]) {
-          case 'j': // Day of the month without leading zeros  (1 to 31)
+          case 'j':
+          case 'd': {
             d = dateSplit[i];
             break;
-
-          case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
-            d = dateSplit[i];
-            break;
-
-          case 'l': // (lowercase 'L') A full textual representation of the day of the week
-            // var days = Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-            d = dateSplit[i];
-            break;
-
-          case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
-            // string += dow;
-            break;
-
-          case 'D': // A textual representation of a day, three letters
-            // days = Array("Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat");
-            // string += days[dow];
-            break;
-
-          case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
+          }
+          case 'm':
+          case 'n': {
             mo = dateSplit[i];
             break;
-
-          case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
-            mo = dateSplit[i];
-            break;
-
-          case 'F': // A full textual representation of a month, such as January or March
-            // var months = Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-            // string += months[mo];
-            break;
-
-          case 'M': // A short textual representation of a month, three letters (Jan - Dec)
-            // months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-            // string += months[mo];
-            break;
-
-          case 'Y': // A full numeric representation of a year, 4 digits (1999 OR 2003)
+          }
+          case 'Y':
+          case 'y': {
             y = dateSplit[i];
             break;
-
-          case 'y': // A two digit representation of a year (99 OR 03)
-            y = dateSplit[i];
-            break;
-
-          case 'H': // 24-hour format of an hour with leading zeros (00 to 23)
+          }
+          case 'H':
+          case 'g':
+          case 'h': {
             h = dateSplit[i];
             break;
-
-          case 'g': // 12-hour format of an hour without leading zeros (1 to 12)
-            h = dateSplit[i];
-            break;
-
-          case 'h': // 12-hour format of an hour with leading zeros (01 to 12)
-            h = dateSplit[i];
-            break;
-
-          case 'a': // Lowercase Ante meridiem and Post meridiem (am or pm)
-            // string += (h < 12) ? "am" : "pm";
-            break;
-
-          case 'i': // Minutes with leading zeros (00 to 59)
+          }
+          case 'i': {
             mi = dateSplit[i];
             break;
-
-          case 's': // Seconds, with leading zeros (00 to 59)
+          }
+          case 's': {
             s = dateSplit[i];
             break;
-
-          case 'c': // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
-            return new Date(value);
+          }
+          case 'c': {
+            this.localValue = new Date(value);
+            return;
+          }
+          default: {
+            break;
+          }
         }
       }
+
       this.localValue = new Date(parseInt(y), parseInt(mo) - 1, parseInt(d), h, mi, s);
     },
     getMonthList() {
