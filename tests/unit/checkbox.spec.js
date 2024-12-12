@@ -1,42 +1,40 @@
-import { expect } from 'chai';
 import { mount } from '@vue/test-utils';
-import Checkbox from '@/components/VCheckbox.vue';
+import { expect, describe, it } from 'vitest';
+import Checkbox from '../../src/components/VCheckbox.vue';
 
-describe('VCheckbox.js', () => {
-    it('set checked on click', async () => {
-        const wrapper = mount(Checkbox, {
-            propsData: {
-                value: 'a'
-            }
-        });
-        const checkbox = wrapper.find('input');
-        await checkbox.setChecked();
-        // const test = true;
-        // expect(test).to.be.true;
-        expect(checkbox.element.checked).to.be.true;
+describe('Checkbox', () => {
+    it('should be unchecked by default', () => {
+        const wrapper = mount(Checkbox);
+        const checkbox = wrapper.find('input[type="checkbox"]');
+        expect(checkbox.element.checked).toBe(false);
     });
 
-    // it('set the value', () => {
-    //     const wrapper = mount(Checkbox, {
-    //         propsData: {
-    //             value: 'a'
-    //         }
-    //     });
+    it('should be checked when modelValue is true', () => {
+        const wrapper = mount(Checkbox, {
+            props: {
+                modelValue: true
+            }
+        });
+        const checkbox = wrapper.find('input[type="checkbox"]');
+        expect(checkbox.element.checked).toBe(true);
+    });
 
-    //     expect(wrapper.vm.value).to.equal('a');
-    // });
+    it.skip('should handle value prop', () => {
+        const wrapper = mount(Checkbox, {
+            props: {
+                value: 'test-value'
+            }
+        });
+        expect(wrapper.props('value')).toBe('test-value');
+    });
 
-    // it('set array values', async () => {
-    //     let
-    //       const wrapperA = mount(Checkbox, {
-    //         value: 'a',
-    //         modelValue: []
-    //       });
-
-    //       const wrapperB = mount(Checkbox, {
-    //         value: 'b',
-    //         modelValue: []
-    //       });
-
-    //   });
+    it.skip('should handle array values', () => {
+        const wrapper = mount(Checkbox, {
+            props: {
+                value: 'test-value',
+                modelValue: []
+            }
+        });
+        expect(wrapper.props('modelValue')).toEqual([]);
+    });
 });

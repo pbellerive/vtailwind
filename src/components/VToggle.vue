@@ -1,12 +1,3 @@
-<template>
-  <span :class="wrapper" @click="onClickToggle">
-    <input type="hidden" />
-    <span :class="buttonClass"></span>
-    <span :class="checkClass"></span>
-    <span :class="checkClass"></span>
-  </span>
-</template>
-
 <script>
 import Base from './base';
 
@@ -14,7 +5,7 @@ export default {
     extends: Base,
     props: ['modelValue'],
     emits: ['update:modelValue'],
-    setup(props) {
+    setup(_props) {
         return {};
     },
     data() {
@@ -65,8 +56,8 @@ export default {
         }
     },
     watch: {
-        checked(newValue, oldValue) {
-            this.$emit('update:modelValue', this.checked);
+        modelValue(_newValue, _oldValue) {
+            this.checked = this.modelValue;
         }
     },
     created() {
@@ -79,5 +70,14 @@ export default {
     }
 };
 </script>
+
+<template>
+  <span :class="wrapper" @click="onClickToggle">
+    <input type="hidden" />
+    <span :class="buttonClass"/>
+    <span :class="checkClass"/>
+    <span :class="checkClass"/>
+  </span>
+</template>
 
 <style lang="scss" scoped></style>

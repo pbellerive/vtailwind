@@ -1,14 +1,3 @@
-<template>
-  <div v-if="show" :class="[css.bgCss, css.wrapper]">
-    <div :class="css.closeButtonCss">
-      <button variant="close" @click="show = false">x</button>
-    </div>
-    <div class="flex flex-col divide-y divide-gray-500 gap-3">
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script>
 import Base from './base';
 import VButton from './VButton.vue';
@@ -45,5 +34,16 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div v-if="show" :class="[css.bgCss, css.wrapper]">
+    <div :class="css.closeButtonCss">
+      <button variant="close" @click="show = false">x</button>
+    </div>
+    <div class="flex flex-col divide-y divide-gray-500 gap-3">
+      <slot/>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

@@ -1,45 +1,3 @@
-<template>
-  <div
-    v-if="show"
-    :class="css.wrapper"
-    class="z-40"
-    @click="onCancelClickButton">
-    <div :class="[css.innerModal, css.bgCss]" class="z-50" @click.stop="">
-      <div>
-        <div v-if="showTitle" class="max-w-xs md:max-w-lg">
-          <slot name="title">
-            <p :class="css.title">
-              {{ title }}
-            </p>
-          </slot>
-        </div>
-        <div :class="css.message">
-          <slot name="message">
-            <span>
-              {{ message }}
-            </span>
-          </slot>
-        </div>
-      </div>
-      <div :class="css.closeButtonDiv">
-        <div :class="css.closeButtonCss">
-          <v-button variant="closeRounded" @click="show = false"> x </v-button>
-        </div>
-      </div>
-      <slot v-if="showFooter" name="footer">
-        <div :class="css.footer">
-          <div>
-            <v-button variant="elevatedPrimary" @click="onOkClickButton">{{ yesLabel }}</v-button>
-          </div>
-          <div>
-            <v-button variant="elevatedDanger" @click="onCancelClickButton">{{ noLabel }}</v-button>
-          </div>
-        </div>
-      </slot>
-    </div>
-  </div>
-</template>
-
 <script>
 import Base from './base';
 import VButton from './VButton.vue';
@@ -147,5 +105,47 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div
+    v-if="show"
+    :class="css.wrapper"
+    class="z-40"
+    @click="onCancelClickButton">
+    <div :class="[css.innerModal, css.bgCss]" class="z-50" @click.stop="">
+      <div>
+        <div v-if="showTitle" class="max-w-xs md:max-w-lg">
+          <slot name="title">
+            <p :class="css.title">
+              {{ title }}
+            </p>
+          </slot>
+        </div>
+        <div :class="css.message">
+          <slot name="message">
+            <span>
+              {{ message }}
+            </span>
+          </slot>
+        </div>
+      </div>
+      <div :class="css.closeButtonDiv">
+        <div :class="css.closeButtonCss">
+          <v-button variant="closeRounded" @click="show = false"> x </v-button>
+        </div>
+      </div>
+      <slot v-if="showFooter" name="footer">
+        <div :class="css.footer">
+          <div>
+            <v-button variant="elevatedPrimary" @click="onOkClickButton">{{ yesLabel }}</v-button>
+          </div>
+          <div>
+            <v-button variant="elevatedDanger" @click="onCancelClickButton">{{ noLabel }}</v-button>
+          </div>
+        </div>
+      </slot>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

@@ -1,63 +1,88 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import globals from 'globals';
-import vue from 'eslint-plugin-vue';
-import * as babelParser from '@babel/eslint-parser';
-import * as vueParser from 'vue-eslint-parser';
-
-const compat = new FlatCompat({
-    baseDirectory: import.meta.dirname,
-    resolvePluginsRelativeTo: import.meta.dirname,
-    recommendedConfig: js.configs.recommended
-});
+import process from 'node:process'
+import pluginVue from 'eslint-plugin-vue'
+import pluginVitest from '@vitest/eslint-plugin'
+import pluginCypress from 'eslint-plugin-cypress/flat'
+import * as parserVue from 'vue-eslint-parser'
 
 export default [
-    js.configs.recommended,
-    ...compat.extends(
-        'plugin:vue/vue3-recommended',
-        'eslint-config-standard'
-    ),
-    {
-        files: ['**/*.{js,vue}'],
-        ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', 'test/unit/*', 'test/*'],
-        languageOptions: {
-            ecmaVersion: 2022,
-            sourceType: 'module',
-            parser: vueParser,
-            parserOptions: {
-                parser: babelParser,
-                sourceType: 'module'
-            },
-            globals: {
-                ...globals.node,
-                'vue/setup-compiler-macros': true
-            }
+  {
+    files: ['**/*.{js,mjs,jsx,vue}'],
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/node_modules/**'],
+    languageOptions: {
+      globals: {
+        process: true
+      },
+      parser: parserVue,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true
         },
-        plugins: {
-            vue
+        parser: {
+          js: 'espree',
+          jsx: 'espree',
+          ts: '@typescript-eslint/parser',
+          tsx: '@typescript-eslint/parser'
         },
-        rules: {
-            'semi': ['error', 'always'],
-            'vue/multi-word-component-names': 'off',
-            'vue/html-indent': ['error', 2],
-            'vue/max-attributes-per-line': ['error', {
-                'singleline': 3,
-                'multiline': 1
-            }],
-            'vue/no-v-html': 'error',
-            'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-            'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-        }
+        extraFileExtensions: ['.vue']
+      }
     },
-    {
-        files: ['**/*.spec.js', '**/*.test.js'],
-        languageOptions: {
-            globals: {
-                ...globals.node,
-                ...globals.mocha
-            }
-        }
+    rules: {
+      'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'prefer-const': 'error',
+      'no-var': 'error',
+      'object-shorthand': 'error',
+      'eqeqeq': ['error', 'always']
+    }
+  },
+  {
+    files: ['**/*.vue'],
+    plugins: {
+      vue: pluginVue
     },
-    prettier
-];
+    rules: {
+      ...pluginVue.configs['flat/recommended'].rules,
+      'vue/multi-word-component-names': 'error',
+      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+      'vue/component-tags-order': ['error', {
+        order: ['script', 'template', 'style']
+      }],
+      'vue/define-macros-order': ['error', {
+        order: ['defineProps', 'defineEmits']
+      }],
+      'vue/html-self-closing': ['error', {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always'
+        }
+      }],
+      'vue/no-unused-refs': 'error',
+      'vue/padding-line-between-blocks': 'error',
+      'vue/prefer-separate-static-class': 'error'
+    }
+  },
+  {
+    files: ['**/*.test.{js,mjs,jsx}', '**/*.spec.{js,mjs,jsx}'],
+    plugins: {
+      vitest: pluginVitest
+    },
+    rules: pluginVitest.configs.recommended.rules
+  },
+  {
+    files: ['cypress/**/*.{js,mjs,jsx}', 'cypress.config.{js,mjs,jsx}'],
+    plugins: {
+      cypress: pluginCypress
+    },
+    rules: {
+      'cypress/no-assigning-return-values': 'error',
+      'cypress/no-unnecessary-waiting': 'error',
+      'cypress/assertion-before-screenshot': 'warn',
+      'cypress/no-force': 'warn',
+      'cypress/no-async-tests': 'error'
+    }
+  }
+]

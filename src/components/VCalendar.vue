@@ -1,93 +1,3 @@
-<template>
-  <div :class="css.wrapper">
-    <div>
-      <div :class="css.wrapperCalendar">
-        <div :class="[css.wrapperSelector]">
-          <div class="mr-1 cursor-pointer" :class="css.previousButtonCss" @click="previousMonth">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="caret-left"
-              class="inline w-2"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 192 512"
-            >
-              <path
-                fill="currentColor"
-                d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"
-              ></path>
-            </svg>
-          </div>
-          <div>
-            <v-rselect
-              v-model="currentMonthSelector"
-              :options="getMonthList()"
-              value-option-attribute="object"
-              :searchable="true"
-              class="text-xs"
-              @changed="$emit('monthChanged')"
-            />
-          </div>
-          <div class="inline">
-            <v-rselect
-              v-model="currentYearSelector"
-              :options="getYearList().reverse()"
-              value-option-attribute="object"
-              :searchable="true"
-              class="text-xs"
-              @changed="$emit('yearChanged')"
-            />
-          </div>
-          <div class="ml-1 cursor-pointer" :class="css.nextButtonCss" @click="nextMonth">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="caret-right"
-              class="inline w-2"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 192 512"
-            >
-              <path
-                fill="currentColor"
-                d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-        <div class="w-full">
-          <!-- jour -->
-          <div v-for="(week, weekIndex) in buildMonths()" :key="weekIndex" :class="css.wrapperWeek">
-            <div
-              v-for="(day, dayIndex) in week"
-              :key="dayIndex + 'd'"
-              :class="[getSelectedDateCss(day), css.wrapperDay]"
-              class="max-h-16"
-            >
-              <span class="absolute top-1 left-2" @click="onDayClick(day)">
-                {{ day.getDate() }}
-              </span>
-              <div class="flex flex-col mt-2 gap-y-1 md:gap-y-2">
-                <div
-                  v-for="evt in getEventByDay(day)"
-                  :key="evt.id"
-                  class="bg-blue-100 text-gray-500 w-full px-2 rounded-md"
-                  @click="onEventClick(evt)"
-                >
-                  {{ evt[eventTitleAttribute] }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import VSelect from './VRichSelect.vue';
 import VBase from './base';
@@ -288,11 +198,11 @@ export default {
             break;
           }
           case 'd': { // Day of the month, 2 digits with leading zeros (01 to 31)
-            string += d < 10 ? '0' + d : d;
+            string += d < 10 ? `0${d}` : d;
             break;
           }
           case 'm': { // Numeric representation of a month, with leading zeros (01 to 12)
-            string += m1 < 10 ? '0' + m1 : m1;
+            string += m1 < 10 ? `0${m1}` : m1;
             break;
           }
           case 'n': { // Numeric representation of a month, without leading zeros (1 to 12)
@@ -308,7 +218,7 @@ export default {
             break;
           }
           case 'H': { // 24-hour format of an hour with leading zeros (00 to 23)
-            string += h < 10 ? '0' + h : h;
+            string += h < 10 ? `0${h}` : h;
             break;
           }
           case 'g': { // 12-hour format of an hour without leading zeros (1 to 12)
@@ -319,7 +229,7 @@ export default {
           case 'h': { // 12-hour format of an hour with leading zeros (01 to 12)
             const hour = h === 0 ? 12 : h;
             const adjustedHour = hour > 12 ? hour - 12 : hour;
-            string += adjustedHour < 10 ? '0' + adjustedHour : adjustedHour;
+            string += adjustedHour < 10 ? `0${adjustedHour}` : adjustedHour;
             break;
           }
           case 'a': { // Lowercase Ante meridiem and Post meridiem (am or pm)
@@ -327,11 +237,11 @@ export default {
             break;
           }
           case 'i': { // Minutes with leading zeros (00 to 59)
-            string += mi < 10 ? '0' + mi : mi;
+            string += mi < 10 ? `0${mi}` : mi;
             break;
           }
           case 's': { // Seconds, with leading zeros (00 to 59)
-            string += s < 10 ? '0' + s : s;
+            string += s < 10 ? `0${s}` : s;
             break;
           }
           case 'c': { // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
@@ -353,13 +263,13 @@ export default {
         const currentEvent = this.events[i];
         let dateOfTheDay;
 
-        if (currentEvent[this.startDateAttribute] != null) {
+        if (currentEvent[this.startDateAttribute] !== null) {
           dateOfTheDay = currentEvent[this.startDateAttribute];
-        } else if (currentEvent[this.dueDateAttribute] != null) {
+        } else if (currentEvent[this.dueDateAttribute] !== null) {
           dateOfTheDay = currentEvent[this.dueDateAttribute];
         }
 
-        if (dateOfTheDay != null) {
+        if (dateOfTheDay !== null) {
           const splitDate = dateOfTheDay.split('-');
           const day = splitDate[1] + splitDate[2];
           if (!(day in this.filteredEvents)) {
@@ -372,9 +282,9 @@ export default {
     },
     getEventByDay(day) {
       const dayString =
-        '' +
-        (day.getMonth() + 1).toString().padStart(2, '0') +
-        day.getDate().toString().padStart(2, '0');
+        `${ 
+        (day.getMonth() + 1).toString().padStart(2, '0') 
+        }${day.getDate().toString().padStart(2, '0')}`;
       if (day && dayString in this.filteredEvents) {
         return this.filteredEvents[dayString];
       }
@@ -518,3 +428,93 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div :class="css.wrapper">
+    <div>
+      <div :class="css.wrapperCalendar">
+        <div :class="[css.wrapperSelector]">
+          <div class="mr-1 cursor-pointer" :class="css.previousButtonCss" @click="previousMonth">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="caret-left"
+              class="inline w-2"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 192 512"
+            >
+              <path
+                fill="currentColor"
+                d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"
+              />
+            </svg>
+          </div>
+          <div>
+            <v-rselect
+              v-model="currentMonthSelector"
+              :options="getMonthList()"
+              value-option-attribute="object"
+              :searchable="true"
+              class="text-xs"
+              @changed="$emit('monthChanged')"
+            />
+          </div>
+          <div class="inline">
+            <v-rselect
+              v-model="currentYearSelector"
+              :options="getYearList().reverse()"
+              value-option-attribute="object"
+              :searchable="true"
+              class="text-xs"
+              @changed="$emit('yearChanged')"
+            />
+          </div>
+          <div class="ml-1 cursor-pointer" :class="css.nextButtonCss" @click="nextMonth">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="caret-right"
+              class="inline w-2"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 192 512"
+            >
+              <path
+                fill="currentColor"
+                d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="w-full">
+          <!-- jour -->
+          <div v-for="(week, weekIndex) in buildMonths()" :key="weekIndex" :class="css.wrapperWeek">
+            <div
+              v-for="(day, dayIndex) in week"
+              :key="dayIndex + 'd'"
+              :class="[getSelectedDateCss(day), css.wrapperDay]"
+              class="max-h-16"
+            >
+              <span class="absolute top-1 left-2" @click="onDayClick(day)">
+                {{ day.getDate() }}
+              </span>
+              <div class="flex flex-col mt-2 gap-y-1 md:gap-y-2">
+                <div
+                  v-for="evt in getEventByDay(day)"
+                  :key="evt.id"
+                  class="bg-blue-100 text-gray-500 w-full px-2 rounded-md"
+                  @click="onEventClick(evt)"
+                >
+                  {{ evt[eventTitleAttribute] }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

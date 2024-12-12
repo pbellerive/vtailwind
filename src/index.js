@@ -1,4 +1,4 @@
-const install = function (app, options) {
+const install = function(app, options) {
     app.config.globalProperties.$vUiSettings = options;
 };
 

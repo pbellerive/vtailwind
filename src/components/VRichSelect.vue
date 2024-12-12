@@ -1,68 +1,3 @@
-<template>
-  <div :class="[css.wrapper]">
-    <div :class="[css.buttonWrapper, css.baseCss, disabledCss]">
-      <div :class="css.placeholderWrapper" @click="onClickShowOptions">
-        <span class="mr-2">
-          {{ computedPlaceholder }}
-        </span>
-      </div>
-      <div class="flex flex-1 justify-end cursor-pointer" @click="onClickShowOptions">
-        <!-- font-awesome -->
-        <div :class="css.arrowCss">
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fas"
-            data-icon="caret-down"
-            class="w-4"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 320 512">
-            <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
-          </svg>
-        </div>
-      </div>
-    </div>
-    <label :class="css.label">
-      {{ label }}
-    </label>
-    <div v-if="showOptions" :class="css.optionsWrapper" class="min-w-[220px]">
-      <slot name="options-search">
-        <div v-if="searchable" class="px-2 mt-2">
-          <v-input v-model="query" :variant="searchInputVariant" />
-        </div>
-      </slot>
-      <slot name="options-slot">
-        <ul class="overflow-y-scroll" :class="css.optionsList">
-          <li @click="onClick()">
-            <span :class="css.optionLabel">
-              {{ placeholder }}
-            </span>
-          </li>
-          <li
-            v-for="option in filteredOptions"
-            :key="option[valueOptionAttribute]"
-            class="cursor-pointer"
-            :class="[isSelectedCss(option)]"
-            @mouseover="hoverOption(option)"
-            @click="onClick(option)">
-            <div :class="[css.optionLabel, preselectOption.id == option.id ? css.highlighted : '']">
-              <span>
-                {{ option[textOptionAttribute] }}
-              </span>
-            </div>
-          </li>
-          <li v-if="showMore && isAnyPageLeft">
-            <div class="flex justify-center">
-              <v-button variant="link" class="" @click="filterOptions(true)">{{ $t('showMore') }}</v-button>
-            </div>
-          </li>
-        </ul>
-      </slot>
-    </div>
-  </div>
-</template>
-
 <script>
 import VButton from './VButton.vue';
 import VInput from './VInput.vue';
@@ -90,7 +25,7 @@ export default {
         },
         options: {
             type: Array,
-            default: function () {
+            default() {
                 return [];
             }
         },
@@ -182,7 +117,8 @@ export default {
             meta: {
                 current_page: 0
             },
-            preselectOption: -1
+            preselectOption: -1,
+            innerValue: undefined
         };
     },
     computed: {
@@ -209,7 +145,7 @@ export default {
             if (modelType === 'array') {
                 let labels = '';
                 for (let i = 0; i < this.modelValue.length; i++) {
-                    labels += this.modelValue + '-';
+                    labels += `${this.modelValue}-`;
                 }
                 return labels;
             }
@@ -229,10 +165,10 @@ export default {
         }
     },
     watch: {
-        modelValue(newValue, oldValue) {
-            this.$emit('changed', newValue);
+        modelValue(_newValue, _oldValue) {
+            this.innerValue = _newValue;
         },
-        query(newValue, oldValue) {
+        query() {
             this.filterOptions();
         }
     },
@@ -301,5 +237,70 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div :class="[css.wrapper]">
+    <div :class="[css.buttonWrapper, css.baseCss, disabledCss]">
+      <div :class="css.placeholderWrapper" @click="onClickShowOptions">
+        <span class="mr-2">
+          {{ computedPlaceholder }}
+        </span>
+      </div>
+      <div class="flex flex-1 justify-end cursor-pointer" @click="onClickShowOptions">
+        <!-- font-awesome -->
+        <div :class="css.arrowCss">
+          <svg
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="caret-down"
+            class="w-4"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 320 512">
+            <path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <label :class="css.label">
+      {{ label }}
+    </label>
+    <div v-if="showOptions" :class="css.optionsWrapper" class="min-w-[220px]">
+      <slot name="options-search">
+        <div v-if="searchable" class="px-2 mt-2">
+          <v-input v-model="query" :variant="searchInputVariant" />
+        </div>
+      </slot>
+      <slot name="options-slot">
+        <ul class="overflow-y-scroll" :class="css.optionsList">
+          <li @click="onClick()">
+            <span :class="css.optionLabel">
+              {{ placeholder }}
+            </span>
+          </li>
+          <li
+            v-for="option in filteredOptions"
+            :key="option[valueOptionAttribute]"
+            class="cursor-pointer"
+            :class="[isSelectedCss(option)]"
+            @mouseover="hoverOption(option)"
+            @click="onClick(option)">
+            <div :class="[css.optionLabel, preselectOption.id == option.id ? css.highlighted : '']">
+              <span>
+                {{ option[textOptionAttribute] }}
+              </span>
+            </div>
+          </li>
+          <li v-if="showMore && isAnyPageLeft">
+            <div class="flex justify-center">
+              <v-button variant="link" class="" @click="filterOptions(true)">{{ $t('showMore') }}</v-button>
+            </div>
+          </li>
+        </ul>
+      </slot>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

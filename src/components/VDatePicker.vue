@@ -1,84 +1,3 @@
-<template>
-  <div :class="css.wrapper">
-    <div>
-      <v-input
-        v-model="currentSelectedDate"
-        variant="default"
-        :label="label"
-        @click="onClickShowDateSelector"></v-input>
-    </div>
-    <div v-show="showDateSelector" class="relative z-20">
-      <div :class="css.wrapperCalendar">
-        <div>
-          <header class="flex items-end bg-blue-700 h-16 text-white px-4 uppercase font-bold">
-            {{ currentSelectedDate }}
-          </header>
-        </div>
-        <div :class="[css.wrapperSelector]">
-          <div class="flex flex-grow gap-1">
-            <div class="cursor-pointer flex-shrink-0" :class="css.previousButtonCss" @click="previousMonth">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="caret-left"
-                class="inline w-2"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 192 512">
-                <path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"></path>
-              </svg>
-            </div>
-            <div class="flex-grow w-full">
-              <v-rselect
-                v-model="currentMonthSelector"
-                :options="getMonthList()"
-                :searchable="true"
-                class="text-xs"
-                value-option-attribute="object" />
-            </div>
-            <div class="cursor-pointer" :class="css.nextButtonCss" @click="nextMonth">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="caret-right"
-                class="inline w-2"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 192 512">
-                <path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
-              </svg>
-            </div>
-          </div>
-          <div class="">
-            <v-rselect
-              v-model="currentYearSelector"
-              :options="getYearList().reverse()"
-              :searchable="true"
-              class="text-xs"
-              value-option-attribute="object" />
-          </div>
-        </div>
-        <div class="flex flex-col px-3 text-center">
-          <!-- jour -->
-          <div v-for="(week, index) in buildMonths()" :key="index" class="grid grid-cols-7 gap-1">
-            <div
-              v-for="(day, index) in week"
-              :key="index + 'd'"
-              :class="[css.dateCss, getSelectedDateCss(day), 'cursor-pointer']"
-              @click="onDayClick(day)">
-              <span>
-                {{ day.getDate() }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import VSelect from './VRichSelect.vue';
 import VInput from './VInput.vue';
@@ -163,7 +82,7 @@ export default {
     },
     computed: {
         currentSelectedDate() {
-            if (this.modelValue == null) return '--';
+            if (this.modelValue === null) return '--';
 
             const currentFormattedDate = this.localValue ? new Intl.DateTimeFormat(this.locale, { month: 'long', year: 'numeric', day: '2-digit' }).format(this.localValue) : '';
             return currentFormattedDate;
@@ -173,8 +92,8 @@ export default {
         }
     },
     watch: {
-        modelValue(newValue, oldValue) {
-            this.parse(newValue);
+        modelValue(_newValue) {
+            this.parse(_newValue);
         }
     },
     created() {
@@ -235,9 +154,6 @@ export default {
 
             let string = '';
             const mo = date.getMonth(); // month (0-11)
-            const m1 = mo + 1; // month (1-12)
-            const dow = date.getDay(); // day of week (0-6)
-            const d = date.getDate(); // day of the month (1-31)
             const y = date.getFullYear(); // 1999 or 2003
             const h = date.getHours(); // hour (0-23)
             const mi = date.getMinutes(); // minute (0-59)
@@ -246,43 +162,43 @@ export default {
             for (let i = 0, len = format.length; i < len; i++) {
                 switch (format[i]) {
                 case 'j': // Day of the month without leading zeros  (1 to 31)
-                    string += d;
+                    string += date.getDate();
                     break;
 
                 case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
-                    string += d < 10 ? '0' + d : d;
+                    string += date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
                     break;
 
                 case 'l': // (lowercase 'L') A full textual representation of the day of the week
-                    var days = Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-                    string += days[dow];
+                    const days = Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+                    string += days[date.getDay()];
                     break;
 
                 case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
-                    string += dow;
+                    string += date.getDay();
                     break;
 
                 case 'D': // A textual representation of a day, three letters
-                    days = Array('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat');
-                    string += days[dow];
+                    const daysShort = Array('Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat');
+                    string += daysShort[date.getDay()];
                     break;
 
                 case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
-                    string += m1 < 10 ? '0' + m1 : m1;
+                    string += mo + 1 < 10 ? `0${mo + 1}` : mo + 1;
                     break;
 
                 case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
-                    string += m1;
+                    string += mo + 1;
                     break;
 
                 case 'F': // A full textual representation of a month, such as January or March
-                    var months = Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+                    const months = Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
                     string += months[mo];
                     break;
 
                 case 'M': // A short textual representation of a month, three letters (Jan - Dec)
-                    months = Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-                    string += months[mo];
+                    const monthsShort = Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+                    string += monthsShort[mo];
                     break;
 
                 case 'Y': // A full numeric representation of a year, 4 digits (1999 OR 2003)
@@ -294,18 +210,18 @@ export default {
                     break;
 
                 case 'H': // 24-hour format of an hour with leading zeros (00 to 23)
-                    string += h < 10 ? '0' + h : h;
+                    string += h < 10 ? `0${h}` : h;
                     break;
 
                 case 'g': // 12-hour format of an hour without leading zeros (1 to 12)
-                    var hour = h === 0 ? 12 : h;
+                    let hour = h === 0 ? 12 : h;
                     string += hour > 12 ? hour - 12 : hour;
                     break;
 
                 case 'h': // 12-hour format of an hour with leading zeros (01 to 12)
                     hour = h === 0 ? 12 : h;
                     hour = hour > 12 ? hour - 12 : hour;
-                    string += hour < 10 ? '0' + hour : hour;
+                    string += hour < 10 ? `0${hour}` : hour;
                     break;
 
                 case 'a': // Lowercase Ante meridiem and Post meridiem (am or pm)
@@ -313,11 +229,11 @@ export default {
                     break;
 
                 case 'i': // Minutes with leading zeros (00 to 59)
-                    string += mi < 10 ? '0' + mi : mi;
+                    string += mi < 10 ? `0${mi}` : mi;
                     break;
 
                 case 's': // Seconds, with leading zeros (00 to 59)
-                    string += s < 10 ? '0' + s : s;
+                    string += s < 10 ? `0${s}` : s;
                     break;
 
                 case 'c': // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
@@ -342,14 +258,18 @@ export default {
 
             // pas une string ou autre  ou null
             if (typeof value !== 'string') {
-                this.localeValue = new Date();
+                const currentDate = new Date();
+                this.localeValue = currentDate;
+                return;
+            }
+
+            if (value === '') {
+                const currentDate = new Date();
+                this.localeValue = currentDate;
                 return;
             }
 
             let mo; // month (0-11)
-            let m1; // month (1-12)
-            let dow; // day of week (0-6)
-            let d; // day of the month (1-31)
             let y; // 1999 or 2003
             let h = 0; // hour (0-23)
             let mi = 0; // minute (0-59)
@@ -508,5 +428,86 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div :class="css.wrapper">
+    <div>
+      <VInput
+        v-model="currentSelectedDate"
+        variant="default"
+        :label="label"
+        @click="onClickShowDateSelector"/>
+    </div>
+    <div v-show="showDateSelector" class="relative z-20">
+      <div :class="css.wrapperCalendar">
+        <div>
+          <header class="flex items-end bg-blue-700 h-16 text-white px-4 uppercase font-bold">
+            {{ currentSelectedDate }}
+          </header>
+        </div>
+        <div :class="[css.wrapperSelector]">
+          <div class="flex flex-grow gap-1">
+            <div class="cursor-pointer flex-shrink-0" :class="css.previousButtonCss" @click="previousMonth">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="caret-left"
+                class="inline w-2"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 192 512">
+                <path fill="currentColor" d="M192 127.338v257.324c0 17.818-21.543 26.741-34.142 14.142L29.196 270.142c-7.81-7.81-7.81-20.474 0-28.284l128.662-128.662c12.599-12.6 34.142-3.676 34.142 14.142z"/>
+              </svg>
+            </div>
+            <div class="flex-grow w-full">
+              <v-rselect
+                v-model="currentMonthSelector"
+                :options="getMonthList()"
+                :searchable="true"
+                class="text-xs"
+                value-option-attribute="object" />
+            </div>
+            <div class="cursor-pointer" :class="css.nextButtonCss" @click="nextMonth">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fas"
+                data-icon="caret-right"
+                class="inline w-2"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 192 512">
+                <path fill="currentColor" d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="">
+            <v-rselect
+              v-model="currentYearSelector"
+              :options="getYearList().reverse()"
+              :searchable="true"
+              class="text-xs"
+              value-option-attribute="object" />
+          </div>
+        </div>
+        <div class="flex flex-col px-3 text-center">
+          <!-- jour -->
+          <div v-for="(week, index) in buildMonths()" :key="index" class="grid grid-cols-7 gap-1">
+            <div
+              v-for="(day, index) in week"
+              :key="index + 'd'"
+              class="cursor-pointer" :class="[css.dateCss, getSelectedDateCss(day)]"
+              @click="onDayClick(day)">
+              <span>
+                {{ day.getDate() }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

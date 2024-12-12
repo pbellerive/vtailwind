@@ -1,11 +1,3 @@
-<template>
-  <div :class="[css.bgCss, css.wrapper]" @click="close">
-    <div>
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script>
 import Base from './base';
 import VButton from './VButton.vue';
@@ -46,5 +38,13 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div :class="[css.bgCss, css.wrapper]" @click="close">
+    <div>
+      <slot/>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

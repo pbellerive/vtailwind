@@ -1,29 +1,3 @@
-<template>
-  <div :class="css.wrapper">
-    <select
-      :value="modelValue"
-      :class="[css.baseCss]"
-      :disabled="disabled"
-      @change="onChange">
-      <option v-if="placeholder" value="undefined" :class="css.placeholderCss">
-        {{ placeholder }}
-      </option>
-      <option
-        v-for="option in options"
-        :key="option.value"
-        :class="optionClass(option[valueOptionAttribute])"
-        :value="option[valueOptionAttribute]">
-        {{ option[textOptionAttribute] }}
-      </option>
-    </select>
-    <div v-if="label" :class="css.label">
-      <label>
-        {{ label }}
-      </label>
-    </div>
-  </div>
-</template>
-
 <script>
 import VBase from './base';
 
@@ -123,7 +97,7 @@ export default {
             return this.css.optionCss;
         },
         isSelected(value) {
-            return value == this.modelValue;
+            return value === this.modelValue;
         },
         onChange(evt) {
             this.$emit('update:modelValue', evt.target.value);
@@ -131,5 +105,31 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div :class="css.wrapper">
+    <select
+      :value="modelValue"
+      :class="[css.baseCss]"
+      :disabled="disabled"
+      @change="onChange">
+      <option v-if="placeholder" value="undefined" :class="css.placeholderCss">
+        {{ placeholder }}
+      </option>
+      <option
+        v-for="option in options"
+        :key="option.value"
+        :class="optionClass(option[valueOptionAttribute])"
+        :value="option[valueOptionAttribute]">
+        {{ option[textOptionAttribute] }}
+      </option>
+    </select>
+    <div v-if="label" :class="css.label">
+      <label>
+        {{ label }}
+      </label>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

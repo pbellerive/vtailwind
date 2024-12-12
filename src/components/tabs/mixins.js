@@ -1,7 +1,10 @@
 const mixin = {
     computed: {
         isSelected() {
-            return this.name == this.store.currentTabName;
+            if (this.name === this.store.currentTabName) {
+                return true;
+            }
+            return false;
         }
     }
 };

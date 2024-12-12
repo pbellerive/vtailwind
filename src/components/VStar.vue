@@ -1,15 +1,3 @@
-<template>
-  <div class="flex flex-row gap-2">
-    <div v-for="index in max" :key="index">
-      <font-awesome-icon
-        :icon="iconCss"
-        :class="color(index)"
-        class="cursor-pointer"
-        @click="onStarClick(index)" />
-    </div>
-  </div>
-</template>
-
 <script>
 import Base from './base';
 
@@ -61,7 +49,7 @@ export default {
 
             if (index >= middle && index < this.max) {
                 return this.colorMiddle;
-            } else if (index == this.max) {
+            } else if (index === this.max) {
                 return this.colorEnd;
             }
 
@@ -69,9 +57,24 @@ export default {
         },
         onStarClick(starValue) {
             this.$emit('update:modelValue', starValue);
+        },
+        isActive(index) {
+            return this.modelValue === index;
         }
     }
 };
 </script>
+
+<template>
+  <div class="flex flex-row gap-2">
+    <div v-for="index in max" :key="index">
+      <font-awesome-icon
+        :icon="iconCss"
+        :class="color(index)"
+        class="cursor-pointer"
+        @click="onStarClick(index)" />
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

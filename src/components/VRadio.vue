@@ -1,18 +1,3 @@
-<template>
-  <div class="flex items-center" :class="wrapperLeftCss">
-    <input
-      ref="radio"
-      v-model="innerValue"
-      type="radio"
-      :value="value"
-      :checked="isChecked"
-      :class="[css.baseCss]"
-      :disabled="disabled"
-      @change="onChange" />
-    <span :class="labelPositionCss">{{ label }}</span>
-  </div>
-</template>
-
 <script>
 import VBase from './base.js';
 
@@ -41,11 +26,18 @@ export default {
         value: {
             type: [String, Number, Boolean, Array, Object],
             default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['update:modelValue'],
     setup() {
-        return {};
+        const _radio = ref(null);
+        return {
+            _radio
+        };
     },
     data() {
         return {
@@ -62,7 +54,7 @@ export default {
     },
     computed: {
         isChecked() {
-            return this.value == this.modelValue;
+            return this.value === this.modelValue;
         },
         wrapperLeftCss() {
             if (this.labelPosition === 'left') {
@@ -81,7 +73,7 @@ export default {
         }
     },
     watch: {
-        modelValue(newValue) {
+        modelValue: (_newValue, _oldValue) => {
             this.innerValue = this.modelValue;
         }
     },
@@ -89,9 +81,24 @@ export default {
         this.innerValue = this.modelValue;
     },
     methods: {
-        onChange($event) {
+        onChange: (_event) => {
             this.$emit('update:modelValue', this.value);
         }
     }
 };
 </script>
+
+<template>
+  <div class="flex items-center" :class="wrapperLeftCss">
+    <input
+      ref="_radio"
+      v-model="innerValue"
+      type="radio"
+      :value="value"
+      :checked="isChecked"
+      :class="[css.baseCss]"
+      :disabled="disabled"
+      @change="onChange" />
+    <span :class="labelPositionCss">{{ label }}</span>
+  </div>
+</template>

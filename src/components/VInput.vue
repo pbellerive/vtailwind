@@ -1,34 +1,3 @@
-<template>
-  <div :class="css.wrapper">
-    <label v-if="label" :class="css.label">
-      {{ label }}
-    </label>
-    <div class="flex gap-0">
-      <div v-if="prepend" class="prependButton">
-        <v-button variant="prepend">
-          {{ prependValue }}
-        </v-button>
-      </div>
-      <input
-        :type="type"
-        :value="modelValue"
-        :required="required"
-        :placeholder="placeholder"
-        :class="[css.baseCss, prepend ? css.preprendInput : '']"
-        :disabled="disabled"
-        :data-testId="dataTestId"
-        @input="onInput"
-        @focus="isFocus = true"
-        @focusout="isFocus = false" />
-    </div>
-    <div v-if="['danger', 'filled_danger'].includes(variant) && shortErrorMessage" :class="[css.shortError]" class="">
-      <div>
-        {{ shortErrorMessage }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import VBase from './base';
 import VButton from './VButton.vue';
@@ -153,5 +122,36 @@ export default {
     }
 };
 </script>
+
+<template>
+  <div :class="css.wrapper">
+    <label v-if="label" :class="css.label">
+      {{ label }}
+    </label>
+    <div class="flex gap-0">
+      <div v-if="prepend" class="prependButton">
+        <v-button variant="prepend">
+          {{ prependValue }}
+        </v-button>
+      </div>
+      <input
+        :type="type"
+        :value="modelValue"
+        :required="required"
+        :placeholder="placeholder"
+        :class="[css.baseCss, prepend ? css.preprendInput : '']"
+        :disabled="disabled"
+        :data-testId="dataTestId"
+        @input="onInput"
+        @focus="isFocus = true"
+        @focusout="isFocus = false" />
+    </div>
+    <div v-if="['danger', 'filled_danger'].includes(variant) && shortErrorMessage" :class="[css.shortError]" class="">
+      <div>
+        {{ shortErrorMessage }}
+      </div>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped></style>

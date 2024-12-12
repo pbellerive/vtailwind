@@ -1,16 +1,3 @@
-<template>
-  <div>
-    <div class="border-b-2 border-b-green-fg-500 mt-5">
-      <ul class="flex justify-start gap-3 md:gap-8 ml-10 text-gray-400">
-        <slot name="header"></slot>
-      </ul>
-
-    </div>
-    <slot name="content"></slot>
-  </div>
-
-</template>
-
 <script>
 // import { reactive } from 'vue';
 import { useStore } from 'vuex';
@@ -22,7 +9,7 @@ export default {
             default: ''
         }
     },
-    setup () {
+    setup() {
         const store = useStore();
 
         return {
@@ -34,11 +21,24 @@ export default {
             // currentTabName: ''
         };
     },
-    mounted () {
+    mounted() {
         this.store.currentTabName = this.defaultTabName;
     }
 };
 </script>
+
+<template>
+  <div>
+    <div class="border-b-2 border-b-green-fg-500 mt-5">
+      <ul class="flex justify-start gap-3 md:gap-8 ml-10 text-gray-400">
+        <slot name="header"/>
+      </ul>
+
+    </div>
+    <slot name="content"/>
+  </div>
+
+</template>
 
 <style lang="scss" scoped>
 

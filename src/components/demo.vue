@@ -1,14 +1,135 @@
+<script>
+import VButton from './VButton.vue';
+import VInput from './VInput.vue';
+import VToggle from './VToggle.vue';
+import VPagination from './VPagination.vue';
+import VSelect from './VSelect.vue';
+import VCheckbox from './VCheckbox.vue';
+import VRadio from './VRadio.vue';
+import VTextArea from './VTextArea.vue';
+import VRichSelect from './VRichSelect.vue';
+import VDatePicker from './VDatePicker.vue';
+import VNotification from './VNotification.vue';
+import VLoading from './VLoading.vue';
+import VModal from './VModal.vue';
+import VMessage from './VMessage.vue';
+import VStar from './VStar.vue';
+import VCalendar from './VCalendar.vue';
+
+export default {
+    name: 'HelloWorld',
+    components: {
+        'v-button': VButton,
+        'v-input': VInput,
+        'v-toggle': VToggle,
+        'v-pagination': VPagination,
+        'v-select': VSelect,
+        'v-checkbox': VCheckbox,
+        'v-radio': VRadio,
+        'v-text-area': VTextArea,
+        'v-rselect': VRichSelect,
+        'v-date-picker': VDatePicker,
+        'v-notification': VNotification,
+        'v-loading': VLoading,
+        'v-modal': VModal,
+        'v-star': VStar,
+        'v-calendar': VCalendar,
+        VMessage
+    },
+    props: {
+        msg: String
+    },
+    data() {
+        return {
+            rating: 4,
+            test: '',
+            testToggle: false,
+            currentPage: 2,
+            selectedOption: 0,
+            options: [
+                {
+                    text: 'option 1',
+                    value: 1
+                },
+                {
+                    text: 'option 2',
+                    value: 2
+                },
+                {
+                    text: 'option 3',
+                    value: 3
+                },
+                {
+                    text: 'option 4',
+                    value: 4
+                }
+            ],
+            checkValue: false,
+            checkArrayValue: ['a'],
+            radioValue: 'my-radioA',
+            radioValue1: undefined,
+            area: 'Allo',
+            rselectValue: {},
+            rselectValue2: { value: '' },
+            dateSelected: new Date(2021, 11, 2),
+            dateSelectedNull: null,
+            events: [
+              {
+                title: 'Meeting',
+                date: new Date(),
+                variant: 'primary'
+              },
+              {
+                title: 'Lunch',
+                date: new Date(new Date().setDate(new Date().getDate() + 1)),
+                variant: 'secondary'
+              }
+            ]
+        };
+    },
+    methods: {
+        openModal(name) {
+            this.$refs[name]
+                .open()
+                .then((_response) => {
+                    // Handle modal response
+                })
+                .catch((_response) => {
+                    // Handle modal error
+                })
+                .finally((_response) => {
+                    // Handle modal finally
+                });
+        },
+        getOptions(_query) {
+            return new Promise((resolve) => {
+                resolve({
+                    data: [
+                        { id: 1, text: 'Option 1' },
+                        { id: 2, text: 'Option 2' },
+                        { id: 3, text: 'Option 3' }
+                    ]
+                });
+            });
+        },
+        onCurrentPageChange(_evt) {
+            // Handle current page change
+        }
+    }
+};
+</script>
+
 <template>
   <div class="hello max-w-4xl mx-auto pb-20">
     <h1>Welcome to VTailwind , a Vuejs 3 UI components</h1>
     <div>
-      <v-message message="Message ici" :show="true" @update:show="(value) => (show = value)"></v-message>
+      <VMessage message="Message ici" :show="true" @update:show="(value) => (show = value)"/>
     </div>
     <div class="grid grid-flow-row gap-3">
       <section>
         <h1>Rating</h1>
         <div>
-          <v-star v-model="rating"></v-star>
+          <v-star v-model="rating"/>
         </div>
       </section>
     </div>
@@ -36,9 +157,9 @@
 
             <v-button variant="notvariant">No variant</v-button>
             <v-button variant="primary" :disabled="true">Primary disabled</v-button>
-            <v-button @click="showModal('modal')">show modal</v-button>
-            <v-button @click="showModal('modalNoFooter')">show modal no footer</v-button>
-            <v-button @click="showModal('modalNoTitle')">show modal no title</v-button>
+            <v-button @click="openModal('modal')">show modal</v-button>
+            <v-button @click="openModal('modalNoFooter')">show modal no footer</v-button>
+            <v-button @click="openModal('modalNoTitle')">show modal no title</v-button>
           </div>
         </div>
       </section>
@@ -268,7 +389,7 @@
       <section>
         <h1 class="uppercase">Calendar</h1>
         <div class="flex flex-col flex-wrap justify-center gap-2 border border-gray-800 shadow-black shadow-sm rounded p-3 text-center">
-          <v-calendar v-model="dateSelected" :events="events"></v-calendar>
+          <v-calendar v-model="dateSelected" :events="events"/>
           <div class="mt-2">Selected Date: {{ dateSelected }}</div>
         </div>
       </section>
@@ -277,157 +398,19 @@
     <v-notification ref="notifDanger" variant="danger" />
     <v-notification ref="notifWarning" variant="warning" />
     <v-loading :is-loading="false" variant="danger" />
-    <v-modal ref="modal" :message="'test test test '" variant="default"> </v-modal>
+    <v-modal ref="modal" :message="'test test test '" variant="default"/>
     <v-modal
       ref="modalNoFooter"
       :message="'No footer '"
       :show-footer="false"
-      variant="default"> </v-modal>
+      variant="default"/>
     <v-modal
       ref="modalNoTitle"
       :message="'No title '"
       title="Title"
       :show-title="false"
-      variant="default"> </v-modal>
+      variant="default"/>
 
     </div>
 
 </template>
-
-<script>
-import VButton from './VButton.vue';
-import VInput from './VInput.vue';
-import VToggle from './VToggle.vue';
-import VPagination from './VPagination.vue';
-import VSelect from './VSelect.vue';
-import VCheckbox from './VCheckbox.vue';
-import VRadio from './VRadio.vue';
-import VTextArea from './VTextArea.vue';
-import VRichSelect from './VRichSelect.vue';
-import VDatePicker from './VDatePicker.vue';
-import VNotification from './VNotification.vue';
-import VLoading from './VLoading.vue';
-import VModal from './VModal.vue';
-import VMessage from './VMessage.vue';
-import VStar from './VStar.vue';
-import VCalendar from './VCalendar.vue';
-
-export default {
-    name: 'HelloWorld',
-    components: {
-        'v-button': VButton,
-        'v-input': VInput,
-        'v-toggle': VToggle,
-        'v-pagination': VPagination,
-        'v-select': VSelect,
-        'v-checkbox': VCheckbox,
-        'v-radio': VRadio,
-        'v-text-area': VTextArea,
-        'v-rselect': VRichSelect,
-        'v-date-picker': VDatePicker,
-        'v-notification': VNotification,
-        'v-loading': VLoading,
-        'v-modal': VModal,
-        'v-star': VStar,
-        'v-calendar': VCalendar,
-        VMessage
-    },
-    props: {
-        msg: String
-    },
-    data() {
-        return {
-            rating: 4,
-            test: '',
-            testToggle: false,
-            currentPage: 2,
-            selectedOption: 0,
-            options: [
-                {
-                    text: 'option 1',
-                    value: 1
-                },
-                {
-                    text: 'option 2',
-                    value: 2
-                },
-                {
-                    text: 'option 3',
-                    value: 3
-                },
-                {
-                    text: 'option 4',
-                    value: 4
-                }
-            ],
-            checkValue: false,
-            checkArrayValue: ['a'],
-            radioValue: 'my-radioA',
-            radioValue1: undefined,
-            area: 'Allo',
-            rselectValue: {},
-            rselectValue2: { value: '' },
-            dateSelected: new Date(2021, 11, 2),
-            dateSelectedNull: null,
-            events: [
-              {
-                title: 'Meeting',
-                date: new Date(),
-                variant: 'primary'
-              },
-              {
-                title: 'Lunch',
-                date: new Date(new Date().setDate(new Date().getDate() + 1)),
-                variant: 'secondary'
-              }
-            ]
-        };
-    },
-    methods: {
-        showModal(name) {
-            this.$refs[name]
-                .open()
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch((response) => {
-                    console.log(response);
-                })
-                .finally((response) => {
-                    console.log('finally');
-                });
-        },
-
-        getOptions(query) {
-            return new Promise((resolve) => {
-                resolve({
-                    data: [
-                        {
-                            text: 'opt 1',
-                            value: 1
-                        },
-                        {
-                            text: 'opt 2',
-                            value: 2
-                        },
-                        {
-                            text: 'opt 3',
-                            value: 3
-                        },
-                        {
-                            text: 'opt 4',
-                            value: 4
-                        }
-                    ],
-                    meta: {
-                        current_page: 1
-                    }
-                });
-            });
-        },
-        onCurrentPageChange(evt) {
-            console.log('Listen update:currentPage');
-        }
-    }
-};
-</script>

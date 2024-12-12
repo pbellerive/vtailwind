@@ -1,29 +1,3 @@
-<template>
-  <ul :class="css.wrapper">
-    <li :class="[css.goToFirstPage, css.pageLabel]" @click="goToPage(1)">
-      <span> &#60;&#60; </span>
-    </li>
-    <li :class="[css.goToPreviousPage, css.pageLabel]" @click="goToPage(currentPage - 1)">
-      <span> &#60; </span>
-    </li>
-    <li
-      v-for="page in pagesToShow"
-      :key="page"
-      :class="[css.page, currentPageCss(page), css.pageLabel]"
-      @click="goToPage(page)">
-      <span>
-        {{ page }}
-      </span>
-    </li>
-    <li :class="[css.goToNextPage, css.pageLabel]" @click="goToPage(currentPage + 1)">
-      <span> &#62; </span>
-    </li>
-    <li :class="[css.goToLastPage, css.pageLabel]" @click="goToPage(nbTotalPages())">
-      <span> &#62;&#62; </span>
-    </li>
-  </ul>
-</template>
-
 <script>
 import VBase from './base';
 
@@ -91,15 +65,13 @@ export default {
         pagesToShow() {
             const pages = [];
 
-            const halfPages = Math.floor(this.pageToDisplay / 2);
-            const nbEndPage = this.nbTotalPages() - this.currentPage;
-            const nbBeforePages = halfPages;
+            const visiblePages = Math.floor(this.pageToDisplay / 2);
             let endPage = this.nbTotalPages() <= this.pageToDisplay ? this.nbTotalPages() : this.pageToDisplay;
             let startPage = 1;
 
             if (this.currentPage > this.pageToDisplay) {
-                startPage = this.currentPage - this.pageToDisplay + 1;
-                endPage = this.currentPage;
+                startPage = this.currentPage - visiblePages;
+                endPage = this.currentPage + visiblePages;
             }
 
             for (let i = startPage; i <= endPage; i++) {
@@ -135,5 +107,31 @@ export default {
     }
 };
 </script>
+
+<template>
+  <ul :class="css.wrapper">
+    <li :class="[css.goToFirstPage, css.pageLabel]" @click="goToPage(1)">
+      <span> &#60;&#60; </span>
+    </li>
+    <li :class="[css.goToPreviousPage, css.pageLabel]" @click="goToPage(currentPage - 1)">
+      <span> &#60; </span>
+    </li>
+    <li
+      v-for="page in pagesToShow"
+      :key="page"
+      :class="[css.page, currentPageCss(page), css.pageLabel]"
+      @click="goToPage(page)">
+      <span>
+        {{ page }}
+      </span>
+    </li>
+    <li :class="[css.goToNextPage, css.pageLabel]" @click="goToPage(currentPage + 1)">
+      <span> &#62; </span>
+    </li>
+    <li :class="[css.goToLastPage, css.pageLabel]" @click="goToPage(nbTotalPages())">
+      <span> &#62;&#62; </span>
+    </li>
+  </ul>
+</template>
 
 <style lang="scss" scoped></style>
