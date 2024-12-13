@@ -185,41 +185,41 @@ export default {
 
       for (let f = 0; f < format.length; f++) {
         switch (format.charAt(f)) {
-        case 'l':
-          string += days[w];
-          break;
+          case 'l':
+            string += days[w];
+            break;
 
-        case 'D':
-          string += daysShort[w];
-          break;
+          case 'D':
+            string += daysShort[w];
+            break;
 
-        case 'm':
-          string += mo < 9 ? '0' + (mo + 1) : mo + 1;
-          break;
+          case 'm':
+            string += mo < 9 ? '0' + (mo + 1) : mo + 1;
+            break;
 
-        case 'F':
-          string += months[mo];
-          break;
+          case 'F':
+            string += months[mo];
+            break;
 
-        case 'M':
-          string += monthsShort[mo];
-          break;
+          case 'M':
+            string += monthsShort[mo];
+            break;
 
-        case 'Y':
-          string += y;
-          break;
+          case 'Y':
+            string += y;
+            break;
 
-        case 'y':
-          string += y.toString().substr(2);
-          break;
+          case 'y':
+            string += y.toString().substr(2);
+            break;
 
-        case 'g':
-          const hour = h === 0 ? 12 : h;
-          string += hour > 12 ? hour - 12 : hour;
-          break;
+          case 'g':
+            const hour = h === 0 ? 12 : h;
+            string += hour > 12 ? hour - 12 : hour;
+            break;
 
-        default:
-          string += format.charAt(f);
+          default:
+            string += format.charAt(f);
         }
       }
       return string;
@@ -247,82 +247,82 @@ export default {
 
       for (let i = 0, len = formatSplit.length; i < len; i++) {
         switch (formatSplit[i]) {
-        case 'j': // Day of the month without leading zeros  (1 to 31)
-          d = dateSplit[i];
-          break;
+          case 'j': // Day of the month without leading zeros  (1 to 31)
+            d = dateSplit[i];
+            break;
 
-        case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
-          d = dateSplit[i];
-          break;
+          case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
+            d = dateSplit[i];
+            break;
 
-        case 'l': // (lowercase 'L') A full textual representation of the day of the week
-          // var days = Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-          d = dateSplit[i];
-          break;
+          case 'l': // (lowercase 'L') A full textual representation of the day of the week
+            // var days = Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+            d = dateSplit[i];
+            break;
 
-        case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
-          // string += dow;
-          break;
+          case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
+            // string += dow;
+            break;
 
-        case 'D':
-          // A textual representation of a day, three letters
-          // days = Array("Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat");
-          // string += days[dow];
-          break;
+          case 'D':
+            // A textual representation of a day, three letters
+            // days = Array("Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat");
+            // string += days[dow];
+            break;
 
-        case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
-          mo = dateSplit[i];
-          break;
+          case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
+            mo = dateSplit[i];
+            break;
 
-        case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
-          mo = dateSplit[i];
-          break;
+          case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
+            mo = dateSplit[i];
+            break;
 
-        case 'F': // A full textual representation of a month, such as January or March
-          // var months = Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-          // string += months[mo];
-          break;
+          case 'F': // A full textual representation of a month, such as January or March
+            // var months = Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+            // string += months[mo];
+            break;
 
-        case 'M': // A short textual representation of a month, three letters (Jan - Dec)
-          // months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-          // string += months[mo];
-          break;
+          case 'M': // A short textual representation of a month, three letters (Jan - Dec)
+            // months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+            // string += months[mo];
+            break;
 
-        case 'Y': // A full numeric representation of a year, 4 digits (1999 OR 2003)
-          y = dateSplit[i];
-          break;
+          case 'Y': // A full numeric representation of a year, 4 digits (1999 OR 2003)
+            y = dateSplit[i];
+            break;
 
-        case 'y': // A two digit representation of a year (99 OR 03)
-          y = dateSplit[i];
-          break;
+          case 'y': // A two digit representation of a year (99 OR 03)
+            y = dateSplit[i];
+            break;
 
-        case 'H': // 24-hour format of an hour with leading zeros (00 to 23)
-          h = dateSplit[i];
-          break;
+          case 'H': // 24-hour format of an hour with leading zeros (00 to 23)
+            h = dateSplit[i];
+            break;
 
-        case 'g': // 12-hour format of an hour without leading zeros (1 to 12)
-          h = dateSplit[i];
-          break;
+          case 'g': // 12-hour format of an hour without leading zeros (1 to 12)
+            h = dateSplit[i];
+            break;
 
-        case 'h': // 12-hour format of an hour with leading zeros (01 to 12)
-          h = dateSplit[i];
-          break;
+          case 'h': // 12-hour format of an hour with leading zeros (01 to 12)
+            h = dateSplit[i];
+            break;
 
-        case 'a': // Lowercase Ante meridiem and Post meridiem (am or pm)
-          // string += (h < 12) ? "am" : "pm";
-          break;
+          case 'a': // Lowercase Ante meridiem and Post meridiem (am or pm)
+            // string += (h < 12) ? "am" : "pm";
+            break;
 
-        case 'i': // Minutes with leading zeros (00 to 59)
-          mi = dateSplit[i];
-          break;
+          case 'i': // Minutes with leading zeros (00 to 59)
+            mi = dateSplit[i];
+            break;
 
-        case 's': // Seconds, with leading zeros (00 to 59)
-          s = dateSplit[i];
-          break;
+          case 's': // Seconds, with leading zeros (00 to 59)
+            s = dateSplit[i];
+            break;
 
-        case 'c': // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
-          return new Date(value);
-          break;
+          case 'c': // ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)
+            return new Date(value);
+            break;
         }
       }
       this.localValue = new Date(parseInt(y), parseInt(mo) - 1, parseInt(d), h, mi, s);
