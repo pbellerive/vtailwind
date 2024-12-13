@@ -1,3 +1,17 @@
+<template>
+  <div class="flex items-center" :class="wrapperLeftCss">
+    <input
+      type="radio"
+      :value="value"
+      :checked="isChecked"
+      :class="[css.baseCss]"
+      :disabled="disabled"
+      @change="updateValue"
+    />
+    <span :class="labelPositionCss">{{ label }}</span>
+  </div>
+</template>
+
 <script>
 import VBase from './base.js';
 
@@ -84,17 +98,3 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div class="flex items-center" :class="wrapperLeftCss">
-    <input
-      type="radio"
-      :value="value"
-      :checked="isChecked"
-      :class="[css.baseCss]"
-      :disabled="disabled"
-      @change="updateValue"
-    />
-    <span :class="labelPositionCss">{{ label }}</span>
-  </div>
-</template>

@@ -1,3 +1,9 @@
+<template>
+  <div v-if="isSelected">
+    <slot>{{ name }}</slot>
+  </div>
+</template>
+
 <script>
 import mixin from './mixins';
 
@@ -19,11 +25,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div v-if="isSelected">
-    <slot>{{ name }}</slot>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

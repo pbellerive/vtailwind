@@ -1,3 +1,14 @@
+<template>
+  <div v-if="show" :class="[css.bgCss, css.wrapper]">
+    <div :class="css.closeButtonCss">
+      <button variant="close" @click="show = false"> x </button>
+    </div>
+    <div class="flex flex-col gap-3 divide-y divide-gray-500">
+      <slot/>
+    </div>
+  </div>
+</template>
+
 <script>
 import Base from './base';
 
@@ -30,16 +41,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div v-if="show" :class="[css.bgCss, css.wrapper]">
-    <div :class="css.closeButtonCss">
-      <button variant="close" @click="show = false"> x </button>
-    </div>
-    <div class="flex flex-col gap-3 divide-y divide-gray-500">
-      <slot/>
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

@@ -1,3 +1,17 @@
+<template>
+  <div class="wrapper">
+    <textarea
+      :value="modelValue"
+      :cols="cols"
+      :rows="rows"
+      :required="required"
+      :class="[css.baseCss]"
+      :disabled="disabled"
+      @input="onInput"
+    />
+  </div>
+</template>
+
 <script>
 import VBase from './base';
 
@@ -45,19 +59,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div class="wrapper">
-    <textarea
-      :value="modelValue"
-      :cols="cols"
-      :rows="rows"
-      :required="required"
-      :class="[css.baseCss]"
-      :disabled="disabled"
-      @input="onInput"
-    />
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

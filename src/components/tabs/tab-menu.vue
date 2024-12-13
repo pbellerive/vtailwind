@@ -1,3 +1,12 @@
+<template>
+  <li
+    :class="{ 'border-b-green-fg-500 border-b-2': isSelected }"
+    @click="onTabClick"
+  >
+    <button>{{ label }}</button>
+  </li>
+</template>
+
 <script>
 import mixin from './mixins';
 
@@ -28,14 +37,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <li
-    :class="{ 'border-b-green-fg-500 border-b-2': isSelected }"
-    @click="onTabClick"
-  >
-    <button>{{ label }}</button>
-  </li>
-</template>
 
 <style lang="scss" scoped></style>

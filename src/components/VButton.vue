@@ -1,3 +1,27 @@
+<template>
+  <div :class="css.wrapper">
+    <router-link
+      v-if="to"
+      :to="to"
+      :class="[css.baseCss, css.bgCss, css.label]"
+      :disabled="disabled"
+    >
+      <span class="text-center">
+        <slot/>
+      </span>
+    </router-link>
+    <button
+      v-else
+      :class="[css.baseCss, css.bgCss, css.label]"
+      :disabled="disabled"
+    >
+      <span class="text-center">
+        <slot/>
+      </span>
+    </button>
+  </div>
+</template>
+
 <script>
 import Base from './base';
 
@@ -135,29 +159,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div :class="css.wrapper">
-    <router-link
-      v-if="to"
-      :to="to"
-      :class="[css.baseCss, css.bgCss, css.label]"
-      :disabled="disabled"
-    >
-      <span class="text-center">
-        <slot/>
-      </span>
-    </router-link>
-    <button
-      v-else
-      :class="[css.baseCss, css.bgCss, css.label]"
-      :disabled="disabled"
-    >
-      <span class="text-center">
-        <slot/>
-      </span>
-    </button>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

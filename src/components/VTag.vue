@@ -1,3 +1,16 @@
+<template>
+  <div :class="css.wrapper">
+    <div v-if="iconClass">
+      <font-awesome-icon :icon="iconClass" />
+    </div>
+    <div>
+      <span class="text-xs">
+        {{ label }}
+      </span>
+    </div>
+  </div>
+</template>
+
 <script>
 import VBase from './base';
 
@@ -45,18 +58,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div :class="css.wrapper">
-    <div v-if="iconClass">
-      <font-awesome-icon :icon="iconClass" />
-    </div>
-    <div>
-      <span class="text-xs">
-        {{ label }}
-      </span>
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

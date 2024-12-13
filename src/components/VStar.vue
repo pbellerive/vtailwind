@@ -1,3 +1,16 @@
+<template>
+  <div class="flex flex-row gap-2">
+    <div v-for="index in max" :key="index">
+      <font-awesome-icon
+        :icon="iconCss"
+        :class="color(index)"
+        class="cursor-pointer"
+        @click="onStarClick(index)"
+      />
+    </div>
+  </div>
+</template>
+
 <script>
 import Base from './base';
 
@@ -63,18 +76,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div class="flex flex-row gap-2">
-    <div v-for="index in max" :key="index">
-      <font-awesome-icon
-        :icon="iconCss"
-        :class="color(index)"
-        class="cursor-pointer"
-        @click="onStarClick(index)"
-      />
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

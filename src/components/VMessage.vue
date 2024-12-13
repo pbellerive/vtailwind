@@ -1,3 +1,22 @@
+<template>
+  <div
+    v-if="innerShow"
+    :class="[css.wrapper, css.bgCss]"
+  >
+    <div :class="css.baseCss">
+      <slot>
+        {{ message }}
+      </slot>
+    </div>
+    <div
+      :class="css.closeButtonCss"
+      @click="hide"
+    >
+      x
+    </div>
+  </div>
+</template>
+
 <script>
 import Base from './base';
 
@@ -75,24 +94,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <div
-    v-if="innerShow"
-    :class="[css.wrapper, css.bgCss]"
-  >
-    <div :class="css.baseCss">
-      <slot>
-        {{ message }}
-      </slot>
-    </div>
-    <div
-      :class="css.closeButtonCss"
-      @click="hide"
-    >
-      x
-    </div>
-  </div>
-</template>
 
 <style lang="scss" scoped></style>

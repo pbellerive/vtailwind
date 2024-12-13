@@ -1,3 +1,12 @@
+<template>
+  <span :class="wrapper" @click="onClickToggle">
+    <input type="hidden" />
+    <span :class="buttonClass"/>
+    <span :class="checkClass"/>
+    <span :class="checkClass"/>
+  </span>
+</template>
+
 <script>
 import Base from './base';
 
@@ -88,14 +97,5 @@ export default {
   }
 };
 </script>
-
-<template>
-  <span :class="wrapper" @click="onClickToggle">
-    <input type="hidden" />
-    <span :class="buttonClass"/>
-    <span :class="checkClass"/>
-    <span :class="checkClass"/>
-  </span>
-</template>
 
 <style lang="scss" scoped></style>
