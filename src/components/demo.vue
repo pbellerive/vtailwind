@@ -1,8 +1,33 @@
 <template>
-  <div class="hello mx-auto max-w-4xl pb-20">
+  <div class="hello relative min-h-screen mx-auto max-w-4xl pb-20">
+    <div class="fixed bottom-10 right-10 flex items-center p-4">
+      <button
+        @click="toggleDarkMode"
+        class="rounded-lg bg-gray-200 p-2.5 text-sm font-medium text-gray-500 hover:bg-gray-300 focus:outline-none
+          focus:ring-4 focus:ring-gray-200 dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-700
+          dark:focus:ring-gray-700">
+        <svg
+          v-if="isDark"
+          class="h-5 w-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
+        </svg>
+        <svg
+          v-else
+          class="h-5 w-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+      </button>
+    </div>
     <h1>Welcome to VTailwind , a Vuejs 3 UI components</h1>
     <div>
-      <VMessage
+      <v-message
         message="Message ici"
         :show="true"
         @update:show="(value) => (show = value)" />
@@ -176,8 +201,7 @@
       </section>
       <section>
         <div
-          class="flex flex-row flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 shadow-sm
-            shadow-black">
+          class="flex flex-row flex-wrap gap-2 rounded border border-gray-800 p-3 shadow-sm shadow-black">
           <div class="flex flex-row justify-center gap-2">
             <div>
               <v-radio
@@ -316,27 +340,15 @@
 
       <section>
         <h1>Date Picker</h1>
-        <div>
-          {{ dateSelected }}
-        </div>
-        <div
-          class="flex flex-row flex-wrap gap-2 rounded border border-gray-800 p-3 shadow-sm shadow-black">
-          <div>
-            <v-date-picker
-              v-model="dateSelected"
-              label="Date Label" />
-          </div>
-          <div>
-            <v-date-picker
-              v-model="dateSelected"
-              :disabled="true"
-              label="Disabled" />
-          </div>
-          <div>
-            <v-date-picker
-              v-model="dateSelectedNull"
-              label=" Default null value" />
-          </div>
+        <div class="flex flex-row flex-wrap gap-2 rounded border border-gray-800 p-3 shadow-sm shadow-black">
+          <v-date-picker
+            v-model="dateSelected"
+            label="Date"
+            format="Y-m-d" />
+          <v-date-picker
+            v-model="dateSelectedNull"
+            label="Date (null)"
+            format="Y-m-d" />
         </div>
       </section>
       TextArea
@@ -360,6 +372,33 @@
             :events="events" />
           <div class="mt-2">Selected Date: {{ dateSelected }}</div>
         </div>
+      </section>
+      <section class="flex flex-col gap-2">
+        <v-login
+          title="S'authentifier"
+          email-placeholder="Email"
+          password-placeholder="Password"
+          button-text="login"
+          :loginFn="
+            () => {
+              console.log('login');
+            }
+          " />
+        <v-register
+          title="S'inscrire"
+          email-placeholder="Email"
+          password-placeholder="Mot de passe"
+          confirm-password-placeholder="Confirmer le mot de passe"
+          button-text="S'inscrire"
+          terms-text="J'accepte les"
+          terms-link-text="conditions d'utilisation"
+          sign-in-text="Déjà un compte?"
+          sign-in-link-text="Se connecter ici"
+          :registerFn="
+            () => {
+              console.log('register');
+            }
+          " />
       </section>
     </div>
     <v-notification ref="notif" />
@@ -407,6 +446,8 @@
   import VMessage from './VMessage.vue';
   import VStar from './VStar.vue';
   import VCalendar from './VCalendar.vue';
+  import VLogin from './VLogin.vue';
+  import VRegister from './VRegister.vue';
 
   export default {
     name: 'HelloWorld',
@@ -426,6 +467,8 @@
       'v-modal': VModal,
       'v-star': VStar,
       'v-calendar': VCalendar,
+      'v-login': VLogin,
+      'v-register': VRegister,
       VMessage
     },
     props: {
@@ -463,7 +506,7 @@
         area: 'Allo',
         rselectValue: {},
         rselectValue2: { value: '' },
-        dateSelected: new Date(2021, 11, 2),
+        dateSelected: new Date(),
         dateSelectedNull: null,
         events: [
           {
@@ -476,7 +519,8 @@
             date: new Date(new Date().setDate(new Date().getDate() + 1)),
             variant: 'secondary'
           }
-        ]
+        ],
+        isDark: localStorage.getItem('darkMode') === 'true'
       };
     },
     methods: {
@@ -541,6 +585,11 @@
       },
       onEvent() {
         // Handle event
+      },
+      toggleDarkMode() {
+        this.isDark = !this.isDark;
+        localStorage.setItem('darkMode', this.isDark);
+        this.$emit('dark-mode-change', this.isDark);
       }
     }
   };

@@ -6,13 +6,16 @@ module.exports = [
   {
     files: ['**/*.{js,mjs,jsx,vue}'],
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/node_modules/**'],
+    plugins: {
+      vue: pluginVue
+    },
     languageOptions: {
       globals: {
         process: true
       },
       parser: parserVue,
       parserOptions: {
-        ecmaVersion: 'latest',
+        ecmaVersion: 2022,
         sourceType: 'module',
         ecmaFeatures: {
           jsx: true
@@ -28,6 +31,7 @@ module.exports = [
     },
     rules: {
       ...pluginVue.configs['flat/recommended'].rules,
+      'vue/component-name-in-template-casing': ['error', 'kebab-case'],
       'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn',
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -40,17 +44,6 @@ module.exports = [
       semi: ['error', 'always'],
       'comma-dangle': ['error', 'never'],
       ...require('eslint-config-prettier').rules
-    }
-  },
-  {
-    files: ['**/*.vue'],
-    plugins: {
-      vue: pluginVue
-    },
-    rules: {
-      'vue/multi-word-component-names': 'off',
-      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
-      'vue/component-tags-order': ['error', { order: ['template', 'script', 'style'] }]
     }
   }
 ];

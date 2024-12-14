@@ -173,55 +173,66 @@
           value: undefined
         },
         currentDay: 1,
-        filteredEvents: {},
         months: [],
         monthList: undefined,
-        showDateSelector: false,
-        yearList: undefined
+        yearList: undefined,
+        eventsByDay: {}
       };
     },
     computed: {
       currentSelectedDate() {
-        const currentDate =
-          this.localValue ||
+        if (!this.localValue && !this.currentYearSelector.value) return null;
+
+        return this.localValue ||
           new Date(
             this.currentYearSelector.value,
             this.currentMonthSelector.value,
             this.currentDay
           );
-        const currentFormattedDate = new Intl.DateTimeFormat(this.locale, {
-          month: 'long',
-          year: 'numeric',
-          day: '2-digit'
-        }).format(currentDate);
-        return currentFormattedDate;
       },
       currentDaySelector() {
-        return this.localValue.getDate();
+        return this.localValue ? this.localValue.getDate() : null;
       }
     },
     watch: {
-      modelValue(newValue) {
-        this.parse(newValue);
+      modelValue: {
+        immediate: true,
+        handler(newValue) {
+          this.parse(newValue);
+        }
       },
-      events(newValue, oldValue) {
-        if (newValue.length !== oldValue.length) {
-          this.filterEventByDay();
+      events: {
+        deep: true,
+        handler(newValue, oldValue) {
+          if (!oldValue || newValue.length !== oldValue.length) {
+            this.filterEventByDay();
+          }
         }
       }
     },
     created() {
       this.getMonthList();
       this.getYearList();
-      if (this.localValue) {
+
+      if (this.modelValue) {
+        this.localValue = new Date(this.modelValue);
         this.currentMonthSelector = {
-          text: this.getMonthList()[this.localValue.getMonth()].text,
+          text: this.localValue.toLocaleString(this.locale, { month: this.monthFormat }),
           value: this.localValue.getMonth()
         };
-
         this.currentYearSelector = {
           text: this.localValue.getFullYear().toString(),
           value: this.localValue.getFullYear()
+        };
+      } else {
+        const now = new Date();
+        this.currentMonthSelector = {
+          text: now.toLocaleString(this.locale, { month: this.monthFormat }),
+          value: now.getMonth()
+        };
+        this.currentYearSelector = {
+          text: now.getFullYear().toString(),
+          value: now.getFullYear()
         };
       }
 
@@ -365,7 +376,7 @@
         return string;
       },
       filterEventByDay() {
-        this.filteredEvents = {};
+        this.eventsByDay = {};
         for (let i = 0; i < this.events.length; i++) {
           const currentEvent = this.events[i];
           let dateOfTheDay;
@@ -379,11 +390,11 @@
           if (dateOfTheDay !== null && typeof dateOfTheDay === 'string') {
             const splitDate = dateOfTheDay.split('-');
             const day = splitDate[1] + splitDate[2];
-            if (!(day in this.filteredEvents)) {
-              this.filteredEvents[day] = [];
+            if (!(day in this.eventsByDay)) {
+              this.eventsByDay[day] = [];
             }
 
-            this.filteredEvents[day].push(currentEvent);
+            this.eventsByDay[day].push(currentEvent);
           }
         }
       },
@@ -392,8 +403,8 @@
           '' +
           (day.getMonth() + 1).toString().padStart(2, '0') +
           day.getDate().toString().padStart(2, '0');
-        if (day && dayString in this.filteredEvents) {
-          return this.filteredEvents[dayString];
+        if (day && dayString in this.eventsByDay) {
+          return this.eventsByDay[dayString];
         }
 
         return [];
@@ -449,9 +460,6 @@
         this.currentMonthSelector = this.getMonthList().find((el) => el.value === currentMonth);
         this.currentYearSelector = this.getYearList().find((el) => el.value === currentYear);
       },
-      onClickShowDateSelector() {
-        this.showDateSelector = !this.showDateSelector && !this.disabled;
-      },
       onDayClick(day) {
         this.showDateSelector = false;
         const formatted = this.dateFormat(this.format, day);
@@ -472,6 +480,25 @@
       },
       onEventClick(evt) {
         this.$emit('clickEvent', evt);
+      },
+      parse(value) {
+        if (!value) {
+          this.localValue = null;
+          return;
+        }
+
+        if (value instanceof Date) {
+          this.localValue = new Date(value);
+          return;
+        }
+
+        // Handle string date input
+        const parsedDate = new Date(value);
+        if (!isNaN(parsedDate.getTime())) {
+          this.localValue = parsedDate;
+        } else {
+          this.localValue = null;
+        }
       }
     }
   };

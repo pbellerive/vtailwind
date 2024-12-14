@@ -35,7 +35,7 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.0",
     "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-vue": "^9.19.0",
+    "eslint-plugin-vue": "^9.32.0",
     "glob": "^10.4.5",
     "jsdom": "^25.0.1",
     "lru-cache": "^10.4.3",
