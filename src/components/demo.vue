@@ -351,28 +351,28 @@
             format="Y-m-d" />
         </div>
       </section>
-      TextArea
       <section>
-        <div
+          <h1 class="uppercase">Calendar</h1>
+          <div
           class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
-            shadow-sm shadow-black">
-          <v-text-area
-            v-model="area"
-            :cols="40"
-            rows="10" />
-        </div>
-      </section>
-      <section>
-        <h1 class="uppercase">Calendar</h1>
-        <div
-          class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
-            shadow-sm shadow-black">
+          shadow-sm shadow-black">
           <v-calendar
-            v-model="dateSelected"
-            :events="events" />
+          v-model="dateSelected"
+          :events="events" />
           <div class="mt-2">Selected Date: {{ dateSelected }}</div>
         </div>
-      </section>
+    </section>
+    TextArea
+    <section>
+      <div
+        class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
+          shadow-sm shadow-black">
+        <v-text-area
+          v-model="area"
+          :cols="40"
+          rows="10" />
+      </div>
+    </section>
       <section class="flex flex-col gap-2">
         <v-login
           title="S'authentifier"

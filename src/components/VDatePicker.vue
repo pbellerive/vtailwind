@@ -1,7 +1,7 @@
 <template>
   <div :class="css.wrapper">
     <div>
-      <VInput
+      <v-input
         v-model="currentSelectedDate"
         variant="default"
         :label="label"
@@ -244,13 +244,21 @@
         return weekDays;
       },
       formatDate(format) {
+        if (!this.localValue || isNaN(this.localValue.getTime())) {
+          return '';
+        }
+        
         let string = '';
+        const d = this.localValue.getDate();
         const h = this.localValue.getHours();
+        const mi = this.localValue.getMinutes();
+        const s = this.localValue.getSeconds();
         const mo = this.localValue.getMonth();
         const y = this.localValue.getFullYear();
         const w = this.localValue.getDay();
+        
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'];
+        const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const months = [
           'January',
           'February',
@@ -280,39 +288,84 @@
           'Dec'
         ];
 
+        if (!format) {
+          return this.localValue.toISOString().split('T')[0];
+        }
+
         for (let f = 0; f < format.length; f++) {
           switch (format.charAt(f)) {
-            case 'l':
+            case 'j': // Day of the month without leading zeros (1 to 31)
+              string += d;
+              break;
+
+            case 'd': // Day of the month with leading zeros (01 to 31)
+              string += d < 10 ? '0' + d : d;
+              break;
+
+            case 'l': // Full day name
               string += days[w];
               break;
 
-            case 'D':
+            case 'D': // Short day name
               string += daysShort[w];
               break;
 
-            case 'm':
-              string += mo < 9 ? '0' + (mo + 1) : mo + 1;
+            case 'w': // Numeric day of week (0 = Sunday, 6 = Saturday)
+              string += w;
               break;
 
-            case 'F':
+            case 'm': // Month with leading zeros (01 to 12)
+              string += mo < 9 ? '0' + (mo + 1) : (mo + 1);
+              break;
+
+            case 'n': // Month without leading zeros (1 to 12)
+              string += mo + 1;
+              break;
+
+            case 'F': // Full month name
               string += months[mo];
               break;
 
-            case 'M':
+            case 'M': // Short month name
               string += monthsShort[mo];
               break;
 
-            case 'Y':
+            case 'Y': // Full year, 4 digits
               string += y;
               break;
 
-            case 'y':
+            case 'y': // Year, 2 digits
               string += y.toString().substr(2);
               break;
 
-            case 'g':
-              const hour = h === 0 ? 12 : h;
-              string += hour > 12 ? hour - 12 : hour;
+            case 'H': // Hours in 24-hour format (00 to 23)
+              string += h < 10 ? '0' + h : h;
+              break;
+
+            case 'g': // Hours in 12-hour format without leading zeros (1 to 12)
+              const hour12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+              string += hour12;
+              break;
+
+            case 'h': // Hours in 12-hour format with leading zeros (01 to 12)
+              const hour12Zero = h === 0 ? 12 : h > 12 ? h - 12 : h;
+              string += hour12Zero < 10 ? '0' + hour12Zero : hour12Zero;
+              break;
+
+            case 'a': // am/pm
+              string += h >= 12 ? 'pm' : 'am';
+              break;
+
+            case 'i': // Minutes with leading zeros (00 to 59)
+              string += mi < 10 ? '0' + mi : mi;
+              break;
+
+            case 's': // Seconds with leading zeros (00 to 59)
+              string += s < 10 ? '0' + s : s;
+              break;
+
+            case 'c': // ISO 8601 format
+              string += this.localValue.toISOString();
               break;
 
             default:
@@ -322,14 +375,22 @@
         return string;
       },
       parse(value) {
-        // si cest un objet  Date
+        // Handle Date objects
+        if (value instanceof Date) {
+            this.localValue = new Date(value);
+            return;
+        }
 
-        // si cest un format ISO 8601 date (eg: 2012-11-20T18:05:54.944Z)  *** format serveur par defaut
+        // Handle null or non-string values
+        if (typeof value !== 'string' || !value) {
+            this.localValue = new Date();
+            return;
+        }
 
-        // pas une string ou autre  ou null
-        if (typeof value !== 'string') {
-          this.localValue = new Date();
-          return;
+        // Try parsing ISO 8601 format first
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
+            this.localValue = new Date(value);
+            return;
         }
 
         let d = 1;
@@ -338,82 +399,90 @@
         let h = 0;
         let mi = 0;
         let s = 0;
+        let isPM = false;
 
-        const formatSplit = this.format.split('');
-        const dateSplit = value.split('');
+        const format = this.format;
+        let dateIndex = 0;
+        let formatIndex = 0;
 
-        for (let i = 0, len = formatSplit.length; i < len; i++) {
-          switch (formatSplit[i]) {
-            case 'j': // Day of the month without leading zeros  (1 to 31)
-              d = dateSplit[i];
-              break;
+        while (formatIndex < format.length) {
+            const formatChar = format[formatIndex];
+            let matchLength = 0;
+            const value = '';
 
-            case 'd': // Day of the month, 2 digits with leading zeros (01 to 31)
-              d = dateSplit[i];
-              break;
+            switch (formatChar) {
+            case 'j': // Day without leading zeros (1-31)
+                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
+                d = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                break;
 
-            case 'l': // (lowercase 'L') A full textual representation of the day of the week
-              d = dateSplit[i];
-              break;
+            case 'd': // Day with leading zeros (01-31)
+                d = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
 
-            case 'w': // Numeric representation of the day of the week (0=Sunday,1=Monday,...6=Saturday)
-              break;
+            case 'm': // Month with leading zeros (01-12)
+                mo = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
 
-            case 'D':
-              break;
+            case 'n': // Month without leading zeros (1-12)
+                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
+                mo = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                break;
 
-            case 'm': // Numeric representation of a month, with leading zeros (01 to 12)
-              mo = dateSplit[i];
-              break;
+            case 'Y': // Full year, 4 digits
+                y = parseInt(value.substring(dateIndex, dateIndex + 4));
+                matchLength = 4;
+                break;
 
-            case 'n': // Numeric representation of a month, without leading zeros (1 to 12)
-              mo = dateSplit[i];
-              break;
+            case 'y': // Year, 2 digits
+                const shortYear = parseInt(value.substring(dateIndex, dateIndex + 2));
+                y = shortYear + (shortYear > 50 ? 1900 : 2000);
+                matchLength = 2;
+                break;
 
-            case 'F': // A full textual representation of a month
-              break;
+            case 'H': // 24-hour format (00 to 23)
+                h = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
 
-            case 'M': // A short textual representation of a month
-              break;
+            case 'g': // 12-hour format without leading zeros (1 to 12)
+                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
+                h = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                break;
 
-            case 'Y': // A full numeric representation of a year, 4 digits
-              y = dateSplit[i];
-              break;
+            case 'h': // 12-hour format with leading zeros (01 to 12)
+                h = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
 
-            case 'y': // A two digit representation of a year
-              y = dateSplit[i];
-              break;
+            case 'a': // am/pm
+                isPM = value.substring(dateIndex, dateIndex + 2).toLowerCase() === 'pm';
+                matchLength = 2;
+                break;
 
-            case 'H': // 24-hour format of an hour with leading zeros
-              h = dateSplit[i];
-              break;
+            case 'i': // Minutes with leading zeros (00 to 59)
+                mi = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
 
-            case 'g': // 12-hour format of an hour without leading zeros
-              h = dateSplit[i];
-              break;
+            case 's': // Seconds with leading zeros (00 to 59)
+                s = parseInt(value.substring(dateIndex, dateIndex + 2));
+                matchLength = 2;
+                break;
+            }
 
-            case 'h': // 12-hour format of an hour with leading zeros
-              h = dateSplit[i];
-              break;
-
-            case 'a': // Lowercase Ante meridiem and Post meridiem
-              break;
-
-            case 'i': // Minutes with leading zeros
-              mi = dateSplit[i];
-              break;
-
-            case 's': // Seconds, with leading zeros
-              s = dateSplit[i];
-              break;
-
-            case 'c': // ISO 8601 date
-              return new Date(value);
-              break;
-          }
+            dateIndex += matchLength;
+            formatIndex++;
         }
-        this.localValue = new Date(parseInt(y), parseInt(mo) - 1, parseInt(d), h, mi, s);
-      },
+
+        // Adjust hours for PM
+        if (isPM && h < 12) h += 12;
+        if (!isPM && h === 12) h = 0;
+
+        this.localValue = new Date(y, mo - 1, d, h, mi, s);
+        },
       getMonthList() {
         const list = [];
         if (this.monthList) {
@@ -459,10 +528,10 @@
       onClickShowDateSelector() {
         this.showDateSelector = !this.showDateSelector && !this.disabled;
       },
-      onDayClick(_day) {
+      onDayClick(day) {
+        this.localValue = new Date(day);
         this.showDateSelector = false;
-        const formatted = this.formatDate(this.format);
-        this.updateValue(this.modelValue, formatted);
+        this.$emit('update:modelValue', this.localValue);
       },
       previousMonth() {
         this.setMonth('previous');
