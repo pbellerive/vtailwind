@@ -1,5 +1,5 @@
 <template>
-  <div class="hello relative min-h-screen mx-auto max-w-4xl pb-20">
+  <div class="hello relative mx-auto min-h-screen max-w-4xl pb-20">
     <div class="fixed bottom-10 right-10 flex items-center p-4">
       <button
         @click="toggleDarkMode"
@@ -163,7 +163,7 @@
         </div>
       </section>
 
-      <section class="">
+      <section>
         <h1>CHECKBOX</h1>
         <div
           class="flex flex-row flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 shadow-sm
@@ -340,7 +340,8 @@
 
       <section>
         <h1>Date Picker</h1>
-        <div class="flex flex-row flex-wrap gap-2 rounded border border-gray-800 p-3 shadow-sm shadow-black">
+        <div
+          class="flex flex-row flex-wrap gap-2 rounded border border-gray-800 p-3 shadow-sm shadow-black">
           <v-date-picker
             v-model="dateSelected"
             label="Date"
@@ -352,51 +353,38 @@
         </div>
       </section>
       <section>
-          <h1 class="uppercase">Calendar</h1>
-          <div
+        <h1 class="uppercase">Calendar</h1>
+        <div
           class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
-          shadow-sm shadow-black">
+            shadow-sm shadow-black">
           <v-calendar
-          v-model="dateSelected"
-          :events="events" />
+            v-model="dateSelected"
+            :events="events" />
           <div class="mt-2">Selected Date: {{ dateSelected }}</div>
         </div>
-    </section>
-    TextArea
-    <section>
-      <div
-        class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
-          shadow-sm shadow-black">
-        <v-text-area
-          v-model="area"
-          :cols="40"
-          rows="10" />
-      </div>
-    </section>
-      <section class="flex flex-col gap-2">
+      </section>
+      TextArea
+      <section>
+        <div
+          class="flex flex-col flex-wrap justify-center gap-2 rounded border border-gray-800 p-3 text-center
+            shadow-sm shadow-black">
+          <v-text-area
+            v-model="area"
+            :cols="40"
+            rows="10" />
+        </div>
+      </section>
+      <section>
         <v-login
           title="S'authentifier"
-          email-placeholder="Email"
-          password-placeholder="Password"
-          button-text="login"
+          :forgottenPasswordFn="
+            () => {
+              console.log('forgot password');
+            }
+          "
           :loginFn="
             () => {
-              console.log('login');
-            }
-          " />
-        <v-register
-          title="S'inscrire"
-          email-placeholder="Email"
-          password-placeholder="Mot de passe"
-          confirm-password-placeholder="Confirmer le mot de passe"
-          button-text="S'inscrire"
-          terms-text="J'accepte les"
-          terms-link-text="conditions d'utilisation"
-          sign-in-text="Déjà un compte?"
-          sign-in-link-text="Se connecter ici"
-          :registerFn="
-            () => {
-              console.log('register');
+              console.log('login success');
             }
           " />
       </section>
@@ -447,7 +435,6 @@
   import VStar from './VStar.vue';
   import VCalendar from './VCalendar.vue';
   import VLogin from './VLogin.vue';
-  import VRegister from './VRegister.vue';
 
   export default {
     name: 'HelloWorld',
@@ -468,7 +455,6 @@
       'v-star': VStar,
       'v-calendar': VCalendar,
       'v-login': VLogin,
-      'v-register': VRegister,
       VMessage
     },
     props: {
@@ -520,10 +506,25 @@
             variant: 'secondary'
           }
         ],
-        isDark: localStorage.getItem('darkMode') === 'true'
+        isDark: false
       };
     },
+    created() {
+      // Clear any existing dark mode setting
+      localStorage.removeItem('darkMode');
+      // Ensure we start in light mode
+      this.isDark = false;
+      document.documentElement.classList.remove('dark');
+    },
     methods: {
+      updateDarkMode() {
+        // Apply dark mode to document
+        if (this.isDark) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      },
       showModal(name) {
         this.$refs[name]
           .open()
@@ -589,6 +590,7 @@
       toggleDarkMode() {
         this.isDark = !this.isDark;
         localStorage.setItem('darkMode', this.isDark);
+        this.updateDarkMode();
         this.$emit('dark-mode-change', this.isDark);
       }
     }

@@ -1,106 +1,136 @@
 <template>
-  <div class="bg-gray-50 dark:bg-gray-900">
-    <div class="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
-      <div class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0 dark:border dark:border-gray-700 dark:bg-gray-800">
-        <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-          <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            {{ title }}
-          </h1>
-          <form class="space-y-4 md:space-y-6" @submit.prevent="login">
-            <div>
-              <label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                {{ emailPlaceholder }}
-              </label>
-              <input
-                v-model="credentials.email"
-                type="email"
-                name="email"
-                id="email"
-                class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                :placeholder="emailPlaceholder"
-                required />
+  <div
+    class="mt-0 w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md
+      xl:p-0">
+    <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
+      <h1
+        class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+        {{ title }}
+      </h1>
+      <form @submit.prevent="onLogin">
+        <div class="space-y-4">
+          <div>
+            <v-input
+              v-model="email"
+              type="text"
+              placeholder="name@company.com"
+              label="Your email"
+              :variant="emailError ? 'danger' : 'default'"
+              :shortErrorMessage="emailError" />
+          </div>
+          <div>
+            <v-input
+              v-model="password"
+              type="password"
+              placeholder="••••••••"
+              label="Password"
+              :variant="passwordError ? 'danger' : 'default'"
+              :shortErrorMessage="passwordError" />
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-start">
+              <slot name="remember-me"></slot>
             </div>
-            <div>
-              <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                {{ passwordPlaceholder }}
-              </label>
-              <input
-                v-model="credentials.password"
-                type="password"
-                name="password"
-                id="password"
-                :placeholder="passwordPlaceholder"
-                class="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                required />
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-start">
-                <slot name="remember-me"></slot>
-              </div>
-              <slot name="forgot-password">
-                <a href="#" class="text-primary-600 dark:text-primary-500 text-sm font-medium hover:underline">
-                  Forgot password?
-                </a>
-              </slot>
-            </div>
-            <button
-              type="submit"
-              class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium capitalize text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-              {{ buttonText }}
-            </button>
-            <slot name="sign-up">
-              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don't have an account yet?
-                <a href="#" class="text-primary-600 dark:text-primary-500 font-medium hover:underline">
-                  Sign up
-                </a>
-              </p>
-            </slot>
-          </form>
+          </div>
+          <v-button
+            type="submit"
+            variant="primary"
+            class="w-full">
+            {{ buttonText }}
+          </v-button>
         </div>
+      </form>
+      <div class="mt-4 text-right">
+        <slot
+          name="forgot-password"
+          v-if="forgottenPasswordFn !== null">
+          <v-button
+            type="button"
+            variant="link"
+            tabindex="-1"
+            @click.prevent.stop="forgottenPasswordFn">
+            {{ forgotPasswordText }}
+          </v-button>
+        </slot>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+  import { ref, watch } from 'vue';
+  import VButton from './VButton.vue';
+  import VInput from './VInput.vue';
 
-const emit = defineEmits(['error']);
+  const props = defineProps({
+    title: {
+      type: String,
+      default: 'Login'
+    },
+    emailPlaceholder: {
+      type: String,
+      default: 'Email'
+    },
+    passwordPlaceholder: {
+      type: String,
+      default: 'Password'
+    },
+    buttonText: {
+      type: String,
+      default: 'Login'
+    },
+    forgotPasswordText: {
+      type: String,
+      default: 'Forgot password?'
+    },
+    loginFn: {
+      type: Function,
+      required: true
+    },
+    forgottenPasswordFn: {
+      type: Function,
+      default: null
+    }
+  });
 
-const props = defineProps({
-  title: {
-    type: String,
-    default: 'Login'
-  },
-  emailPlaceholder: {
-    type: String,
-    default: 'Email'
-  },
-  passwordPlaceholder: {
-    type: String,
-    default: 'Password'
-  },
-  buttonText: {
-    type: String,
-    default: 'Login'
-  },
-  loginFn: {
-    type: Function,
-    required: true
-  }
-});
+  const email = ref('');
+  const password = ref('');
+  const emailError = ref('');
+  const passwordError = ref('');
 
-const credentials = ref({
-  email: '',
-  password: ''
-});
+  watch(email, () => {
+    emailError.value = '';
+  });
 
-const login = () => {
-  if (!credentials.value.email || !credentials.value.password) {
-    emit('error', 'Email and password are required');
-    return;
-  }
-  props.loginFn(credentials.value);
-};
+  watch(password, () => {
+    passwordError.value = '';
+  });
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const onLogin = (e) => {
+    e.preventDefault();
+
+    emailError.value = '';
+    passwordError.value = '';
+
+    if (!email.value) {
+      emailError.value = 'Email is required';
+      return;
+    }
+    if (!validateEmail(email.value)) {
+      emailError.value = 'Please enter a valid email';
+      return;
+    }
+
+    if (!password.value) {
+      passwordError.value = 'Password is required';
+      return;
+    }
+
+    props.loginFn({ email: email.value, password: password.value });
+  };
 </script>

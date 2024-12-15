@@ -98,7 +98,7 @@
             default: {
               wrapper: 'relative h-14 w-full min-w-[200px]',
               baseCss:
-                'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-1 font-sans text-sm font-normal text-blue-gray-700  transition-all focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
+                'peer w-full rounded-[7px] border border-gray-200  bg-transparent px-3 py-1.5 font-sans text-sm font-normal text-blue-gray-700  transition-all focus:border-2 focus:border-blue-300 focus:outline-0 disabled:border-1 disabled:bg-gray-50',
               label: '',
               prependButton: 'mr-0 pr-0',
               preprendInput: 'ml-0 rounded-l-none'
@@ -142,7 +142,7 @@
             },
             title: {
               baseCss:
-                'border-none rounded rounded-sm px-4 py-1 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-600 font-bold text-lg md:text-2xl'
+                'border-none rounded rounded-sm px-4 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-fb-300 w-full max-w-full text-gray-600 font-bold text-lg md:text-2xl'
             }
           }
         }

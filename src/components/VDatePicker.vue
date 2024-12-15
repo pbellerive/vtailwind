@@ -112,7 +112,7 @@
         default: 'en-US'
       },
       modelValue: {
-        type: Date,
+        type: [Date, String],
         default: null
       },
       monthFormat: {
@@ -134,7 +134,7 @@
     },
     data() {
       return {
-        localValue: new Date(),
+        localValue: null,
         tag: 'date-picker',
         css: {
           dateLabel: '',
@@ -176,18 +176,51 @@
     },
     computed: {
       currentSelectedDate() {
-        if (this.modelValue === undefined) return '--';
-
-        const currentFormattedDate = this.localValue ? this.formatDate(this.format) : '';
-        return currentFormattedDate;
-      },
-      currentDaySelector() {
-        return this.localValue.getDate();
+        if (!this.localValue) {
+          return '--/--/--';
+        }
+        return this.formatDate(this.format);
       }
     },
     watch: {
-      modelValue(newValue, _oldValue) {
-        this.parse(newValue);
+      modelValue: {
+        immediate: true,
+        handler(newValue) {
+          if (!newValue) {
+            this.localValue = null;
+            this.currentMonthSelector = {
+              text: new Date().toLocaleString(this.locale, { month: this.monthFormat }),
+              value: new Date().getMonth()
+            };
+            this.currentYearSelector = {
+              text: new Date().getFullYear().toString(),
+              value: new Date().getFullYear()
+            };
+            return;
+          }
+
+          if (newValue instanceof Date) {
+            this.localValue = new Date(newValue);
+          } else {
+            const parsedDate = new Date(newValue);
+            if (!isNaN(parsedDate.getTime())) {
+              this.localValue = parsedDate;
+            } else {
+              this.localValue = null;
+            }
+          }
+
+          if (this.localValue) {
+            this.currentMonthSelector = {
+              text: this.localValue.toLocaleString(this.locale, { month: this.monthFormat }),
+              value: this.localValue.getMonth()
+            };
+            this.currentYearSelector = {
+              text: this.localValue.getFullYear().toString(),
+              value: this.localValue.getFullYear()
+            };
+          }
+        }
       }
     },
     created() {
@@ -247,7 +280,7 @@
         if (!this.localValue || isNaN(this.localValue.getTime())) {
           return '';
         }
-        
+
         let string = '';
         const d = this.localValue.getDate();
         const h = this.localValue.getHours();
@@ -256,7 +289,7 @@
         const mo = this.localValue.getMonth();
         const y = this.localValue.getFullYear();
         const w = this.localValue.getDay();
-        
+
         const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         const daysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const months = [
@@ -315,7 +348,7 @@
               break;
 
             case 'm': // Month with leading zeros (01 to 12)
-              string += mo < 9 ? '0' + (mo + 1) : (mo + 1);
+              string += mo < 9 ? '0' + (mo + 1) : mo + 1;
               break;
 
             case 'n': // Month without leading zeros (1 to 12)
@@ -375,114 +408,149 @@
         return string;
       },
       parse(value) {
+        // Handle null or undefined
+        if (!value) {
+          this.localValue = new Date();
+          return;
+        }
+
         // Handle Date objects
         if (value instanceof Date) {
-            this.localValue = new Date(value);
-            return;
+          const d = new Date(value);
+          this.localValue = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12);
+          return;
         }
 
-        // Handle null or non-string values
-        if (typeof value !== 'string' || !value) {
-            this.localValue = new Date();
+        // Handle string values
+        if (typeof value === 'string') {
+          // Try parsing ISO 8601 format first
+          const isoDate = new Date(value);
+          if (!isNaN(isoDate.getTime())) {
+            this.localValue = new Date(
+              isoDate.getFullYear(),
+              isoDate.getMonth(),
+              isoDate.getDate(),
+              12
+            );
             return;
-        }
+          }
 
-        // Try parsing ISO 8601 format first
-        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
-            this.localValue = new Date(value);
-            return;
-        }
+          // If not ISO format, try parsing with the specified format
+          if (this.format) {
+            let d = 1;
+            let mo = 1;
+            let y = new Date().getFullYear();
+            let h = 0;
+            let mi = 0;
+            let s = 0;
+            let isPM = false;
+            let dateIndex = 0;
+            let formatIndex = 0;
 
-        let d = 1;
-        let mo = 0;
-        let y = new Date().getFullYear();
-        let h = 0;
-        let mi = 0;
-        let s = 0;
-        let isPM = false;
+            while (formatIndex < this.format.length && dateIndex < value.length) {
+              const formatChar = this.format[formatIndex];
+              let matchLength = 0;
 
-        const format = this.format;
-        let dateIndex = 0;
-        let formatIndex = 0;
+              switch (formatChar) {
+                case 'j': // Day without leading zeros (1-31)
+                  matchLength = value.substring(dateIndex).match(/^\d{1,2}/)?.[0]?.length || 0;
+                  if (matchLength) {
+                    d = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                  }
+                  break;
 
-        while (formatIndex < format.length) {
-            const formatChar = format[formatIndex];
-            let matchLength = 0;
-            const value = '';
+                case 'd': // Day with leading zeros (01-31)
+                  d = parseInt(value.substring(dateIndex, dateIndex + 2)) || d;
+                  matchLength = 2;
+                  break;
 
-            switch (formatChar) {
-            case 'j': // Day without leading zeros (1-31)
-                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
-                d = parseInt(value.substring(dateIndex, dateIndex + matchLength));
-                break;
+                case 'm': // Month with leading zeros (01-12)
+                  mo = parseInt(value.substring(dateIndex, dateIndex + 2)) || mo;
+                  matchLength = 2;
+                  break;
 
-            case 'd': // Day with leading zeros (01-31)
-                d = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+                case 'n': // Month without leading zeros (1-12)
+                  matchLength = value.substring(dateIndex).match(/^\d{1,2}/)?.[0]?.length || 0;
+                  if (matchLength) {
+                    mo = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                  }
+                  break;
 
-            case 'm': // Month with leading zeros (01-12)
-                mo = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+                case 'Y': // Full year, 4 digits
+                  y = parseInt(value.substring(dateIndex, dateIndex + 4)) || y;
+                  matchLength = 4;
+                  break;
 
-            case 'n': // Month without leading zeros (1-12)
-                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
-                mo = parseInt(value.substring(dateIndex, dateIndex + matchLength));
-                break;
+                case 'y': // Year, 2 digits
+                  const shortYear = parseInt(value.substring(dateIndex, dateIndex + 2));
+                  if (!isNaN(shortYear)) {
+                    y = shortYear + (shortYear > 50 ? 1900 : 2000);
+                  }
+                  matchLength = 2;
+                  break;
 
-            case 'Y': // Full year, 4 digits
-                y = parseInt(value.substring(dateIndex, dateIndex + 4));
-                matchLength = 4;
-                break;
+                case 'H': // 24-hour format (00 to 23)
+                  h = parseInt(value.substring(dateIndex, dateIndex + 2)) || h;
+                  matchLength = 2;
+                  break;
 
-            case 'y': // Year, 2 digits
-                const shortYear = parseInt(value.substring(dateIndex, dateIndex + 2));
-                y = shortYear + (shortYear > 50 ? 1900 : 2000);
-                matchLength = 2;
-                break;
+                case 'g': // 12-hour format without leading zeros (1 to 12)
+                  matchLength = value.substring(dateIndex).match(/^\d{1,2}/)?.[0]?.length || 0;
+                  if (matchLength) {
+                    h = parseInt(value.substring(dateIndex, dateIndex + matchLength));
+                  }
+                  break;
 
-            case 'H': // 24-hour format (00 to 23)
-                h = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+                case 'h': // 12-hour format with leading zeros (01 to 12)
+                  h = parseInt(value.substring(dateIndex, dateIndex + 2)) || h;
+                  matchLength = 2;
+                  break;
 
-            case 'g': // 12-hour format without leading zeros (1 to 12)
-                matchLength = value.match(/^\d{1,2}/)?.[0]?.length || 0;
-                h = parseInt(value.substring(dateIndex, dateIndex + matchLength));
-                break;
+                case 'a': // am/pm
+                  isPM = value.substring(dateIndex, dateIndex + 2).toLowerCase() === 'pm';
+                  matchLength = 2;
+                  break;
 
-            case 'h': // 12-hour format with leading zeros (01 to 12)
-                h = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+                case 'i': // Minutes with leading zeros (00 to 59)
+                  mi = parseInt(value.substring(dateIndex, dateIndex + 2)) || mi;
+                  matchLength = 2;
+                  break;
 
-            case 'a': // am/pm
-                isPM = value.substring(dateIndex, dateIndex + 2).toLowerCase() === 'pm';
-                matchLength = 2;
-                break;
+                case 's': // Seconds with leading zeros (00 to 59)
+                  s = parseInt(value.substring(dateIndex, dateIndex + 2)) || s;
+                  matchLength = 2;
+                  break;
 
-            case 'i': // Minutes with leading zeros (00 to 59)
-                mi = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+                default:
+                  // Skip non-format characters
+                  matchLength = 1;
+              }
 
-            case 's': // Seconds with leading zeros (00 to 59)
-                s = parseInt(value.substring(dateIndex, dateIndex + 2));
-                matchLength = 2;
-                break;
+              dateIndex += matchLength;
+              formatIndex++;
             }
 
-            dateIndex += matchLength;
-            formatIndex++;
+            // Adjust hours for PM
+            if (isPM && h < 12) h += 12;
+            if (!isPM && h === 12) h = 0;
+
+            // Create date and validate
+            const parsedDate = new Date(y, mo - 1, d, h, mi, s);
+            if (!isNaN(parsedDate.getTime())) {
+              this.localValue = new Date(
+                parsedDate.getFullYear(),
+                parsedDate.getMonth(),
+                parsedDate.getDate(),
+                12
+              );
+              return;
+            }
+          }
         }
 
-        // Adjust hours for PM
-        if (isPM && h < 12) h += 12;
-        if (!isPM && h === 12) h = 0;
-
-        this.localValue = new Date(y, mo - 1, d, h, mi, s);
-        },
+        // Default to current date if parsing fails
+        this.localValue = new Date();
+      },
       getMonthList() {
         const list = [];
         if (this.monthList) {
@@ -512,8 +580,11 @@
         return list;
       },
       getSelectedDateCss(day) {
+        if (!this.localValue) {
+          return '';
+        }
+
         if (
-          this.localValue &&
           day.getDate() === this.localValue.getDate() &&
           day.getMonth() === this.localValue.getMonth() &&
           day.getFullYear() === this.localValue.getFullYear()
@@ -529,7 +600,7 @@
         this.showDateSelector = !this.showDateSelector && !this.disabled;
       },
       onDayClick(day) {
-        this.localValue = new Date(day);
+        this.localValue = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 12);
         this.showDateSelector = false;
         this.$emit('update:modelValue', this.localValue);
       },

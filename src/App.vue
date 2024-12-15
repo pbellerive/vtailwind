@@ -17,10 +17,7 @@
   import 'tailwindcss/tailwind.css';
   import { ref } from 'vue';
 
-  const isDark = ref(
-    localStorage.getItem('darkMode') === 'true' ||
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
+  const isDark = ref(false);
 
   const updateDarkMode = (value) => {
     isDark.value = value;

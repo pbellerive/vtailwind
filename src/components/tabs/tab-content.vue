@@ -5,25 +5,25 @@
 </template>
 
 <script>
-import mixin from './mixins';
+  import mixin from './mixins';
 
-export default {
-  mixins: [mixin],
-  props: {
-    label: {
-      type: String,
-      default: 'New Tab'
+  export default {
+    mixins: [mixin],
+    props: {
+      label: {
+        type: String,
+        default: 'New Tab'
+      },
+      name: {
+        type: String,
+        default: undefined,
+        required: true
+      }
     },
-    name: {
-      type: String,
-      default: undefined,
-      required: true
+    setup() {
+      return {};
     }
-  },
-  setup() {
-    return {};
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped></style>

@@ -115,7 +115,7 @@
       },
       modelValue: {
         type: [Date, String],
-        default: new Date()
+        default: () => new Date()
       },
       monthFormat: {
         type: String,
@@ -183,12 +183,10 @@
       currentSelectedDate() {
         if (!this.localValue && !this.currentYearSelector.value) return null;
 
-        return this.localValue ||
-          new Date(
-            this.currentYearSelector.value,
-            this.currentMonthSelector.value,
-            this.currentDay
-          );
+        return (
+          this.localValue ||
+          new Date(this.currentYearSelector.value, this.currentMonthSelector.value, this.currentDay)
+        );
       },
       currentDaySelector() {
         return this.localValue ? this.localValue.getDate() : null;
@@ -198,7 +196,32 @@
       modelValue: {
         immediate: true,
         handler(newValue) {
-          this.parse(newValue);
+          if (!newValue) {
+            this.localValue = null;
+            return;
+          }
+
+          if (newValue instanceof Date) {
+            this.localValue = new Date(newValue);
+          } else {
+            const parsedDate = new Date(newValue);
+            if (!isNaN(parsedDate.getTime())) {
+              this.localValue = parsedDate;
+            } else {
+              this.localValue = null;
+            }
+          }
+
+          if (this.localValue) {
+            this.currentMonthSelector = {
+              text: this.localValue.toLocaleString(this.locale, { month: this.monthFormat }),
+              value: this.localValue.getMonth()
+            };
+            this.currentYearSelector = {
+              text: this.localValue.getFullYear().toString(),
+              value: this.localValue.getFullYear()
+            };
+          }
         }
       },
       events: {
@@ -462,9 +485,9 @@
       },
       onDayClick(day) {
         this.showDateSelector = false;
-        const formatted = this.dateFormat(this.format, day);
-
-        this.$emit('update:modelValue', formatted);
+        const newDate = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 12);
+        this.localValue = newDate;
+        this.$emit('update:modelValue', newDate);
       },
       previousMonth() {
         let currentMonth = this.currentMonthSelector.value - 1;
