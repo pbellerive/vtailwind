@@ -1,18 +1,25 @@
 <template>
-  <div class="max-w-4xl mx-auto grid justify-items-center mt-8">
-    <img class="self-center w-32" alt="Vue logo" src="./assets/logo.png" />
+  <div
+    :class="{ dark: isDark }"
+    class="min-h-screen">
+    <div class="mx-auto mt-8 grid max-w-4xl justify-items-center">
+      <img
+        class="w-32 self-center"
+        alt="Vue logo"
+        src="./assets/logo.png" />
+    </div>
+    <demo @dark-mode-change="updateDarkMode" />
   </div>
-  <Demo />
 </template>
 
-<script>
-import Demo from './components/demo.vue';
-import 'tailwindcss/tailwind.css';
+<script setup>
+  import Demo from './components/demo.vue';
+  import 'tailwindcss/tailwind.css';
+  import { ref } from 'vue';
 
-export default {
-  name: 'App',
-  components: {
-    Demo,
-  },
-};
+  const isDark = ref(false);
+
+  const updateDarkMode = (value) => {
+    isDark.value = value;
+  };
 </script>

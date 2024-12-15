@@ -1,33 +1,44 @@
 import { defineComponent } from 'vue';
 
 const Base = defineComponent({
+  props: {
+    modelValue: {
+      type: [String, Number, Boolean, Array, Object],
+      default: undefined
+    },
+    variant: {
+      type: String,
+      default: 'default'
+    },
+    dataTestId: {
+      type: String,
+      default: undefined
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ['update:modelValue'],
   data() {
     return {
       tag: '',
       css: {
         // baseCss: 'border-2 border-blue-200 rounded'
         variant: {
-          default: {},
-        },
-      },
+          default: {}
+        }
+      }
     };
   },
-  props: {
-    modelValue: {},
-    variant: {
-      type: String,
-      default: 'default',
-    },
-    dataTestId: {
-      type: String,
-      default: undefined,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+  watch: {
+    variant() {
+      this.loadVariant();
+    }
   },
-  emits: ['update:modelValue'],
+  created() {
+    this.loadVariant();
+  },
   methods: {
     getCssVariant() {
       if (this.variant && this.css.variant && this.css.variant[this.variant]) {
@@ -39,7 +50,7 @@ const Base = defineComponent({
       if (this.$vUiSettings && this.$vUiSettings[this.tag]) {
         this.css.variant = {
           ...this.css.variant,
-          ...this.$vUiSettings[this.tag].css.variant,
+          ...this.$vUiSettings[this.tag].css.variant
         };
       }
 
@@ -51,16 +62,8 @@ const Base = defineComponent({
         this.css[i] = variant[i];
       }
       // }
-    },
-  },
-  created() {
-    this.loadVariant();
-  },
-  watch: {
-    variant() {
-      this.loadVariant();
-    },
-  },
+    }
+  }
 });
 
 export default Base;

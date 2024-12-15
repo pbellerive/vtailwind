@@ -1,10 +1,9 @@
-
 const mixin = {
-    computed: {
-        isSelected() {
-            return this.name == this.store.currentTabName;
-        }
+  computed: {
+    isSelected() {
+      return this.tab === this.selectedTab;
     }
-}
+  }
+};
 
 export default mixin;

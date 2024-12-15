@@ -12,51 +12,51 @@
 </template>
 
 <script>
-import VBase from './base';
+  import VBase from './base';
 
-export default {
-  extends: VBase,
-  data() {
-    return {
-      isFocus: false,
-      tag: 'text-area',
-      css: {
-        baseCss: '',
-        wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
-        variant: {
-          default: {
-            baseCss: '',
-            wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
-          },
-        },
+  export default {
+    extends: VBase,
+    props: {
+      iconClass: {
+        type: String,
+        default: undefined
       },
-    };
-  },
-  computed: {
-    withPrepend() {
-      return typeof this.prependText != 'undefined' && this.prependText.trim().length > 0;
+      label: {
+        type: String,
+        default: undefined
+      }
     },
-  },
-  props: {
-    iconClass: {
-      type: String,
-      default: undefined,
+    emits: ['update:modelValue'],
+    setup() {
+      return {};
     },
-    label: {
-      type: String,
-      default: undefined,
+    data() {
+      return {
+        isFocus: false,
+        tag: 'text-area',
+        css: {
+          baseCss: '',
+          wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1',
+          variant: {
+            default: {
+              baseCss: '',
+              wrapper: 'flex gap-2 text-xs items-center rounded rounded-md border px-3 py-1'
+            }
+          }
+        }
+      };
     },
-  },
-  $emits: ['update:modelValue'],
-  methods: {
-    onInput(evt) {
-      this.$emit('update:modelValue', evt.target.value);
+    computed: {
+      withPrepend() {
+        return typeof this.prependText !== 'undefined' && this.prependText.trim().length > 0;
+      }
     },
-  },
-  setup() {
-    return {};
-  },
-};
+    methods: {
+      onInput(evt) {
+        this.$emit('update:modelValue', evt.target.value);
+      }
+    }
+  };
 </script>
 
 <style lang="scss" scoped></style>

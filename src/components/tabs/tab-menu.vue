@@ -1,40 +1,40 @@
 <template>
-   <li @click="onTabClick" :class="{'border-b-2 border-b-green-fg-500': isSelected}">
-        <button >{{label}}</button>
-    </li>
+  <li
+    :class="{ 'border-b-green-fg-500 border-b-2': isSelected }"
+    @click="onTabClick">
+    <button>{{ label }}</button>
+  </li>
 </template>
 
 <script>
-import mixin from './mixins';
+  import mixin from './mixins';
 
-export default {
-    setup () {
-        const store = useStore();
-
-        return {
-            store
-        }
-    },
-    methods: {
-        onTabClick() {
-            this.$parent.currentTabName = this.name;
-        }
-    },
+  export default {
     mixins: [mixin],
     props: {
-        label: {
-            type: String,
-            default: 'New Tab'
-        },
-        name: {
-            type: String,
-            default: undefined,
-            required: true
-        },
+      label: {
+        type: String,
+        default: 'New Tab'
+      },
+      name: {
+        type: String,
+        default: undefined,
+        required: true
+      }
     },
-}
+    setup() {
+      const store = useStore();
+
+      return {
+        store
+      };
+    },
+    methods: {
+      onTabClick() {
+        this.$parent.currentTabName = this.name;
+      }
+    }
+  };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

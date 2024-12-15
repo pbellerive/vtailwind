@@ -1,5 +1,5 @@
-import plugin from './src/index'
+import plugin from './src/index';
 
-const vtailwind = plugin
+const vtailwind = plugin;
 
-export default vtailwind
+export default vtailwind;

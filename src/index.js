@@ -1,9 +1,9 @@
 const install = function (app, options) {
-    app.config.globalProperties.$vUiSettings = options;
+  app.config.globalProperties.$vUiSettings = options;
 };
 
 const plugin = {
-    install
+  install
 };
 
 export default plugin;
